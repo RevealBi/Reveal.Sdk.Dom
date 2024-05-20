@@ -6,8 +6,9 @@ namespace Reveal.Sdk.Dom.Visualizations
 {
     public abstract class DataDefinitionBase : SchemaType, IDataDefinition
     {
+        //need set to be public to support custom DSIs provided from Slingshot
         [JsonProperty]
-        public DataSourceItem DataSourceItem { get; internal set; }
+        public DataSourceItem DataSourceItem { get; set; }
 
         /// <inheritdoc/>
         [JsonProperty("Expiration")]

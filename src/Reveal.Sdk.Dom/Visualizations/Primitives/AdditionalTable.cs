@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Reveal.Sdk.Dom.Visualizations
 {
-    internal sealed class AdditionalTable
+    public sealed class AdditionalTable
     {
         public string Alias { get; set; }
 

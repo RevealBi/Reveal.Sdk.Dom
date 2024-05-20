@@ -26,7 +26,7 @@ namespace Reveal.Sdk.Dom.Data
 
         [JsonProperty]
         [JsonConverter(typeof(StringEnumConverter))]
-        internal DataSourceProvider Provider { get; set; }
+        public DataSourceProvider Provider { get; set; } //needs to be public to enable serialization of custom datasources
 
         [JsonProperty("Description")]
         public string Title { get; set; }
@@ -40,7 +40,7 @@ namespace Reveal.Sdk.Dom.Data
         }
 
         [JsonProperty]
-        internal Dictionary<string, object> Properties { get; set; }
+        public Dictionary<string, object> Properties { get; set; } //needs to be public to enable serialization of custom datasources
 
         public override bool Equals(object obj)
         {

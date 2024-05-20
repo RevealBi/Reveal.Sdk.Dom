@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Reveal.Sdk.Dom.Visualizations
 {
-    public abstract class FieldBase<TFilter> : IField, IFieldDataType
+    public abstract class FieldBase<TFilter> : IField, IFieldDataType, IAliasInternal
         where TFilter : IFilter
     {
         private string _fieldLabel;
@@ -56,7 +56,7 @@ namespace Reveal.Sdk.Dom.Visualizations
         internal Dictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
 
         //used when joining data from multiple sources
-        [JsonProperty]
-        internal string TableAlias { get; set; }
+        [JsonProperty("TableAlias")]
+        string IAliasInternal.TableAlias { get; set; }
     }
 }

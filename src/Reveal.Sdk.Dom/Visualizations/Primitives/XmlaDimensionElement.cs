@@ -15,6 +15,7 @@ namespace Reveal.Sdk.Dom.Visualizations
         public string UniqueName { get; set; }
         public string Caption { get; set; }
         public string UserCaption { get; set; }
+        public string DefaultHierarchy { get; set; }
         public string DimensionUniqueName { get; set; }
         [JsonConverter(typeof(StringEnumConverter))]
         public XmlaDimensionType DimensionType { get; set; } = XmlaDimensionType.Regular;

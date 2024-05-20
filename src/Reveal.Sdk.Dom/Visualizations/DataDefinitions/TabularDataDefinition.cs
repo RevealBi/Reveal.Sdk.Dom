@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Reveal.Sdk.Dom.Visualizations
 {
-    public sealed class TabularDataDefinition : DataDefinitionBase
+    public sealed class TabularDataDefinition : DataDefinitionBase, ITabularDataDefinitionInternal
     {
         public TabularDataDefinition()
         {
@@ -32,11 +32,12 @@ namespace Reveal.Sdk.Dom.Visualizations
         internal SummarizationSpec SummarizationSpec { get; set; }
 
         //used when joining tables from multiple data sources
-        [JsonProperty]
-        internal List<AdditionalTable> AdditionalTables { get; set; } = new List<AdditionalTable>();
+        [JsonProperty("AdditionalTables")]
+        List<AdditionalTable> ITabularDataDefinitionInternal.AdditionalTables { get; set; } = new List<AdditionalTable>();
 
         //not sure what this is for yet
         [JsonProperty]
         internal List<ServiceAdditionalTable> ServiceAdditionalTables { get; set; } = new List<ServiceAdditionalTable>();
+
     }
 }
