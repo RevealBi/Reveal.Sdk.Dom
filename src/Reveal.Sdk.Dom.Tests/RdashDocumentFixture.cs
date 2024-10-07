@@ -293,14 +293,16 @@ namespace Reveal.Sdk.Dom.Tests
         {
             var dashboard = new RdashDocument();
 
-            var productDataSourceItem = new DataSourceItemFactory().Create(DataSourceType.REST, "http://localhost:8080/api", "Sales")
+            var dsiFactory = new DataSourceItemFactory();
+
+            var productDataSourceItem = dsiFactory.Create(DataSourceType.REST, "http://localhost:8080/api", "Sales")
                 .SetFields(new List<IField>()
                 {
                     new TextField("Product"),
                     new NumberField("Revenue")
                 });
 
-            var productDetailsDataSourceItem = new DataSourceItemFactory().Create(DataSourceType.REST, "http://localhost:8080/api", "ProductDetails")
+            var productDetailsDataSourceItem = dsiFactory.Create(DataSourceType.REST, "http://localhost:8080/api", "ProductDetails")
                 .SetFields(new List<IField>()
                 {
                     new TextField("Product"),
