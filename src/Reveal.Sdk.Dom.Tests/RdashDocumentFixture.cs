@@ -7,6 +7,7 @@ using Reveal.Sdk.Dom.Visualizations;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Xunit;
 
 namespace Reveal.Sdk.Dom.Tests
@@ -286,6 +287,92 @@ namespace Reveal.Sdk.Dom.Tests
             document.Visualizations.Add(new GridVisualization(new DataSourceItem()));
 
             Assert.Throws<ArgumentNullException>(() => document.Import(new RdashDocument(), (IVisualization)null));
+        }
+
+        private RdashDocument TestDashboardForJoins()
+        {
+            var dashboard = new RdashDocument();
+
+            var productDataSourceItem = new DataSourceItemFactory().Create(DataSourceType.REST, "http://localhost:8080/api", "Sales")
+                .SetFields(new List<IField>()
+                {
+                    new TextField("Product"),
+                    new NumberField("Revenue")
+                });
+
+            var productDetailsDataSourceItem = new DataSourceItemFactory().Create(DataSourceType.REST, "http://localhost:8080/api", "ProductDetails")
+                .SetFields(new List<IField>()
+                {
+                    new TextField("Product"),
+                    new TextField("Product2"),
+                    new TextField("Category")
+                });
+
+            productDataSourceItem.Join("A", "Product", "Product", productDetailsDataSourceItem);
+
+            var visualization = new GridVisualization("JoinTest",productDataSourceItem);
+
+            ((ITabularColumns)visualization).Columns.Add(new TabularColumn("Product"));
+            ((ITabularColumns)visualization).Columns.Add(new TabularColumn("Revenue"));
+            ((ITabularColumns)visualization).Columns.Add(new TabularColumn("Category"));
+
+            dashboard.Visualizations.Add(visualization);
+
+            return dashboard;
+        }
+
+        [Fact]
+        public void ToJsonString_DontDuplicateJoins()
+        {
+            var dashboard = TestDashboardForJoins();
+
+            //sanity check
+            var json = dashboard.ToJsonString();
+            var jsonDocument = JObject.Parse(json);
+
+            var joins = jsonDocument.SelectTokens("$.Widgets[0].DataSpec.AdditionalTables[*]");
+
+            Assert.Equal(1, joins.Count());
+
+
+            //second ToJsonString should still return a single join
+            json = dashboard.ToJsonString();
+            jsonDocument = JObject.Parse(json);
+
+            joins = jsonDocument.SelectTokens("$.Widgets[0].DataSpec.AdditionalTables[*]");
+
+            Assert.Equal(1, joins.Count());
+        }
+
+        [Fact]
+        public void ToJsonString_ReplaceUpdatedJoin()
+        {
+            var dashboard = TestDashboardForJoins();
+
+            //sanity check
+            var json = dashboard.ToJsonString();
+            var jsonDocument = JObject.Parse(json);
+
+            var firstJoinRightFieldName = jsonDocument.SelectTokens("$.Widgets[0].DataSpec.AdditionalTables[0].JoinConditions[0].RightFieldName").First().ToString();
+            var joins = jsonDocument.SelectTokens("$.Widgets[0].DataSpec.AdditionalTables[*]");
+
+            Assert.Equal(1, joins.Count());
+            Assert.Equal("A.[Product]", firstJoinRightFieldName);
+
+            //retrieve the right DSI to not create it again
+            var productDetailsDataSourceItem = dashboard.Visualizations[0].DataDefinition.AsTabular().DataSourceItem.JoinTables[0].DataDefinition.DataSourceItem;
+
+            dashboard.Visualizations[0].DataDefinition.AsTabular().DataSourceItem.Join("A","Product","Product2",productDetailsDataSourceItem);
+
+            //second ToJsonString should have the updated value
+            json = dashboard.ToJsonString();
+            jsonDocument = JObject.Parse(json);
+
+            firstJoinRightFieldName = jsonDocument.SelectTokens("$.Widgets[0].DataSpec.AdditionalTables[0].JoinConditions[0].RightFieldName").First().ToString();
+            joins = jsonDocument.SelectTokens("$.Widgets[0].DataSpec.AdditionalTables[*]");
+
+            Assert.Equal(1, joins.Count());
+            Assert.Equal("A.[Product2]", firstJoinRightFieldName);
         }
     }
 }

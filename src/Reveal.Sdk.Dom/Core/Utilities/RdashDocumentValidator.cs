@@ -52,7 +52,12 @@ namespace Reveal.Sdk.Dom.Core.Utilities
             if (tdd.DataSourceItem.JoinTables != null)
             {
                 tdd.JoinTables.AddRange(tdd.DataSourceItem.JoinTables.Clone());
+
+                //remove any duplicates, keeping the newest versions
+                //the Alias should be unique for each different join
+                tdd.JoinTables = tdd.JoinTables.GroupBy(jt => jt.Alias).Select(g => g.Last()).ToList();
             }
+
         }
 
         static void FixDataSources(RdashDocument document, DataSourceItem dataSourceItem, Dictionary<string, DataSource> dataSources)
