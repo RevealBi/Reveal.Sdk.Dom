@@ -7,7 +7,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
     public class DataSourceFixture
     {
         [Fact]
-        public void DataSource_DefaultConstructor_SetsSchemaTypeName()
+        public void DataSource_HasDefaultSchemaTypeNames_WhenConstructed()
         {
             // Arrange
             var dataSource = new DataSource();
@@ -19,7 +19,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void DataSource_DefaultConstructor_SetsProperties()
+        public void DataSource_HasNotNullProperties_WhenConstructed()
         {
             // Arrange
             var dataSource = new DataSource();
@@ -31,7 +31,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void DataSource_DefaultConstructor_GeneratesUniqueId()
+        public void DataSource_GeneratesUniqueId_WhenConstructed()
         {
             // Arrange
             var dataSource1 = new DataSource();
@@ -44,7 +44,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void DataSource_SetId_NullValue_GeneratesUniqueId()
+        public void DataSource_GeneratesUniqueId_WhenSetIdWithNullValue()
         {
             // Arrange
             var dataSource = new DataSource();
@@ -57,7 +57,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void DataSource_DefaultRefreshRate_Should_SetAndGetValue()
+        public void DataSource_ReturnSetValue_WhenGetDefaultRefreshRate()
         {
             // Arrange
             var dataSource = new DataSource();
@@ -72,7 +72,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void DataSource_Equals_Null_ReturnsFalse()
+        public void DataSource_IsNotNull_WhenConstructed()
         {
             // Arrange
             var dataSource = new DataSource();
@@ -85,7 +85,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void DataSource_Equals_SameId_ReturnsTrue()
+        public void DataSource_AreEqual_WhenHaveSameIds()
         {
             // Arrange
             var dataSource1 = new DataSource { Id = "same-id" };
@@ -99,7 +99,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void DataSource_GetHashCode_ReturnsConsistentValue()
+        public void DataSource_ReturnsConsistentValue_WhenGetHashCode()
         {
             // Arrange
             var dataSource = new DataSource();
