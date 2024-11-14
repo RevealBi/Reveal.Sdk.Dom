@@ -1,4 +1,6 @@
-﻿using Reveal.Sdk.Dom.Data;
+﻿using NuGet.Frameworks;
+using Reveal.Sdk.Dom.Core.Constants;
+using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
     public class DataSourceItemFixture
     {
         [Fact]
-        public void DataSourceItem_Id_DefaultValue()
+        public void Constructor_GeneratesNotNullObject_WithoutArguments()
         {
             // Arrange
             var dataSourceItem = new DataSourceItem();
@@ -18,53 +20,226 @@ namespace Reveal.Sdk.Dom.Tests.Data
             // Act
 
             // Assert
-            Assert.NotEmpty(dataSourceItem.Id);
+            Assert.NotNull(dataSourceItem);
         }
 
         [Fact]
-        public void DataSourceItem_Id_SetValue()
+        public void Constructor_CreatesDefaultSchemaTypeName_WithoutArguments()
         {
             // Arrange
             var dataSourceItem = new DataSourceItem();
-            var id = "12345";
 
             // Act
-            dataSourceItem.Id = id;
 
             // Assert
-            Assert.Equal(id, dataSourceItem.Id);
+            Assert.Equal(SchemaTypeNames.DataSourceItemType, dataSourceItem.SchemaTypeName);
         }
 
         [Fact]
-        public void DataSourceItem_Title_SetValue()
+        public void Constructor_GeneratesUniqueNotEmptyId_WithoutArguments()
+        {
+            // Arrange
+            var dataSourceItem1 = new DataSourceItem();
+            var dataSourceItem2 = new DataSourceItem();
+
+            // Act
+
+            // Assert
+            Assert.NotEmpty(dataSourceItem1.Id);
+            Assert.NotEmpty(dataSourceItem2.Id);
+            Assert.NotEqual(dataSourceItem1.Id, dataSourceItem2.Id);
+        }
+
+        [Fact]
+        public void Constructor_CreatesDataSourceItem_WithDataSourceAndTitle()
+        {
+            // Arrange
+            var dsTitle = "DS Title";
+            var dsItemTitle = "DS Item Title";
+            var dataSource = new DataSource { Title = dsTitle };
+            var dataSourceItem = new DataSourceItem(dsItemTitle, dataSource);
+
+            // Act
+
+            // Assert
+            Assert.NotNull(dataSourceItem);
+            Assert.Equal(dataSource, dataSourceItem.DataSource);
+            Assert.Equal(dataSource.Id, dataSourceItem.DataSourceId);
+            Assert.Equal(dsTitle, dataSourceItem.DataSource.Title);
+            Assert.Equal(dsItemTitle, dataSourceItem.Title);
+        }
+
+        [Fact]
+        public void Constructor_GeneratesUniqueNotEmptyId_WithDataSourceAndTitle()
+        {
+            // Arrange
+            var dataSource1 = new DataSource();
+            var dataSource2 = new DataSource();
+            var dataSourceItem1 = new DataSourceItem("Title 1", dataSource1);
+            var dataSourceItem2 = new DataSourceItem("Title 2", dataSource2);
+
+            // Act
+
+            // Assert
+            Assert.NotEmpty(dataSourceItem1.Id);
+            Assert.NotEmpty(dataSourceItem2.Id);
+            Assert.NotEqual(dataSourceItem1.Id, dataSourceItem2.Id);
+        }
+
+        [Fact]
+        public void Constructor_UpdatesDataSourceTitle_WithUntitledDataSourceAndTitle()
+        {
+            // Arrange
+            var dsItemTitle = "DS Item Title";
+            var dataSource = new DataSource();
+            var dataSourceItem = new DataSourceItem(dsItemTitle, dataSource);
+
+            // Act
+
+            // Assert
+            Assert.Equal(dsItemTitle, dataSourceItem.DataSource.Title);
+        }
+
+        [Fact]
+        public void Constructor_DoesNotUpdateDataSourceTitle_WithTitledDataSourceAndTitle()
+        {
+            // Arrange
+            var dsItemTitle = "DS Item Title";
+            var dsTitle = "DS Title";
+            var dataSource = new DataSource { Title = dsTitle };
+            var dataSourceItem = new DataSourceItem(dsItemTitle, dataSource);
+
+            // Act
+
+            // Assert
+            Assert.Equal(dsTitle, dataSourceItem.DataSource.Title);
+        }
+
+        [Fact]
+        public void SetId_GeneratesUniqueNotEmptyId_WithNullValue()
+        {
+            // Arrange
+            var dataSourceItem1 = new DataSourceItem();
+            var dataSourceItem2 = new DataSourceItem();
+
+            // Act
+            dataSourceItem1.Id = null;
+            dataSourceItem2.Id = null;
+
+            // Assert
+            Assert.NotEmpty(dataSourceItem1.Id);
+            Assert.NotEmpty(dataSourceItem2.Id);
+            Assert.NotEqual(dataSourceItem1.Id, dataSourceItem2.Id);
+        }
+
+        [Fact]
+        public void SetId_UpdatesResourceId_WhenResourceNotNull()
         {
             // Arrange
             var dataSourceItem = new DataSourceItem();
-            var title = "Test Title";
+            dataSourceItem.ResourceItem = new DataSourceItem();
+            var newId = "updated-id";
 
             // Act
-            dataSourceItem.Title = title;
+            dataSourceItem.Id = newId;
 
             // Assert
-            Assert.Equal(title, dataSourceItem.Title);
+            Assert.Equal(dataSourceItem.Id, dataSourceItem.ResourceItem.Id);
         }
 
         [Fact]
-        public void DataSourceItem_Subtitle_SetValue()
+        public void GetId_ReturnsSameValue_AfterSetId()
         {
             // Arrange
             var dataSourceItem = new DataSourceItem();
-            var subtitle = "Test Subtitle";
+            var newId = "updated-id";
 
             // Act
-            dataSourceItem.Subtitle = subtitle;
+            dataSourceItem.Id = newId;
 
             // Assert
-            Assert.Equal(subtitle, dataSourceItem.Subtitle);
+            Assert.Equal(newId, dataSourceItem.Id);
         }
 
         [Fact]
-        public void DataSourceItem_Fields_SetValue()
+        public void GetSubtitle_ReturnsSameValue_AfterSetSubtitle()
+        {
+            // Arrange
+            var dataSourceItem = new DataSourceItem();
+            var subTitle = "subtitle";
+
+            // Act
+            dataSourceItem.Subtitle = subTitle;
+
+            // Assert
+            Assert.Equal(subTitle, dataSourceItem.Subtitle);
+        }
+
+        [Fact]
+        public void Constructor_SetDefaultValue_ForHasTabularData()
+        {
+            // Arrange
+            var dataSourceItem = new DataSourceItem();
+
+            // Act
+
+            // Assert
+            Assert.True(dataSourceItem.HasTabularData);
+        }
+
+        [Fact]
+        public void Constructor_SetDefaultValue_ForHasAsset()
+        {
+            // Arrange
+            var dataSourceItem = new DataSourceItem();
+
+            // Act
+
+            // Assert
+            Assert.False(dataSourceItem.HasAsset);
+        }
+
+        [Fact]
+        public void Constructor_SetDefaultValue_ForProperties()
+        {
+            // Arrange
+            var dataSourceItem = new DataSourceItem();
+
+            // Act
+
+            // Assert
+            Assert.NotNull(dataSourceItem.Properties);
+            Assert.Empty(dataSourceItem.Properties);
+        }
+
+        [Fact]
+        public void Constructor_SetDefaultValue_ForParameters()
+        {
+            // Arrange
+            var dataSourceItem = new DataSourceItem();
+
+            // Act
+
+            // Assert
+            Assert.NotNull(dataSourceItem.Parameters);
+            Assert.Empty(dataSourceItem.Parameters);
+        }
+
+        [Fact]
+        public void Constructor_SetDefaultValue_ForFields()
+        {
+            // Arrange
+            var dataSourceItem = new DataSourceItem();
+
+            // Act
+
+            // Assert
+            Assert.NotNull(dataSourceItem.Fields);
+            Assert.Empty(dataSourceItem.Fields);
+        }
+
+        [Fact]
+        public void GetFields_ReturnSameValue_AfterSetFields()
         {
             // Arrange
             var dataSourceItem = new DataSourceItem();
@@ -78,7 +253,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void DataSourceItem_DataSource_SetValue()
+        public void GetDataSource_ReturnSameValue_AfterSetDataSource()
         {
             // Arrange
             var dataSourceItem = new DataSourceItem();
@@ -89,6 +264,20 @@ namespace Reveal.Sdk.Dom.Tests.Data
 
             // Assert
             Assert.Equal(dataSource, dataSourceItem.DataSource);
+            Assert.Equal(dataSource.Id, dataSourceItem.DataSourceId);
+        }
+
+        [Fact]
+        public void Constructor_SetDefaultValue_ForJoinTables()
+        {
+            // Arrange
+            var dataSourceItem = new DataSourceItem();
+
+            // Act
+
+            // Assert
+            Assert.NotNull(dataSourceItem.JoinTables);
+            Assert.Empty(dataSourceItem.JoinTables);
         }
 
         [Fact]
