@@ -7,7 +7,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
     public class DataSourceFixture
     {
         [Fact]
-        public void DataSource_HasDefaultSchemaTypeNames_WhenConstructed()
+        public void Constructor_SetDefaultDataSource_WithoutArguments()
         {
             // Arrange
             var dataSource = new DataSource();
@@ -19,7 +19,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void DataSource_HasNotNullProperties_WhenConstructed()
+        public void Constructor_SetDefaultProperties_WithoutArguments()
         {
             // Arrange
             var dataSource = new DataSource();
@@ -28,10 +28,11 @@ namespace Reveal.Sdk.Dom.Tests.Data
 
             // Assert
             Assert.NotNull(dataSource.Properties);
+            Assert.Empty(dataSource.Properties);
         }
 
         [Fact]
-        public void DataSource_GeneratesUniqueId_WhenConstructed()
+        public void Constructor_GeneratesUniqueNotEmptyId_WithoutArguments()
         {
             // Arrange
             var dataSource1 = new DataSource();
@@ -40,24 +41,30 @@ namespace Reveal.Sdk.Dom.Tests.Data
             // Act
 
             // Assert
+            Assert.NotEmpty(dataSource1.Id);
+            Assert.NotEmpty(dataSource2.Id);
             Assert.NotEqual(dataSource1.Id, dataSource2.Id);
         }
 
         [Fact]
-        public void DataSource_GeneratesUniqueId_WhenSetIdWithNullValue()
+        public void SetId_GeneratesUniqueNotEmptyId_WithNullValue()
         {
             // Arrange
-            var dataSource = new DataSource();
+            var dataSource1 = new DataSource();
+            var dataSource2 = new DataSource();
 
             // Act
-            dataSource.Id = null;
+            dataSource1.Id = null;
+            dataSource2.Id = null;
 
             // Assert
-            Assert.NotNull(dataSource.Id);
+            Assert.NotEmpty(dataSource1.Id);
+            Assert.NotEmpty(dataSource2.Id);
+            Assert.NotEqual(dataSource1.Id, dataSource2.Id);
         }
 
         [Fact]
-        public void DataSource_ReturnSetValue_WhenGetDefaultRefreshRate()
+        public void DefaultRefreshRateGetter_ReturnSameValue_WithSetValue()
         {
             // Arrange
             var dataSource = new DataSource();
@@ -72,7 +79,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void DataSource_IsNotNull_WhenConstructed()
+        public void Constructor_CreateNotNullObject_WithoutArguments()
         {
             // Arrange
             var dataSource = new DataSource();
@@ -85,7 +92,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void DataSource_AreEqual_WhenHaveSameIds()
+        public void CheckEqual_ReturnTrue_WhenIdsAreTheSame()
         {
             // Arrange
             var dataSource1 = new DataSource { Id = "same-id" };
@@ -99,7 +106,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void DataSource_ReturnsConsistentValue_WhenGetHashCode()
+        public void GetHashCode_ReturnsConsistentValue_ForTheSameDataSource()
         {
             // Arrange
             var dataSource = new DataSource();
@@ -110,6 +117,19 @@ namespace Reveal.Sdk.Dom.Tests.Data
 
             // Assert
             Assert.Equal(hashCode1, hashCode2);
+        }
+
+        [Fact]
+        public void CheckEqual_ReturnFalse_WhenComparedWithNull()
+        {
+            // Arrange
+            var dataSource = new DataSource();
+
+            // Act
+            var result = dataSource.Equals(null);
+
+            // Assert
+            Assert.False(result);
         }
     }
 }
