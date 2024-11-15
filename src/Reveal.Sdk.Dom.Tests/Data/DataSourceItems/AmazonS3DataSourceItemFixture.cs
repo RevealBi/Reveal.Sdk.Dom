@@ -7,60 +7,70 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
     public class AmazonS3DataSourceItemFixture
     {
         [Fact]
-        public void Constructor_WithDataSource_SetsTitleAndDataSource()
+        public void Constructor_SetsTitleAndDataSource_ValidParameters()
         {
             // Arrange
             string title = "Test Item";
             var dataSource = new AmazonS3DataSource();
-
-            // Act
             var item = new AmazonS3DataSourceItem(title, dataSource);
 
+            // Act
+            var actualTitle = item.Title;
+            var actualDataSource = item.DataSource;
+
             // Assert
-            Assert.Equal(title, item.Title);
-            Assert.Equal(dataSource, item.DataSource);
+            Assert.Equal(title, actualTitle);
+            Assert.Equal(dataSource, actualDataSource);
         }
 
         [Fact]
-        public void Constructor_WithNullDataSource_ShouldHandleNullGracefully()
+        public void Constructor_SetsTitleAndDataSource_NullDataSource()
         {
             // Arrange
             string title = "Test Item";
+            DataSource dataSource = null;
+            var item = new AmazonS3DataSourceItem(title, dataSource);
 
             // Act
-            var item = new AmazonS3DataSourceItem(title, null);
+            var actualTitle = item.Title;
+            var actualDataSource = item.DataSource;
 
             // Assert
-            Assert.Equal(title, item.Title);
+            Assert.Equal(title, actualTitle);
         }
 
         [Fact]
-        public void Constructor_WithEmptyTitle_ShouldHandleEmptyTitleGracefully()
+        public void Constructor_SetsTitle_EmptyTitle()
         {
             // Arrange
             string title = string.Empty;
             var dataSource = new AmazonS3DataSource();
-
-            // Act
             var item = new AmazonS3DataSourceItem(title, dataSource);
 
+            // Act
+            var actualTitle = item.Title;
+            var actualDataSource = item.DataSource;
+
             // Assert
-            Assert.Equal(title, item.Title);
-            Assert.Equal(dataSource, item.DataSource);
+            Assert.Equal(title, actualTitle);
+            Assert.Equal(dataSource, actualDataSource);
         }
 
         [Fact]
-        public void HasAsset_Should_BeFalse()
+        public void HasAsset_ReturnsFalse_Always()
         {
             // Arrange
             var item = new AmazonS3DataSourceItem("Test Item", new AmazonS3DataSource());
 
+            // Act
+            var hasAsset = item.HasAsset;
+
             // Assert
-            Assert.False(item.HasAsset);
+            Assert.False(hasAsset);
         }
 
         [Fact]
-        public void Path_Should_GetAndSetPathProperty()
+        public void Path_SetsAndGetsValue_ValidValue()
         {
             // Arrange
             var item = new AmazonS3DataSourceItem("Test Item", new AmazonS3DataSource());
@@ -68,28 +78,30 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
 
             // Act
             item.Path = expectedPath;
-            var result = item.Path;
+            var actualPath = item.Path;
 
             // Assert
-            Assert.Equal(expectedPath, result);
+            Assert.Equal(expectedPath, actualPath);
         }
 
         [Fact]
-        public void Path_SetToNull_ShouldHandleNullGracefully()
+        public void Path_SetsValue_NullValue()
         {
             // Arrange
             var item = new AmazonS3DataSourceItem("Test Item", new AmazonS3DataSource());
 
             // Act
             item.Path = null;
+            var actualPath = item.Path;
+            var actualPropertyPath = item.Properties.GetValue<string>("Path");
 
             // Assert
-            Assert.Null(item.Path);
-            Assert.Null(item.Properties.GetValue<string>("Path"));
+            Assert.Null(actualPath);
+            Assert.Null(actualPropertyPath);
         }
 
         [Fact]
-        public void Properties_Should_StorePathValueCorrectly()
+        public void Properties_StoresPathValueCorrectly_ValidPath()
         {
             // Arrange
             var item = new AmazonS3DataSourceItem("Test Item", new AmazonS3DataSource());
@@ -97,9 +109,10 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
 
             // Act
             item.Path = expectedPath;
+            var actualPropertyPath = item.Properties.GetValue<string>("Path");
 
             // Assert
-            Assert.Equal(expectedPath, item.Properties.GetValue<string>("Path"));
+            Assert.Equal(expectedPath, actualPropertyPath);
         }
     }
 }

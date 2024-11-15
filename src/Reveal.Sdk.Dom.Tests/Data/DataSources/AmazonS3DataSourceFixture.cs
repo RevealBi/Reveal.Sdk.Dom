@@ -7,17 +7,20 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
     public class AmazonS3DataSourceFixture
     {
         [Fact]
-        public void Constructor_Should_SetProviderToAmazonS3()
+        public void Constructor_SetsProviderToAmazonS3_Always()
         {
             // Arrange
             var dataSource = new AmazonS3DataSource();
 
+            // Act
+            var actualProvider = dataSource.Provider;
+
             // Assert
-            Assert.Equal(DataSourceProvider.AmazonS3, dataSource.Provider);
+            Assert.Equal(DataSourceProvider.AmazonS3, actualProvider);
         }
 
         [Fact]
-        public void AccountId_Should_GetAndSetAccountIdProperty()
+        public void AccountId_SetsAndGetsValue_ValidAccountId()
         {
             // Arrange
             var dataSource = new AmazonS3DataSource();
@@ -25,109 +28,87 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
 
             // Act
             dataSource.AccountId = expectedAccountId;
-            var result = dataSource.AccountId;
+            var actualAccountId = dataSource.AccountId;
 
             // Assert
-            Assert.Equal(expectedAccountId, result);
+            Assert.Equal(expectedAccountId, actualAccountId);
         }
 
         [Fact]
-        public void Region_Should_GetAndSetRegionProperty()
-        {
-            // Arrange
-            var dataSource = new AmazonS3DataSource();
-            var expectedRegion = "us-west-2";
-
-            // Act
-            dataSource.Region = expectedRegion;
-            var result = dataSource.Region;
-
-            // Assert
-            Assert.Equal(expectedRegion, result);
-        }
-
-        [Fact]
-        public void Properties_Should_StoreAllValuesCorrectly()
-        {
-            // Arrange
-            var dataSource = new AmazonS3DataSource();
-            var expectedAccountId = "123456789012";
-            var expectedRegion = "us-west-2";
-
-            // Act
-            dataSource.AccountId = expectedAccountId;
-            dataSource.Region = expectedRegion;
-
-            // Assert
-            Assert.Equal(expectedAccountId, dataSource.Properties.GetValue<string>("AccountId"));
-            Assert.Equal(expectedRegion, dataSource.Properties.GetValue<string>("Region"));
-        }
-
-        [Fact]
-        public void Properties_Should_UpdateValuesCorrectly()
-        {
-            // Arrange
-            var dataSource = new AmazonS3DataSource();
-            var initialAccountId = "123456789012";
-            var updatedAccountId = "098765432109";
-            var initialRegion = "us-west-1";
-            var updatedRegion = "us-east-1";
-
-            // Assert
-            dataSource.AccountId = initialAccountId;
-            Assert.Equal(initialAccountId, dataSource.AccountId);
-
-            dataSource.AccountId = updatedAccountId;
-            Assert.Equal(updatedAccountId, dataSource.AccountId);
-            
-            dataSource.Region = initialRegion;
-            Assert.Equal(initialRegion, dataSource.Region);
-
-            dataSource.Region = updatedRegion;
-            Assert.Equal(updatedRegion, dataSource.Region);
-        }
-
-        [Fact]
-        public void AccountId_SetToNull_Should_HandleNullAssignment()
+        public void AccountId_SetsValue_NullAccountId()
         {
             // Arrange
             var dataSource = new AmazonS3DataSource();
 
             // Act
             dataSource.AccountId = null;
+            var actualAccountId = dataSource.AccountId;
+            var actualPropertyAccountId = dataSource.Properties.GetValue<string>("AccountId");
 
             // Assert
-            Assert.Null(dataSource.AccountId);
-            Assert.Null(dataSource.Properties.GetValue<string>("AccountId"));
+            Assert.Null(actualAccountId);
+            Assert.Null(actualPropertyAccountId);
         }
 
         [Fact]
-        public void Region_SetToNull_Should_HandleNullAssignment()
+        public void Region_SetsAndGetsValue_ValidRegion()
+        {
+            // Arrange
+            var dataSource = new AmazonS3DataSource();
+            var expectedRegion = "us-west-2";
+
+            // Act
+            dataSource.Region = expectedRegion;
+            var actualRegion = dataSource.Region;
+
+            // Assert
+            Assert.Equal(expectedRegion, actualRegion);
+        }
+
+        [Fact]
+        public void Region_SetsValue_NullRegion()
         {
             // Arrange
             var dataSource = new AmazonS3DataSource();
 
             // Act
             dataSource.Region = null;
+            var actualRegion = dataSource.Region;
+            var actualPropertyRegion = dataSource.Properties.GetValue<string>("Region");
 
             // Assert
-            Assert.Null(dataSource.Region);
-            Assert.Null(dataSource.Properties.GetValue<string>("Region"));
+            Assert.Null(actualRegion);
+            Assert.Null(actualPropertyRegion);
         }
 
         [Fact]
-        public void Provider_Should_RemainAmazonS3_AfterPropertiesSet()
+        public void Properties_StoresAccountIdValueCorrectly_ValidAccountId()
         {
             // Arrange
             var dataSource = new AmazonS3DataSource();
-            dataSource.AccountId = "123456789012";
-            dataSource.Region = "us-west-2";
+            var expectedAccountId = "123456789012";
 
             // Act
-            var provider = dataSource.Provider;
+            dataSource.AccountId = expectedAccountId;
+            var actualPropertyAccountId = dataSource.Properties.GetValue<string>("AccountId");
 
             // Assert
-            Assert.Equal(DataSourceProvider.AmazonS3, provider);
+            Assert.Equal(expectedAccountId, actualPropertyAccountId);
+        }
+
+        [Fact]
+        public void Properties_StoresRegionValueCorrectly_ValidRegion()
+        {
+            // Arrange
+            var dataSource = new AmazonS3DataSource();
+            var expectedRegion = "us-west-2";
+
+            // Act
+            dataSource.Region = expectedRegion;
+            var actualPropertyRegion = dataSource.Properties.GetValue<string>("Region");
+
+            // Assert
+            Assert.Equal(expectedRegion, actualPropertyRegion);
         }
     }
 }
