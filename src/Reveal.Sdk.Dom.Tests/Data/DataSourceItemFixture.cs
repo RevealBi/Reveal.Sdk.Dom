@@ -281,7 +281,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void DataSourceItem_Join_AddsJoinTableUsingJoinConditions()
+        public void Join_AddsJoinTable_UsingJoinConditions()
         {
             // Arrange
             var dataSourceItem = new DataSourceItem();
@@ -301,23 +301,26 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void DataSourceItem_Join_AddsJoinTableUsingLeftAndRightFieldNames()
+        public void Join_AddsJoinTable_UsingLeftAndRightFieldNames()
         {
             // Arrange
+            var leftJoinFieldName = "left";
+            var rightJoinFieldName = "right";
+            var aliasName = "Alias";
             var dataSourceItem = new DataSourceItem();
-            var joinConditions = new List<JoinCondition> { new JoinCondition("left", "right") };
+            var joinConditions = new List<JoinCondition> { new JoinCondition(leftJoinFieldName, rightJoinFieldName) };
             var dataSourceItemToJoin = new DataSourceItem();
 
             // Act
-            dataSourceItem.Join("Alias", "left", "right", dataSourceItemToJoin);
+            dataSourceItem.Join(aliasName, leftJoinFieldName, rightJoinFieldName, dataSourceItemToJoin);
 
             // Assert
             Assert.Single(dataSourceItem.JoinTables);
-            Assert.Equal("Alias", dataSourceItem.JoinTables[0].Alias);
+            Assert.Equal(aliasName, dataSourceItem.JoinTables[0].Alias);
             Assert.Equal(dataSourceItemToJoin, dataSourceItem.JoinTables[0].DataDefinition.DataSourceItem);
             Assert.Single(dataSourceItem.JoinTables[0].JoinConditions);
-            Assert.Equal("[left]", dataSourceItem.JoinTables[0].JoinConditions[0].LeftFieldName);
-            Assert.Equal("Alias.[right]", dataSourceItem.JoinTables[0].JoinConditions[0].RightFieldName);
+            Assert.Equal($"[{leftJoinFieldName}]", dataSourceItem.JoinTables[0].JoinConditions[0].LeftFieldName);
+            Assert.Equal($"{aliasName}.[{rightJoinFieldName}]", dataSourceItem.JoinTables[0].JoinConditions[0].RightFieldName);
         }
 
         [Theory]
@@ -325,7 +328,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         [InlineData("[FieldName]", "[FieldName]")]
         [InlineData("A.FieldName", "A.[FieldName]")]
         [InlineData("A.[FieldName]", "A.[FieldName]")]
-        public void ValidateLeftJoinFieldName_ShouldReturnFormattedFieldName(string fieldName, string expected)
+        public void ValidateLeftJoinFieldName_ReturnsFieldName_WithLeftFieldName/**/(string fieldName, string expected)
         {
             // Arrange
             var dataSourceItem = new DataSourceItem();
@@ -344,7 +347,8 @@ namespace Reveal.Sdk.Dom.Tests.Data
         [InlineData("[FieldName]")]
         [InlineData("Alias.FieldName")]
         [InlineData("Alias.[FieldName]")]
-        public void ValidateRightFieldName_ShouldReturnFormattedFieldName(string fieldName)
+        [InlineData("[Alias.FieldName]")]
+        public void ValidateRightFieldName_ReturnsFieldName_WithValidRightFieldName(string fieldName)
         {
             // Arrange
             var dataSourceItem = new DataSourceItem();
@@ -356,6 +360,25 @@ namespace Reveal.Sdk.Dom.Tests.Data
 
             // Assert
             Assert.Equal("Alias.[FieldName]", dataSourceItem.JoinTables[0].JoinConditions[0].RightFieldName);
+        }
+
+        [Theory]
+        [InlineData("FieldName.Alias")]
+        [InlineData("[FieldName.Alias]")]
+        [InlineData("Alias.FieldName.FieldName1")]
+        public void ValidateRightFieldName_ThrowsException_WithInvalidRightFieldName(string fieldName)
+        {
+            // Arrange
+            var dataSourceItem = new DataSourceItem();
+            var joinConditions = new List<JoinCondition> { new JoinCondition("", fieldName) };
+            var dataSourceItemToJoin = new DataSourceItem();
+
+            // Act
+            Action act = () => dataSourceItem.Join("Alias", joinConditions, dataSourceItemToJoin);
+            ArgumentException exception = Assert.Throws<ArgumentException>(act);
+
+            // Assert
+            Assert.Equal($"Invalid right field name format: {fieldName}", exception.Message);
         }
 
         [Theory]
@@ -384,7 +407,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         [InlineData(typeof(RestDataSourceItem), false)]
         [InlineData(typeof(SnowflakeDataSourceItem), false)]
         [InlineData(typeof(WebServiceDataSourceItem), false)]
-        public void DataSourceItem_IsXmla(Type dataSourceItemType, bool expectedIsXmla)
+        public void IsXmla_ReturnsExpectedBoolean_ForGivenDataSourceItemType(Type dataSourceItemType, bool expectedIsXmla)
         {
             // Arrange
             var constructor = dataSourceItemType.GetConstructor(new[] { typeof(string), typeof(DataSource) });
