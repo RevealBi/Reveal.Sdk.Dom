@@ -1,4 +1,5 @@
-﻿using Reveal.Sdk.Dom.Data;
+﻿using Reveal.Sdk.Dom.Core.Extensions;
+using Reveal.Sdk.Dom.Data;
 using System;
 using Xunit;
 
@@ -18,6 +19,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
 
             // Assert
             Assert.Equal(expectedHost, hostDataSource.Host);
+            Assert.Equal(expectedHost, hostDataSource.Properties.GetValue<string>("Host"));
         }
 
         [Fact]  
@@ -25,13 +27,14 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         {
             // Arrange
             var hostDataSource = new HostDataSource();
-            var expectedPort = "port";
+            var expectedPort = "8080";
 
             // Act
             hostDataSource.Port = expectedPort;
 
             // Assert
             Assert.Equal(expectedPort, hostDataSource.Port);
+            Assert.Equal(expectedPort, hostDataSource.Properties.GetValue<string>("Port"));
         }
     }
 }
