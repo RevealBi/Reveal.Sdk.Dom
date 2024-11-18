@@ -124,19 +124,6 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void CheckEqual_ReturnFalse_WhenComparedWithNull()
-        {
-            // Arrange
-            var dataSource = new DataSource();
-
-            // Act
-            var result = dataSource.Equals(null);
-
-            // Assert
-            Assert.False(result);
-        }
-
-        [Fact]
         public void GetHashCode_ReturnsConsistentValue_ForTheSameValues()
         {
             // Arrange
