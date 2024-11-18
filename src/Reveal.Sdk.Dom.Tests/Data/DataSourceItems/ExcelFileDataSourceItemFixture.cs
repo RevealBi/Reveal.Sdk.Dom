@@ -1,4 +1,5 @@
-﻿using Reveal.Sdk.Dom.Core.Constants;
+﻿using Newtonsoft.Json.Linq;
+using Reveal.Sdk.Dom.Core.Constants;
 using Reveal.Sdk.Dom.Core.Utilities;
 using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations;
@@ -10,7 +11,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
     public class ExcelFileDataSourceItemFixture
     {
         [Fact]
-        public void Constructor_WithTitleAndDataSource_ShouldSetProperties()
+        public void Constructor_SetProperties_WithTitleAndDataSourceProvided()
         {
             // Arrange
             string title = "Test Excel File";
@@ -31,7 +32,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         }
 
         [Fact]
-        public void Constructor_WithTitle_ShouldSetProperties()
+        public void Constructor_SetProperties_WithTitleProvided()
         {
             // Arrange
             string title = "Test Excel File";
@@ -52,7 +53,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         }
 
         [Fact]
-        public void Constructor_WithTitleAndPath_ShouldSetProperties()
+        public void Constructor_SetProperties_WithTitleAndPathProvided()
         {
             // Arrange
             string title = "Test Excel File";
@@ -75,7 +76,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         }
 
         [Fact]
-        public void Constructor_WithTitlePathAndSheet_ShouldSetProperties()
+        public void Constructor_SetProperties_WithTitlePathAndSheetProvided()
         {
             // Arrange
             string title = "Test Excel File";
@@ -100,7 +101,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         }
 
         [Fact]
-        public void Path_GetAndSet_ShouldSetLocalPath()
+        public void Path_GetAndSetCorrectly_WhenSet()
         {
             // Arrange
             string path = "test.xlsx";
@@ -114,7 +115,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         }
 
         [Fact]
-        public void Sheet_GetAndSet_ShouldSetSheet()
+        public void Sheet_GetAndSetCorrectly_WhenSet()
         {
             // Arrange
             string sheet = "Sheet1";
@@ -128,7 +129,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         }
 
         [Fact]
-        public void Constructor_WithTitle_Should_Add_TwoDataSources()
+        public void Constructor_AddTwoDataSources_WithTitleProvided()
         {
             // Arrange
             var document = new RdashDocument("Test");
@@ -146,7 +147,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         }
 
         [Fact]
-        public void Constructor_WithTitleAndPath_Should_Add_TwoDataSources()
+        public void Constructor_AddTwoDataSources_WithTitleAndPathProvided()
         {
             // Arrange
             var document = new RdashDocument("Test");
@@ -164,7 +165,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         }
 
         [Fact]
-        public void Constructor_WithTitleAndPathAndSheet_Should_Add_TwoDataSources()
+        public void Constructor_AddTwoDataSources_WithTitleAndPathAndSheetProvided()
         {
             // Arrange
             var document = new RdashDocument("Test");
