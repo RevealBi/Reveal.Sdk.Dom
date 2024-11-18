@@ -15,9 +15,9 @@ namespace Reveal.Sdk.Dom.Tests.Data
         public void Constructor_GeneratesNotNullObject_WithoutArguments()
         {
             // Arrange
-            var dataSourceItem = new DataSourceItem();
 
             // Act
+            var dataSourceItem = new DataSourceItem();
 
             // Assert
             Assert.NotNull(dataSourceItem);
@@ -27,9 +27,9 @@ namespace Reveal.Sdk.Dom.Tests.Data
         public void Constructor_CreatesDefaultSchemaTypeName_WithoutArguments()
         {
             // Arrange
-            var dataSourceItem = new DataSourceItem();
 
             // Act
+            var dataSourceItem = new DataSourceItem();
 
             // Assert
             Assert.Equal(SchemaTypeNames.DataSourceItemType, dataSourceItem.SchemaTypeName);
@@ -39,34 +39,15 @@ namespace Reveal.Sdk.Dom.Tests.Data
         public void Constructor_GeneratesUniqueNotEmptyId_WithoutArguments()
         {
             // Arrange
-            var dataSourceItem1 = new DataSourceItem();
-            var dataSourceItem2 = new DataSourceItem();
 
             // Act
+            var dataSourceItem1 = new DataSourceItem();
+            var dataSourceItem2 = new DataSourceItem();
 
             // Assert
             Assert.NotEmpty(dataSourceItem1.Id);
             Assert.NotEmpty(dataSourceItem2.Id);
             Assert.NotEqual(dataSourceItem1.Id, dataSourceItem2.Id);
-        }
-
-        [Fact]
-        public void Constructor_CreatesDataSourceItem_WithDataSourceAndTitle()
-        {
-            // Arrange
-            var dsTitle = "DS Title";
-            var dsItemTitle = "DS Item Title";
-            var dataSource = new DataSource { Title = dsTitle };
-            var dataSourceItem = new DataSourceItem(dsItemTitle, dataSource);
-
-            // Act
-
-            // Assert
-            Assert.NotNull(dataSourceItem);
-            Assert.Equal(dataSource, dataSourceItem.DataSource);
-            Assert.Equal(dataSource.Id, dataSourceItem.DataSourceId);
-            Assert.Equal(dsTitle, dataSourceItem.DataSource.Title);
-            Assert.Equal(dsItemTitle, dataSourceItem.Title);
         }
 
         [Fact]
@@ -75,10 +56,10 @@ namespace Reveal.Sdk.Dom.Tests.Data
             // Arrange
             var dataSource1 = new DataSource();
             var dataSource2 = new DataSource();
-            var dataSourceItem1 = new DataSourceItem("Title 1", dataSource1);
-            var dataSourceItem2 = new DataSourceItem("Title 2", dataSource2);
 
             // Act
+            var dataSourceItem1 = new DataSourceItem("Title 1", dataSource1);
+            var dataSourceItem2 = new DataSourceItem("Title 2", dataSource2);
 
             // Assert
             Assert.NotEmpty(dataSourceItem1.Id);
@@ -86,33 +67,24 @@ namespace Reveal.Sdk.Dom.Tests.Data
             Assert.NotEqual(dataSourceItem1.Id, dataSourceItem2.Id);
         }
 
-        [Fact]
-        public void Constructor_UpdatesDataSourceTitle_WithUntitledDataSourceAndTitle()
+        [Theory]
+        [InlineData("DS Title", "DS Title")]
+        [InlineData(null, "DS Item Title")]
+        public void Constructor_CreatesDataSourceItem_WithDataSourceAndTitle(string dsTitle, string expectedDsTitle)
         {
             // Arrange
             var dsItemTitle = "DS Item Title";
-            var dataSource = new DataSource();
-            var dataSourceItem = new DataSourceItem(dsItemTitle, dataSource);
-
-            // Act
-
-            // Assert
-            Assert.Equal(dsItemTitle, dataSourceItem.DataSource.Title);
-        }
-
-        [Fact]
-        public void Constructor_DoesNotUpdateDataSourceTitle_WithTitledDataSourceAndTitle()
-        {
-            // Arrange
-            var dsItemTitle = "DS Item Title";
-            var dsTitle = "DS Title";
             var dataSource = new DataSource { Title = dsTitle };
-            var dataSourceItem = new DataSourceItem(dsItemTitle, dataSource);
 
             // Act
+            var dataSourceItem = new DataSourceItem(dsItemTitle, dataSource);
 
             // Assert
-            Assert.Equal(dsTitle, dataSourceItem.DataSource.Title);
+            Assert.NotNull(dataSourceItem);
+            Assert.Equal(dataSource, dataSourceItem.DataSource);
+            Assert.Equal(dataSource.Id, dataSourceItem.DataSourceId);
+            Assert.Equal(expectedDsTitle, dataSourceItem.DataSource.Title);
+            Assert.Equal(dsItemTitle, dataSourceItem.Title);
         }
 
         [Fact]
@@ -176,12 +148,27 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void Constructor_SetDefaultValue_ForHasTabularData()
+        public void SetSubtitle_UpdateResourceItemSubTitle_ResourceItemNotnull()
         {
             // Arrange
             var dataSourceItem = new DataSourceItem();
+            dataSourceItem.ResourceItem = new DataSourceItem();
+            var subTitle = "subtitle";
 
             // Act
+            dataSourceItem.Subtitle = subTitle;
+
+            // Assert
+            Assert.Equal(subTitle, dataSourceItem.ResourceItem.Subtitle);
+        }
+
+        [Fact]
+        public void Constructor_SetDefaultValue_ForHasTabularData()
+        {
+            // Arrange
+
+            // Act
+            var dataSourceItem = new DataSourceItem();
 
             // Assert
             Assert.True(dataSourceItem.HasTabularData);
@@ -191,9 +178,9 @@ namespace Reveal.Sdk.Dom.Tests.Data
         public void Constructor_SetDefaultValue_ForHasAsset()
         {
             // Arrange
-            var dataSourceItem = new DataSourceItem();
 
             // Act
+            var dataSourceItem = new DataSourceItem();
 
             // Assert
             Assert.False(dataSourceItem.HasAsset);
@@ -203,9 +190,9 @@ namespace Reveal.Sdk.Dom.Tests.Data
         public void Constructor_SetDefaultValue_ForProperties()
         {
             // Arrange
-            var dataSourceItem = new DataSourceItem();
 
             // Act
+            var dataSourceItem = new DataSourceItem();
 
             // Assert
             Assert.NotNull(dataSourceItem.Properties);
@@ -216,9 +203,9 @@ namespace Reveal.Sdk.Dom.Tests.Data
         public void Constructor_SetDefaultValue_ForParameters()
         {
             // Arrange
-            var dataSourceItem = new DataSourceItem();
 
             // Act
+            var dataSourceItem = new DataSourceItem();
 
             // Assert
             Assert.NotNull(dataSourceItem.Parameters);
@@ -229,9 +216,9 @@ namespace Reveal.Sdk.Dom.Tests.Data
         public void Constructor_SetDefaultValue_ForFields()
         {
             // Arrange
-            var dataSourceItem = new DataSourceItem();
 
             // Act
+            var dataSourceItem = new DataSourceItem();
 
             // Assert
             Assert.NotNull(dataSourceItem.Fields);
@@ -271,9 +258,9 @@ namespace Reveal.Sdk.Dom.Tests.Data
         public void Constructor_SetDefaultValue_ForJoinTables()
         {
             // Arrange
-            var dataSourceItem = new DataSourceItem();
 
             // Act
+            var dataSourceItem = new DataSourceItem();
 
             // Assert
             Assert.NotNull(dataSourceItem.JoinTables);

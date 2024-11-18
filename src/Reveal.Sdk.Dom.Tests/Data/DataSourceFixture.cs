@@ -137,14 +137,15 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Fact]
-        public void GetHashCode_ReturnsConsistentValue_ForTheSameDataSource()
+        public void GetHashCode_ReturnsConsistentValue_ForTheSameValues()
         {
             // Arrange
-            var dataSource = new DataSource();
+            var dataSource1 = new DataSource() { Id = "id", Title = "Title", Subtitle = "Sub Title", Provider = DataSourceProvider.REST, SchemaTypeName = SchemaTypeNames.AssetVisualizationDataSpecType};
+            var dataSource2 = new DataSource() { Id = "id", Title = "Title", Subtitle = "Sub Title", Provider = DataSourceProvider.REST, SchemaTypeName = SchemaTypeNames.AssetVisualizationDataSpecType };
 
             // Act
-            var hashCode1 = dataSource.GetHashCode();
-            var hashCode2 = dataSource.GetHashCode();
+            var hashCode1 = dataSource1.GetHashCode();
+            var hashCode2 = dataSource2.GetHashCode();
 
             // Assert
             Assert.Equal(hashCode1, hashCode2);
