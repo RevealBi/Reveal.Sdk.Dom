@@ -17,7 +17,7 @@ namespace Reveal.Sdk.Dom.Visualizations.Settings
         /// Supported data sources include: Athena, BigQuery, MySQL, Oracle, PostgreSQL, SQL Server, and SyBase.
         /// </summary>
         [JsonProperty("PagedRows")]
-        public bool IsPagingEnabled { get; set; } = true;
+        public bool IsPagingEnabled { get; set; } = false;
 
         /// <summary>
         /// Gets or sets the number of rows to display per page.
