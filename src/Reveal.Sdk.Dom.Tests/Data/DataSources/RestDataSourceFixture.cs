@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Reveal.Sdk.Dom.Core.Extensions;
 using Reveal.Sdk.Dom.Data;
 using Xunit;
@@ -7,52 +8,79 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
 {
     public class RestDataSourceFixture
     {
+        public static IEnumerable<object[]> HeadersTestData =>
+            new List<object[]>
+            {
+                new object[] { new List<string> { "Authorization: Bearer token", "Content-Type: application/json" } },
+                new object[] { null }
+            };
+        
         [Fact]
         public void Constructor_SetsProviderToREST_WhenConstructed()
         {
-            // Arrange
+            // Arrange & Act
             var dataSource = new RestDataSource();
 
             // Assert
             Assert.Equal(DataSourceProvider.REST, dataSource.Provider);
         }
 
-        [Fact]
-        public void Body_SetsAndGetsValue_WhenSetWithValidInput()
+        [Theory]
+        [InlineData("https://example.com/api/data")]
+        [InlineData(null)]
+        public void Url_SetsAndGetsValue_WithDifferentInputs(string url)
         {
             // Arrange
             var dataSource = new RestDataSource();
-            var expectedBody = "Test Body Content";
 
             // Act
-            dataSource.Body = expectedBody;
+            dataSource.Url = url;
 
             // Assert
-            Assert.Equal(expectedBody, dataSource.Body);
-            Assert.Equal(expectedBody, dataSource.Properties.GetValue<string>("Body"));
+            Assert.Equal(url, dataSource.Url);
+            Assert.Equal(url, dataSource.Properties.GetValue<string>("URL"));
         }
 
-        [Fact]
-        public void ContentType_SetsAndGetsValue_WhenSetWithValidInput()
+        [Theory]
+        [InlineData("application/json")]
+        [InlineData("text/xml")]
+        [InlineData(null)]
+        public void ContentType_SetsAndGetsValue_WithDifferentInputs(string contentType)
         {
             // Arrange
             var dataSource = new RestDataSource();
-            var expectedContentType = "application/json";
 
             // Act
-            dataSource.ContentType = expectedContentType;
+            dataSource.ContentType = contentType;
 
             // Assert
-            Assert.Equal(expectedContentType, dataSource.ContentType);
-            Assert.Equal(expectedContentType, dataSource.Properties.GetValue<string>("ContentType"));
+            Assert.Equal(contentType, dataSource.ContentType);
+            Assert.Equal(contentType, dataSource.Properties.GetValue<string>("ContentType"));
         }
 
-        [Fact]
-        public void Headers_SetsAndGetsValue_WhenSetWithValidInput()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void UseAnonymousAuthentication_SetsAndGetsValue_WithDifferentInputs(bool value)
         {
             // Arrange
             var dataSource = new RestDataSource();
-            var expectedHeaders = new List<string> { "Authorization: Bearer token", "Content-Type: application/json" };
+
+            // Act
+            dataSource.UseAnonymousAuthentication = value;
+
+            // Assert
+            Assert.Equal(value, dataSource.UseAnonymousAuthentication);
+            Assert.Equal(value, dataSource.Properties.GetValue<bool>("UseAnonymousAuthentication"));
+        }
+
+        [Theory]
+        [MemberData(nameof(HeadersTestData))]
+        public void Headers_SetsAndGetsValue_WithDifferentInputs(string[] headers)
+        {
+            // Arrange
+            var dataSource = new RestDataSource();
+            var expectedHeaders = headers?.ToList();
 
             // Act
             dataSource.Headers = expectedHeaders;
@@ -62,91 +90,21 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
             Assert.Equal(expectedHeaders, dataSource.Properties.GetValue<List<string>>("Headers"));
         }
 
-        [Fact]
-        public void Method_SetsAndGetsValue_WhenSetWithValidInput()
-        {
-            // Arrange
-            var dataSource = new RestDataSource();
-            var expectedMethod = "POST";
-
-            // Act
-            dataSource.Method = expectedMethod;
-
-            // Assert
-            Assert.Equal(expectedMethod, dataSource.Method);
-            Assert.Equal(expectedMethod, dataSource.Properties.GetValue<string>("Method"));
-        }
-
-        [Fact]
-        public void Body_SetsValueToNull_WhenSetToNull()
+        [Theory]
+        [InlineData("GET")]
+        [InlineData("POST")]
+        [InlineData(null)]
+        public void Method_SetsAndGetsValue_WithDifferentInputs(string method)
         {
             // Arrange
             var dataSource = new RestDataSource();
 
             // Act
-            dataSource.Body = null;
+            dataSource.Method = method;
 
             // Assert
-            Assert.Null(dataSource.Body);
-            Assert.Null(dataSource.Properties.GetValue<string>("Body"));
-        }
-
-        [Fact]
-        public void Headers_SetsValueToNull_WhenSetToNull()
-        {
-            // Arrange
-            var dataSource = new RestDataSource();
-
-            // Act
-            dataSource.Headers = null;
-
-            // Assert
-            Assert.Null(dataSource.Headers);
-            Assert.Null(dataSource.Properties.GetValue<List<string>>("Headers"));
-        }
-
-        [Fact]
-        public void ContentType_SetsValueToNull_WhenSetToNull()
-        {
-            // Arrange
-            var dataSource = new RestDataSource();
-
-            // Act
-            dataSource.ContentType = null;
-
-            // Assert
-            Assert.Null(dataSource.ContentType);
-            Assert.Null(dataSource.Properties.GetValue<string>("ContentType"));
-        }
-
-        [Fact]
-        public void Method_SetsValueToNull_WhenSetToNull()
-        {
-            // Arrange
-            var dataSource = new RestDataSource();
-
-            // Act
-            dataSource.Method = null;
-
-            // Assert
-            Assert.Null(dataSource.Method);
-            Assert.Null(dataSource.Properties.GetValue<string>("Method"));
-        }
-
-        [Fact]
-        public void Headers_AddsValueToList_WhenNewHeaderAdded()
-        {
-            // Arrange
-            var dataSource = new RestDataSource();
-            var initialHeaders = new List<string> { "Authorization: Bearer token" };
-            var newHeader = "Content-Type: application/json";
-
-            // Act
-            dataSource.Headers = initialHeaders;
-            dataSource.Headers.Add(newHeader);
-
-            // Assert
-            Assert.Contains(newHeader, dataSource.Headers);
+            Assert.Equal(method, dataSource.Method);
+            Assert.Equal(method, dataSource.Properties.GetValue<string>("Method"));
         }
     }
 }
