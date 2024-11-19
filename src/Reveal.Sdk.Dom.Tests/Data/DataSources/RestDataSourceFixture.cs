@@ -8,9 +8,9 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
     public class RestDataSourceFixture
     {
         [Fact]
-        public void Constructor_SetsProviderToREST_Always()
+        public void Constructor_SetsProviderToREST_WhenConstructed()
         {
-            // Arrange & Act
+            // Arrange
             var dataSource = new RestDataSource();
 
             // Assert
@@ -18,7 +18,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         }
 
         [Fact]
-        public void Body_SetsAndGetsValue_ValidInput()
+        public void Body_SetsAndGetsValue_WhenSetWithValidInput()
         {
             // Arrange
             var dataSource = new RestDataSource();
@@ -33,7 +33,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         }
 
         [Fact]
-        public void ContentType_SetsAndGetsValue_ValidInput()
+        public void ContentType_SetsAndGetsValue_WhenSetWithValidInput()
         {
             // Arrange
             var dataSource = new RestDataSource();
@@ -48,7 +48,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         }
 
         [Fact]
-        public void Headers_SetsAndGetsValue_ValidInput()
+        public void Headers_SetsAndGetsValue_WhenSetWithValidInput()
         {
             // Arrange
             var dataSource = new RestDataSource();
@@ -63,7 +63,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         }
 
         [Fact]
-        public void Method_SetsAndGetsValue_ValidInput()
+        public void Method_SetsAndGetsValue_WhenSetWithValidInput()
         {
             // Arrange
             var dataSource = new RestDataSource();
@@ -78,7 +78,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         }
 
         [Fact]
-        public void Body_SetsValueToNull_HandlesGracefully()
+        public void Body_SetsValueToNull_WhenSetToNull()
         {
             // Arrange
             var dataSource = new RestDataSource();
@@ -92,7 +92,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         }
 
         [Fact]
-        public void Headers_SetsValueToNull_HandlesGracefully()
+        public void Headers_SetsValueToNull_WhenSetToNull()
         {
             // Arrange
             var dataSource = new RestDataSource();
@@ -106,7 +106,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         }
 
         [Fact]
-        public void ContentType_SetsValueToNull_HandlesGracefully()
+        public void ContentType_SetsValueToNull_WhenSetToNull()
         {
             // Arrange
             var dataSource = new RestDataSource();
@@ -120,7 +120,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         }
 
         [Fact]
-        public void Method_SetsValueToNull_HandlesGracefully()
+        public void Method_SetsValueToNull_WhenSetToNull()
         {
             // Arrange
             var dataSource = new RestDataSource();
@@ -134,7 +134,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         }
 
         [Fact]
-        public void Headers_AddsValueToList_ValidInput()
+        public void Headers_AddsValueToList_WhenNewHeaderAdded()
         {
             // Arrange
             var dataSource = new RestDataSource();
