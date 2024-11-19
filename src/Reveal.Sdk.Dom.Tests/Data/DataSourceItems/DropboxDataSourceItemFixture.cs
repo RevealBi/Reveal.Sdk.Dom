@@ -12,6 +12,8 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
             // Arrange
             string title = "Test Item";
             var dataSource = new DropboxDataSource();
+            
+            //Act
             var item = new DropboxDataSourceItem(title, dataSource);
 
             // Assert
@@ -19,35 +21,21 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
             Assert.Equal(dataSource, item.DataSource);
         }
 
-        [Fact]
-        public void Path_SetsAndGetsValue_ValidPath()
-        {
-            // Arrange
-            var item = new DropboxDataSourceItem("Test Item", new DropboxDataSource());
-            var expectedPath = "/test/path/to/file";
-
-            // Act
-            item.Path = expectedPath;
-            var actualPath = item.Path;
-
-            // Assert
-            Assert.Equal(expectedPath, actualPath);
-        }
-
-        [Fact]
-        public void Path_SetsValue_NullPath()
+        [Theory]
+        [InlineData("/test/path/to/file")]
+        [InlineData("/another/path")]
+        [InlineData(null)]
+        public void Path_SetsAndGetsValue_WithDifferentInputs(string path)
         {
             // Arrange
             var item = new DropboxDataSourceItem("Test Item", new DropboxDataSource());
 
             // Act
-            item.Path = null;
-            var actualPath = item.Path;
-            var actualPropertyPath = item.Properties.GetValue<string>("Path");
+            item.Path = path;
 
             // Assert
-            Assert.Null(actualPath);
-            Assert.Null(actualPropertyPath);
+            Assert.Equal(path, item.Path);
+            Assert.Equal(path, item.Properties.GetValue<string>("Path"));
         }
     }
 }

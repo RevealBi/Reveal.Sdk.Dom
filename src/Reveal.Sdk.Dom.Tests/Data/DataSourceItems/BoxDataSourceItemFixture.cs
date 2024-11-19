@@ -12,6 +12,8 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
             // Arrange
             string title = "Test Item";
             var dataSource = new BoxDataSource();
+
+            // Act
             var item = new BoxDataSourceItem(title, dataSource);
 
             // Assert
@@ -19,35 +21,21 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
             Assert.Equal(dataSource, item.DataSource);
         }
 
-        [Fact]
-        public void Identifier_SetsAndGetsValue_ValidIdentifier()
-        {
-            // Arrange
-            var item = new BoxDataSourceItem("Test Item", new BoxDataSource());
-            var expectedIdentifier = "UniqueIdentifier123";
-
-            // Act
-            item.Identifier = expectedIdentifier;
-            var actualIdentifier = item.Identifier;
-
-            // Assert
-            Assert.Equal(expectedIdentifier, actualIdentifier);
-        }
-
-        [Fact]
-        public void Identifier_SetsValue_NullIdentifier()
+        [Theory]
+        [InlineData("UniqueIdentifier123")]
+        [InlineData("AnotherIdentifier456")]
+        [InlineData(null)]
+        public void Identifier_SetsAndGetsValue_WithDifferentInputs(string identifier)
         {
             // Arrange
             var item = new BoxDataSourceItem("Test Item", new BoxDataSource());
 
             // Act
-            item.Identifier = null;
-            var actualIdentifier = item.Identifier;
-            var actualPropertyIdentifier = item.Properties.GetValue<string>("Identifier");
+            item.Identifier = identifier;
 
             // Assert
-            Assert.Null(actualIdentifier);
-            Assert.Null(actualPropertyIdentifier);
+            Assert.Equal(identifier, item.Identifier);
+            Assert.Equal(identifier, item.Properties.GetValue<string>("Identifier"));
         }
     }
 }
