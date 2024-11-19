@@ -2,7 +2,7 @@
 using Moq;
 using Xunit;
 
-namespace Reveal.Sdk.Dom.Tests.Data.DataSources
+namespace Reveal.Sdk.Dom.Tests.Data
 {
     public class DatabaseDataSourceFixture
     {
