@@ -3,7 +3,7 @@ using Reveal.Sdk.Dom.Data;
 using System;
 using Xunit;
 
-namespace Reveal.Sdk.Dom.Tests.Data.DataSources
+namespace Reveal.Sdk.Dom.Tests.Data
 {
     public class HostDataSourceFixture
     {
@@ -22,7 +22,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
             Assert.Equal(expectedHost, hostDataSource.Properties.GetValue<string>("Host"));
         }
 
-        [Fact]  
+        [Fact]
         public void GetPort_ReturnSameValue_WithSetPort()
         {
             // Arrange
