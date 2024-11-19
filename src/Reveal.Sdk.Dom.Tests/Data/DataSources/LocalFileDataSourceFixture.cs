@@ -12,7 +12,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
     public class LocalFileDataSourceFixture
     {
         [Fact]
-        public void Constructor_SetProviderToGoogleAnalytics4_WhenConstructed()
+        public void Constructor_SetProviderToLocalFile_WhenConstructed()
         {
             // Act
             var dataSource = new LocalFileDataSource();

@@ -12,7 +12,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
     public class CsvDataSourceFixture
     {
         [Fact]
-        public void Constructor_SetProviderToGoogleAnalytics4_WhenConstructed()
+        public void Constructor_SetProviderToCSV_WhenConstructed()
         {
             // Act
             var dataSource = new CsvDataSource();
