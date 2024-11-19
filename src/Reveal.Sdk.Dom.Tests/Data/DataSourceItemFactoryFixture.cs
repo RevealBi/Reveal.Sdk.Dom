@@ -2,7 +2,7 @@
 using System;
 using Xunit;
 
-namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
+namespace Reveal.Sdk.Dom.Tests.Data
 {
     public class DataSourceItemFactoryFixture
     {
@@ -84,8 +84,8 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
             var id = "2";
             var title = "Test Title";
             var subtitle = "Test Subtitle";
-            var dataSource = new DataSource() 
-            { 
+            var dataSource = new DataSource()
+            {
                 Id = "CustomId",
                 Title = "Custom Title",
                 Subtitle = "Custom Subtitle",
