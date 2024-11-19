@@ -315,7 +315,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         [InlineData("[FieldName]", "[FieldName]")]
         [InlineData("A.FieldName", "A.[FieldName]")]
         [InlineData("A.[FieldName]", "A.[FieldName]")]
-        public void ValidateLeftJoinFieldName_ReturnsFieldName_WithLeftFieldName/**/(string fieldName, string expected)
+        public void ValidateLeftJoinFieldName_ReturnsFieldName_WithLeftFieldName(string fieldName, string expected)
         {
             // Arrange
             var dataSourceItem = new DataSourceItem();

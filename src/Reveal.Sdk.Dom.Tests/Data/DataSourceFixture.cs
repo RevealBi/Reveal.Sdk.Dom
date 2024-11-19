@@ -144,7 +144,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
         [InlineData("Title", "new-title")]
         [InlineData("Subtitle", "new-subtitle")]
         [InlineData("Provider", DataSourceProvider.MicrosoftExcel)]
-        public void GetHashCode_ReturnsDifferentValue_WithDifferentStringFieldValues(string propertyName, object propertyValue)
+        public void GetHashCode_ReturnsDifferentValue_WhenSetDifferentProperties(string propertyName, object propertyValue)
         {
             // Arrange
             var dataSource = new DataSource();
