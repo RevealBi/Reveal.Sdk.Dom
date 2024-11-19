@@ -3,7 +3,7 @@ using Reveal.Sdk.Dom.Core.Extensions;
 using Reveal.Sdk.Dom.Data;
 using Xunit;
 
-namespace Reveal.Sdk.Dom.Tests.Data.DataSources
+namespace Reveal.Sdk.Dom.Tests.Data
 {
     public class ProcessDataSourceFixture
     {
