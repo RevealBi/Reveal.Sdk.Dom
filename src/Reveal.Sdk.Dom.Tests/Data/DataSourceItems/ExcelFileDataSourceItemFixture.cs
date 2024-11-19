@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using Reveal.Sdk.Dom.Core.Constants;
-using Reveal.Sdk.Dom.Core.Utilities;
+﻿using Reveal.Sdk.Dom.Core.Constants;
 using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations;
 using System.Collections.Generic;
