@@ -6,12 +6,14 @@ namespace Reveal.Sdk.Dom.Tests.Data
 {
     public class TableDataSourceItemFixture
     {
-        [Fact]
-        public void Constructor_CreateTableDataSourceItem_WithTitleAndDataSource()
+        [Theory]
+        [InlineData("DS Title", "DS Title")]
+        [InlineData(null, "Expected DS Item Title")]
+        public void Constructor_CreateTableDataSourceItem_WithTitleAndDataSource(string dataSourceTitle, string expectedDSTitle)
         {
             // Arrange
-            var title = "Title";
-            var dataSource = new DataSource();
+            var title = "Expected DS Item Title";
+            var dataSource = new DataSource() { Title = dataSourceTitle };
 
             // Act
             var mock = new Mock<TableDataSourceItem>(title, dataSource) { CallBase = true };
@@ -21,7 +23,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
             Assert.Equal(title, tableDataSourceItem.Title);
             Assert.Equal(dataSource, tableDataSourceItem.DataSource);
             Assert.Equal(dataSource.Id, tableDataSourceItem.DataSourceId);
-            Assert.Equal(title, tableDataSourceItem.DataSource.Title);
+            Assert.Equal(expectedDSTitle, tableDataSourceItem.DataSource.Title);
         }
 
         [Fact]
