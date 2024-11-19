@@ -7,20 +7,16 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
     public class DropboxDataSourceItemFixture
     {
         [Fact]
-        public void Constructor_SetsTitleAndDataSource_ValidDataSource()
+        public void Constructor_SetsTitleAndDataSource_WhenConstructed()
         {
             // Arrange
             string title = "Test Item";
             var dataSource = new DropboxDataSource();
             var item = new DropboxDataSourceItem(title, dataSource);
 
-            // Act
-            var actualTitle = item.Title;
-            var actualDataSource = item.DataSource;
-
             // Assert
-            Assert.Equal(title, actualTitle);
-            Assert.Equal(dataSource, actualDataSource);
+            Assert.Equal(title, item.Title);
+            Assert.Equal(dataSource, item.DataSource);
         }
 
         [Fact]
