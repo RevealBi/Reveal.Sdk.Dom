@@ -23,7 +23,6 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
 
         [Theory]
         [InlineData("UniqueIdentifier123")]
-        [InlineData("AnotherIdentifier456")]
         [InlineData(null)]
         public void Identifier_SetsAndGetsValue_WithDifferentInputs(string identifier)
         {

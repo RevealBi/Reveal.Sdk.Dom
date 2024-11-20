@@ -23,7 +23,6 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
 
         [Theory]
         [InlineData("/test/path/to/file")]
-        [InlineData("/another/path")]
         [InlineData(null)]
         public void Path_SetsAndGetsValue_WithDifferentInputs(string path)
         {
