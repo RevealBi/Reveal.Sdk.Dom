@@ -10,18 +10,23 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
 {
     public class MicrosoftAzureSqlServerDataSourceItemFixture
     {
-        [Fact]
-        public void Constructor_SetsTitleAndDatasource_AsProvided()
+        [Theory]
+        [InlineData("DS Title", "DS Item Title", "DS Title", "DS Item Title")]
+        [InlineData(null, "DS Item Title", "DS Item Title", "DS Item Title")]
+        public void Constructor_SetsTitleAndDatasource_AsProvided(string dSTitle, string dSItemTitle, string expectedDSTitle, string expectedDSItemTitle)
         {
             // Arrange
-            var dataSource = new MicrosoftAzureSqlServerDataSource();
-            var title = "Test title";
+            var dataSource = new MicrosoftAzureSqlServerDataSource() { Title = dSTitle };
 
             // Act
-            var dataSourceItem = new MicrosoftAzureSqlServerDataSourceItem(title, dataSource);
+            var dataSourceItem = new MicrosoftAzureSqlServerDataSourceItem(dSItemTitle, dataSource);
 
             // Assert
-            Assert.Equal(title, dataSourceItem.Title);
+            Assert.Equal(expectedDSItemTitle, dataSourceItem.Title);
+            Assert.Equal(dataSource, dataSourceItem.DataSource);
+            Assert.Equal(dataSource.Id, dataSourceItem.DataSourceId);
+            Assert.Equal(expectedDSTitle, dataSourceItem.DataSource.Title);
+            Assert.Equal(dSItemTitle, dataSourceItem.Title);
             Assert.Equal(dataSource, dataSourceItem.DataSource);
         }
     }

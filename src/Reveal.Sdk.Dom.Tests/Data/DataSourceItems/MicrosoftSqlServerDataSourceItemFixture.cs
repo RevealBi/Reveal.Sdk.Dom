@@ -5,42 +5,9 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
 {
     public class MicrosoftSqlServerDataSourceItemFixture
     {
-        [Fact]
-        public void HasTabularData_Should_Be_True()
-        {
-            // Arrange
-            var item = new MicrosoftSqlServerDataSourceItem("Test Item", new MicrosoftSqlServerDataSource());
-
-            // Assert
-            Assert.True(item.HasTabularData);
-        }
 
         [Fact]
-        public void HasAsset_Should_Be_False()
-        {
-            // Arrange
-            var item = new MicrosoftSqlServerDataSourceItem("Test Item", new MicrosoftSqlServerDataSource());
-
-            // Assert
-            Assert.False(item.HasAsset);
-        }
-
-        [Fact]
-        public void Table_GetAndSetProperties_ReturnsCorrectValue()
-        {
-            // Arrange
-            string table = "Test Table";
-            var item = new MicrosoftSqlServerDataSourceItem("Test Item", new MicrosoftSqlServerDataSource());
-
-            // Act
-            item.Table = table;
-
-            // Assert
-            Assert.Equal(table, item.Table);
-        }
-
-        [Fact]
-        public void Constructor_WithDataSource_SetsTitleAndDataSource()
+        public void Constructor_SetsTitleAndDataSource_AsProvided()
         {
             // Arrange
             string title = "Test Item";
@@ -54,25 +21,30 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
             Assert.Equal(dataSource, item.DataSource);
         }
 
-        [Fact]
-        public void Constructor_WithTable_SetsTitleTableAndDataSource()
+        [Theory]
+        [InlineData("DS Title", "DS Item Title", "DS Title", "DS Item Title")]
+        [InlineData(null, "DS Item Title", "DS Item Title", "DS Item Title")]
+        public void Constructor_SetsTitleTableAndDataSource_AsProvided(string dSTitle, string dSItemTitle, string expectedDSTitle, string expectedDSItemTitle)
         {
             // Arrange
-            string title = "Test Item";
             string table = "Test Table";
-            var dataSource = new MicrosoftSqlServerDataSource();
+            var dataSource = new MicrosoftSqlServerDataSource() { Title = dSTitle };
 
             // Act
-            var item = new MicrosoftSqlServerDataSourceItem(title, table, dataSource);
+            var item = new MicrosoftSqlServerDataSourceItem(dSItemTitle, table, dataSource);
 
             // Assert
-            Assert.Equal(title, item.Title);
             Assert.Equal(table, item.Table);
+            Assert.Equal(expectedDSItemTitle, item.Title);
             Assert.Equal(dataSource, item.DataSource);
+            Assert.Equal(dataSource.Id, item.DataSourceId);
+            Assert.Equal(expectedDSTitle, item.DataSource.Title);
+            Assert.Equal(dataSource, item.DataSource);
+            Assert.Equal(dataSource.Id, item.DataSourceId);
         }
 
         [Fact]
-        public void Constructor_WithNonSqlServerDataSource_CreatesSqlServerDataSource()
+        public void Constructor_CreatesSqlServerDataSource_WithNonSqlServerDataSource()
         {
             // Arrange
             var dataSource = new DataSource();
@@ -83,7 +55,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         }
 
         [Fact]
-        public void Constructor_WithSqlServerDataSource_DoesNotCreateNewDataSource()
+        public void Constructor_DoesNotCreateNewDataSource_WithSqlServerDataSource()
         {
             // Arrange
             var dataSource = new MicrosoftSqlServerDataSource();
@@ -91,6 +63,41 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
 
             // Assert
             Assert.Equal(dataSource, item.DataSource);
+        }
+
+
+        [Fact]
+        public void HasTabularData_BeTrue_ByDefault()
+        {
+            // Arrange
+            var item = new MicrosoftSqlServerDataSourceItem("Test Item", new MicrosoftSqlServerDataSource());
+
+            // Assert
+            Assert.True(item.HasTabularData);
+        }
+
+        [Fact]
+        public void HasAsset_BeFalse_ByDefault()
+        {
+            // Arrange
+            var item = new MicrosoftSqlServerDataSourceItem("Test Item", new MicrosoftSqlServerDataSource());
+
+            // Assert
+            Assert.False(item.HasAsset);
+        }
+
+        [Fact]
+        public void Table_ReturnsCorrectValue_WhenSet()
+        {
+            // Arrange
+            string table = "Test Table";
+            var item = new MicrosoftSqlServerDataSourceItem("Test Item", new MicrosoftSqlServerDataSource());
+
+            // Act
+            item.Table = table;
+
+            // Assert
+            Assert.Equal(table, item.Table);
         }
     }
 }
