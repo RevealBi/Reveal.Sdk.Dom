@@ -6,22 +6,23 @@ namespace Reveal.Sdk.Dom.Tests.Data
 {
     public class ProcedureDataSourceItemFixture
     {
-        [Fact]
-        public void Constructor_CreateProcedureDataSourceItem_WithTitleAndDataSource()
+        [Theory]
+        [InlineData("DS Title", "DS Item Title", "DS Title", "DS Item Title")] // If Data Source has the title, when it's used to create DS Item, its title is not updated
+        [InlineData(null, "DS Item Title", "DS Item Title", "DS Item Title")] // If Data Source has null title, when it's used to create DS Item, its title is updated to be the same as DS Item's title
+        public void Constructor_CreateProcedureDataSourceItem_WithTitleAndDataSource(string dsTitle, string dsItemTitle, string expectedDSTitle, string expectedDSItemTitle)
         {
             // Arrange
-            var title = "Title";
-            var dataSource = new DataSource();
+            var dataSource = new DataSource() { Title = dsTitle };
 
             // Act
-            var mock = new Mock<ProcedureDataSourceItem>(title, dataSource) { CallBase = true };
+            var mock = new Mock<ProcedureDataSourceItem>(dsItemTitle, dataSource) { CallBase = true };
             var procedureDataSourceItem = mock.Object;
 
             // Assert
-            Assert.Equal(title, procedureDataSourceItem.Title);
+            Assert.Equal(expectedDSItemTitle, procedureDataSourceItem.Title);
             Assert.Equal(dataSource, procedureDataSourceItem.DataSource);
             Assert.Equal(dataSource.Id, procedureDataSourceItem.DataSourceId);
-            Assert.Equal(title, procedureDataSourceItem.DataSource.Title);
+            Assert.Equal(expectedDSTitle, procedureDataSourceItem.DataSource.Title);
         }
     }
 }
