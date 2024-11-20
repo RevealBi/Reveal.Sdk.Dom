@@ -7,108 +7,99 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
     public class MicrosoftSqlServerDataSourceFixture
     {
         [Fact]
-        public void Constructor_Should_SetProviderToMicrosoftSqlServer()
+        public void Constructor_SetsProviderToMicrosoftSqlServer_WhenConstructed()
         {
-            // Arrange
+            // Act
             var dataSource = new MicrosoftSqlServerDataSource();
 
-            // Act
-            var provider = dataSource.Provider;
-
             // Assert
-            Assert.Equal(DataSourceProvider.MicrosoftSqlServer, provider);
+            Assert.Equal(DataSourceProvider.MicrosoftSqlServer, dataSource.Provider);
         }
 
         [Fact]
-        public void Constructor_Should_SetServerAggregationDefaultToTrue()
+        public void Constructor_SetsServerAggregationDefaultToTrue_WhenConstructed()
         {
-            // Arrange
+            // Act
             var dataSource = new MicrosoftSqlServerDataSource();
 
-            // Act
-            var serverAggregationDefault = dataSource.Properties.GetValue<bool>("ServerAggregationDefault");
-
             // Assert
-            Assert.True(serverAggregationDefault);
+            Assert.True(dataSource.Properties.GetValue<bool>("ServerAggregationDefault"));
         }
 
         [Fact]
-        public void Constructor_Should_SetServerAggregationReadOnlyToFalse()
+        public void Constructor_SetsServerAggregationReadOnlyToFalse_WhenConstructed()
         {
-            // Arrange
-            var dataSource = new MicrosoftSqlServerDataSource();
-
             // Act
-            var serverAggregationReadOnly = dataSource.Properties.GetValue<bool>("ServerAggregationReadOnly");
+            var dataSource = new MicrosoftSqlServerDataSource();
 
             // Assert
-            Assert.False(serverAggregationReadOnly);
+            Assert.False(dataSource.Properties.GetValue<bool>("ServerAggregationReadOnly"));
         }
 
-        [Fact]
-        public void Database_Should_GetAndSetDatabaseProperty()
+        [Theory]
+        [InlineData("TestDatabase")]
+        [InlineData(null)]
+        public void Database_SetsAndGetsValue_WithDifferentInputs(string database)
         {
             // Arrange
             var dataSource = new MicrosoftSqlServerDataSource();
-            var database = "TestDatabase";
 
             // Act
             dataSource.Database = database;
-            var result = dataSource.Database;
 
             // Assert
-            Assert.Equal(database, result);
+            Assert.Equal(database, dataSource.Database);
         }
 
-        [Fact]
-        public void Host_Should_GetAndSetHostProperty()
+        [Theory]
+        [InlineData("TestHost")]
+        [InlineData(null)]
+        public void Host_SetsAndGetsValue_WithDifferentInputs(string host)
         {
             // Arrange
             var dataSource = new MicrosoftSqlServerDataSource();
-            var host = "TestHost";
 
             // Act
             dataSource.Host = host;
-            var result = dataSource.Host;
 
             // Assert
-            Assert.Equal(host, result);
+            Assert.Equal(host, dataSource.Host);
         }
 
-        [Fact]
-        public void Port_Should_GetAndSetPortProperty()
+        [Theory]
+        [InlineData("1234")]
+        [InlineData(null)]
+        public void Port_SetsAndGetsValue_WithDifferentInputs(string port)
         {
             // Arrange
             var dataSource = new MicrosoftSqlServerDataSource();
-            var port = "1234";
 
             // Act
             dataSource.Port = port;
-            var result = dataSource.Port;
 
             // Assert
-            Assert.Equal(port, result);
+            Assert.Equal(port, dataSource.Port);
         }
 
-        [Fact]
-        public void Schema_Should_GetAndSetSchemaProperty()
+        [Theory]
+        [InlineData("TestSchema")]
+        [InlineData(null)]
+        public void Schema_SetsAndGetsValue_WithDifferentInputs(string schema)
         {
             // Arrange
             var dataSource = new MicrosoftSqlServerDataSource();
-            var schema = "TestSchema";
 
             // Act
             dataSource.Schema = schema;
-            var result = dataSource.Schema;
 
             // Assert
-            Assert.Equal(schema, result);
+            Assert.Equal(schema, dataSource.Schema);
         }
 
         [Fact]
-        public void Constructor_Should_Set_ServerAggregationDefault_Property()
+        public void Constructor_EnsuresServerAggregationDefaultPropertyExists_WhenConstructed()
         {
-            // Arrange
+            // Act
             var dataSource = new MicrosoftSqlServerDataSource();
 
             // Assert
@@ -117,9 +108,9 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         }
 
         [Fact]
-        public void Constructor_Should_Set_ServerAggregationReadOnly_Property()
+        public void Constructor_EnsuresServerAggregationReadOnlyPropertyExists_WhenConstructed()
         {
-            // Arrange
+            // Act
             var dataSource = new MicrosoftSqlServerDataSource();
 
             // Assert
