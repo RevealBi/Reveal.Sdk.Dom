@@ -68,23 +68,21 @@ namespace Reveal.Sdk.Dom.Tests.Data
         }
 
         [Theory]
-        [InlineData("DS Title", "DS Title")]
-        [InlineData(null, "DS Item Title")]
-        public void Constructor_CreatesDataSourceItem_WithDataSourceAndTitle(string dsTitle, string expectedDsTitle)
+        [InlineData("DS Title", "DS Item Title", "DS Title", "DS Item Title")] // If Data Source has the title, when it's used to create DS Item, its title is not updated
+        [InlineData(null, "DS Item Title", "DS Item Title", "DS Item Title")] // If Data Source has null title, when it's used to create DS Item, its title is updated to be the same as DS Item's title
+        public void Constructor_CreatesDataSourceItem_WithDataSourceAndTitle(string dsTitle, string dsItemTitle, string expectedDSTitle, string expectedDSItemTitle)
         {
             // Arrange
-            var dsItemTitle = "DS Item Title";
             var dataSource = new DataSource { Title = dsTitle };
 
             // Act
             var dataSourceItem = new DataSourceItem(dsItemTitle, dataSource);
 
             // Assert
-            Assert.NotNull(dataSourceItem);
             Assert.Equal(dataSource, dataSourceItem.DataSource);
             Assert.Equal(dataSource.Id, dataSourceItem.DataSourceId);
-            Assert.Equal(expectedDsTitle, dataSourceItem.DataSource.Title);
-            Assert.Equal(dsItemTitle, dataSourceItem.Title);
+            Assert.Equal(expectedDSTitle, dataSourceItem.DataSource.Title);
+            Assert.Equal(expectedDSItemTitle, dataSourceItem.Title);
         }
 
         [Fact]

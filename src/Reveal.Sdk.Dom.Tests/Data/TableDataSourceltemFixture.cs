@@ -7,8 +7,8 @@ namespace Reveal.Sdk.Dom.Tests.Data
     public class TableDataSourceItemFixture
     {
         [Theory]
-        [InlineData("DS Title", "DS Item Title", "DS Title", "DS Item Title")] // If DS' title is not null, then it still have it after DSItem created.
-        [InlineData(null, "DS Item Title", "DS Item Title", "DS Item Title")] // If DS' title is null, then DS Item's title will be set to it.
+        [InlineData("DS Title", "DS Item Title", "DS Title", "DS Item Title")] // If Data Source has the title, when it's used to create DS Item, its title is not updated
+        [InlineData(null, "DS Item Title", "DS Item Title", "DS Item Title")] // If Data Source has null title, when it's used to create DS Item, its title is updated to be the same as DS Item's title
         public void Constructor_CreateTableDataSourceItem_WithTitleAndDataSource(string dSTitle, string dSItemTitle, string expectedDSTitle, string expectedDSItemTitle)
         {
             // Arrange

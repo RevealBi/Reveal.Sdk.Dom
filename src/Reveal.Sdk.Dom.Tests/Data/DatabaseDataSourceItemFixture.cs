@@ -6,22 +6,23 @@ namespace Reveal.Sdk.Dom.Tests.Data
 {
     public class DatabaseDataSourceItemFixture
     {
-        [Fact]
-        public void Constructor_CreateDatabaseDSItem_WithTitleAndDataSource()
+        [Theory]
+        [InlineData("DS Title", "DS Item Title", "DS Title", "DS Item Title")] // If Data Source has the title, when it's used to create DS Item, its title is not updated
+        [InlineData(null, "DS Item Title", "DS Item Title", "DS Item Title")] // If Data Source has null title, when it's used to create DS Item, its title is updated to be the same as DS Item's title
+        public void Constructor_CreateDatabaseDSItem_WithTitleAndDataSource(string dsTitle, string dsItemTitle, string expectedDSTitle, string expectedDSItemTitle)
         {
             // Arrange
-            var title = "Title";
-            var dataSource = new DataSource();
+            var dataSource = new DataSource() { Title = dsTitle};
 
             // Act
-            var mock = new Mock<DatabaseDataSourceItem>(title, dataSource) { CallBase = true };
+            var mock = new Mock<DatabaseDataSourceItem>(dsItemTitle, dataSource) { CallBase = true };
             var dbDataSourceItem = mock.Object;
 
             // Assert
-            Assert.Equal(title, dbDataSourceItem.Title);
+            Assert.Equal(expectedDSItemTitle, dbDataSourceItem.Title);
             Assert.Equal(dataSource, dbDataSourceItem.DataSource);
             Assert.Equal(dataSource.Id, dbDataSourceItem.DataSourceId);
-            Assert.Equal(title, dbDataSourceItem.DataSource.Title);
+            Assert.Equal(expectedDSTitle, dbDataSourceItem.DataSource.Title);
         }
 
         [Fact]
