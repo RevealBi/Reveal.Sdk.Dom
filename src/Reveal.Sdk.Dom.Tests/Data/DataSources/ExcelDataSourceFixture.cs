@@ -7,7 +7,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
     public class ExcelDataSourceFixture
     {
         [Fact]
-        public void Constructor_SetProviderToMicrosoftExcel_WhenConstructed()
+        public void Constructor_SetProviderToMicrosoftExcel_WhenCalled()
         {
             // Act
             var dataSource = new ExcelDataSource();

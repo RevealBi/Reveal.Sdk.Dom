@@ -7,7 +7,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
     public class CsvDataSourceFixture
     {
         [Fact]
-        public void Constructor_SetProviderToCSV_WhenConstructed()
+        public void Constructor_SetProviderToCSV_WhenCalled()
         {
             // Act
             var dataSource = new CsvDataSource();
