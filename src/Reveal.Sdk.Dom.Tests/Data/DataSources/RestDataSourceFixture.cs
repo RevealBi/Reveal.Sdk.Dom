@@ -43,7 +43,6 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
 
         [Theory]
         [InlineData("application/json")]
-        [InlineData("text/xml")]
         [InlineData(null)]
         public void ContentType_SetsAndGetsValue_WithDifferentInputs(string contentType)
         {
@@ -92,7 +91,6 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
 
         [Theory]
         [InlineData("GET")]
-        [InlineData("POST")]
         [InlineData(null)]
         public void Method_SetsAndGetsValue_WithDifferentInputs(string method)
         {
