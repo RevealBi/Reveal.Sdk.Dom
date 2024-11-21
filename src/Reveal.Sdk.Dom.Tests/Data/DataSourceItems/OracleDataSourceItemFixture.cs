@@ -5,11 +5,12 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
 {
     public class OracleDataSourceItemFixture
     {
-        [Fact]
-        public void Constructor_SetsTitleAndDataSource_WhenConstructed()
+        [Theory]
+        [InlineData("Test Item")]
+        [InlineData(null)]
+        public void Constructor_SetsTitleAndDataSource_WhenCalled(string title)
         {
             // Arrange
-            var title = "Test Item";
             var dataSource = new OracleDataSource();
 
             // Act
