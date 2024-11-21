@@ -7,7 +7,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
     public class MongoDbDataSourceItemFixture
     {
         [Fact]
-        public void Constructor_SetsTitleAndDataSource_WhenConstructed()
+        public void Constructor_SetsTitleAndDataSource_WhenCalled()
         {
             // Arrange
             var title = "Test Item";
