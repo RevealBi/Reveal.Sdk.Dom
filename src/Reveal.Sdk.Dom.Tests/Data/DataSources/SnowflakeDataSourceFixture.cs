@@ -1,4 +1,5 @@
-﻿using Reveal.Sdk.Dom.Data;
+﻿using Reveal.Sdk.Dom.Core.Extensions;
+using Reveal.Sdk.Dom.Data;
 using Xunit;
 
 namespace Reveal.Sdk.Dom.Tests.Data.DataSources
@@ -8,55 +9,59 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         [Fact]
         public void SnowflakeDataSource_ShouldSetProviderToSnowflake()
         {
-            // Arrange
-            var dataSource = new SnowflakeDataSource();
-
             // Act
+            var dataSource = new SnowflakeDataSource();
 
             // Assert
             Assert.Equal(DataSourceProvider.Snowflake, dataSource.Provider);
         }
 
-        [Fact]
-        public void SnowflakeDataSource_ShouldSetAccount()
+        [Theory]
+        [InlineData("testAccount")]
+        [InlineData(null)]
+        public void Account_ShouldSetAndGetValue_WithDifferentInputs(string account)
         {
             // Arrange
             var dataSource = new SnowflakeDataSource();
-            var account = "testAccount";
 
             // Act
             dataSource.Account = account;
 
             // Assert
             Assert.Equal(account, dataSource.Account);
+            Assert.Equal(account, dataSource.Properties.GetValue<string>("Account"));
         }
 
-        [Fact]
-        public void SnowflakeDataSource_ShouldSetRole()
+        [Theory]
+        [InlineData("testRole")]
+        [InlineData(null)]
+        public void Role_ShouldSetAndGetValue_WithDifferentInputs(string role)
         {
             // Arrange
             var dataSource = new SnowflakeDataSource();
-            var role = "testRole";
 
             // Act
             dataSource.Role = role;
 
             // Assert
             Assert.Equal(role, dataSource.Role);
+            Assert.Equal(role, dataSource.Properties.GetValue<string>("Role"));
         }
 
-        [Fact]
-        public void SnowflakeDataSource_ShouldSetWarehouse()
+        [Theory]
+        [InlineData("testWarehouse")]
+        [InlineData(null)]
+        public void Warehouse_ShouldSetAndGetValue_WithDifferentInputs(string warehouse)
         {
             // Arrange
             var dataSource = new SnowflakeDataSource();
-            var warehouse = "testWarehouse";
 
             // Act
             dataSource.Warehouse = warehouse;
 
             // Assert
             Assert.Equal(warehouse, dataSource.Warehouse);
+            Assert.Equal(warehouse, dataSource.Properties.GetValue<string>("Warehouse"));
         }
     }
 }

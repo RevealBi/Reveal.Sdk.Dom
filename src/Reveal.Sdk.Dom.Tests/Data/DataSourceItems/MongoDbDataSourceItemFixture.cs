@@ -1,10 +1,10 @@
-﻿using Reveal.Sdk.Dom.Core.Extensions;
+using Reveal.Sdk.Dom.Core.Extensions;
 using Reveal.Sdk.Dom.Data;
 using Xunit;
 
 namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
 {
-    public class SnowflakeDataSourceItemFixture
+    public class MongoDbDataSourceItemFixture
     {
         [Theory]
         [InlineData("Test Item")]
@@ -12,37 +12,35 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         public void Constructor_SetsTitleAndDataSource_WhenCalled(string title)
         {
             // Arrange
-            var dataSource = new SnowflakeDataSource();
+            var dataSource = new MongoDBDataSource();
 
             // Act
-            var item = new SnowflakeDataSourceItem(title, dataSource);
+            var item = new MongoDbDataSourceItem(title, dataSource);
 
             // Assert
             Assert.Equal(title, item.Title);
             Assert.Equal(dataSource, item.DataSource);
         }
 
-        [Theory]
-        [InlineData("Test Item")]
-        [InlineData(null)]
-        public void Constructor_SetsTitleAndDataSource_WhenConstructedWithGenericDataSource(string title)
+        [Fact]
+        public void Collection_SetsAndGetsValue_WithInputs()
         {
             // Arrange
-            var dataSource = new DataSource();
+            var item = new MongoDbDataSourceItem("Test Item", new MongoDBDataSource());
 
             // Act
-            var item = new SnowflakeDataSourceItem(title, dataSource);
+            item.Collection = "TestCollection";
 
             // Assert
-            Assert.Equal(title, item.Title);
-            Assert.IsType<SnowflakeDataSource>(item.DataSource);
+            Assert.Equal("TestCollection", item.Collection);
+            Assert.Equal("TestCollection", item.Properties.GetValue<string>("Collection"));
         }
 
         [Fact]
-        public void ProcessDataOnServer_ShouldSetAndGetValue_WithInputs()
+        public void ProcessDataOnServer_SetsAndGetsValue_WithInputs()
         {
             // Arrange
-            var item = new SnowflakeDataSourceItem("Test Item", new SnowflakeDataSource());
+            var item = new MongoDbDataSourceItem("Test Item", new MongoDBDataSource());
 
             // Act
             item.ProcessDataOnServer = true;
