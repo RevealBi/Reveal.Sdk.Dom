@@ -3,7 +3,7 @@ using Reveal.Sdk.Dom.Core.Extensions;
 
 namespace Reveal.Sdk.Dom.Data
 {
-    internal class MongoDbDataSourceItem : DataSourceItem, IProcessDataOnServer
+    public class MongoDbDataSourceItem : DataSourceItem, IProcessDataOnServer
     {
         public MongoDbDataSourceItem(string title, DataSource dataSource) :
             base(title, dataSource)
