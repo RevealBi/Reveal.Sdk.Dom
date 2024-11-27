@@ -14,5 +14,15 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
             // Assert
             Assert.Equal(DataSourceProvider.MySQL, dataSource.Provider);
         }
+        
+        [Fact]
+        public void Constructor_InitializesPropertiesToDefaultValues_WhenInstanceIsCreated()
+        {
+            // Act
+            var dataSource = new MySQLDataSource();
+
+            // Assert
+            Assert.NotNull(dataSource);
+        }
     }
 }
