@@ -12,8 +12,8 @@ namespace Reveal.Sdk.Dom.Data
         [JsonIgnore]
         public string Collection
         {
-            get => Properties.GetValue<string>("Collection");
-            set => Properties.SetItem("Collection", value);
+            get => Properties.GetValue<string>("Table");
+            set => Properties.SetItem("Table", value);
         }
 
         [JsonIgnore]
