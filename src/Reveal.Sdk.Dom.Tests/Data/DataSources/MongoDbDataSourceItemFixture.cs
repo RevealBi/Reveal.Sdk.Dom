@@ -17,22 +17,6 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         }
 
         [Theory]
-        [InlineData("mongodb://localhost:27017")]
-        [InlineData(null)]
-        public void ConnectionString_SetsAndGetsValue_WithDifferentInputs(string connectionString)
-        {
-            // Arrange
-            var dataSource = new MongoDBDataSource();
-
-            // Act
-            dataSource.ConnectionString = connectionString;
-
-            // Assert
-            Assert.Equal(connectionString, dataSource.ConnectionString);
-            Assert.Equal(connectionString, dataSource.Properties.GetValue<string>("ConnectionString"));
-        }
-
-        [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void ProcessDataOnServerDefaultValue_SetsAndGetsValue_WithDifferentInputs(bool defaultValue)

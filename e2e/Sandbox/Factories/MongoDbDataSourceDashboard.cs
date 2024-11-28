@@ -1,13 +1,7 @@
 ﻿using Reveal.Sdk.Dom;
 using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations;
-using Reveal.Sdk.Dom;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Reveal.Sdk.Data.MongoDB;
 
 namespace Sandbox.Factories
 {
@@ -17,23 +11,62 @@ namespace Sandbox.Factories
         {
             var mongoDbDs = new MongoDBDataSource()
             {
-                ConnectionString = "mongodb://root:Abc123@localhost:27017"
+                Id = "MyMongoDatasource",
+                Title = "MyMongoDatasource",
+                Subtitle = "My MongoDB",
+                ProcessDataOnServerDefaultValue = true,
+                ProcessDataOnServerReadOnly = false,
             };
 
-            var salesCollection = new MongoDbDataSourceItem("Sales Collection", mongoDbDs)
+            var testCollection = new MongoDbDataSourceItem("DB Test", mongoDbDs)
             {
-                Collection = "sales",
+                Id = "MyMongoDatasourceItem",
+                Title = "MyMongoDatasourceItem",
+                Subtitle = "Test Collection",
+                Collection = "data",
                 Fields = new List<IField>
                 {
-                    new TextField("storeLocation") { FieldLabel = "Store Location" },
-                    new TextField("purchaseMethod") { FieldLabel = "Purchase Method" },
-                    new TextField("saleDate") { FieldLabel = "Sale Date" }
+                    new TextField("_id"),
+                    new TextField("name"),
+                    new NumberField("price"),
+                    new DateTimeField("available_since"),
+                    new TextField("category"),
+                    new NumberField("year_value"),
+                    new NumberField("month_value"),
+                    new NumberField("day_value"),
+                    new NumberField("hour_value"),
+                    new NumberField("minutes_value"),
+                    new NumberField("seconds_value"),
+                    new NumberField("milliseconds_value"),
+                    new NumberField("numeric_value1"),
+                    new NumberField("numeric_value2"),
+                    new NumberField("numeric_value3"),
+                    new TextField("image_url")
+
                 }
             };
 
             var document = new RdashDocument("My Dashboard");
 
-            document.Visualizations.Add(new GridVisualization("Sales List", salesCollection).SetColumns("Store Location", "Purchase Method", "Sale Date"));
+            document.Visualizations.Add(new GridVisualization("Test List", testCollection).SetColumns("name", "category", "price"));
+
+            var jsonData = document.ToJsonString();
+
+            // var filePath = "test.rdash";
+
+            // try
+            // {
+
+            //     if (File.Exists(filePath))
+            //         File.Delete(filePath);
+
+            //     document.Save(filePath);
+            // }
+            // catch
+            // {
+            //     throw;
+            // }
+            
 
             return document;
         }
