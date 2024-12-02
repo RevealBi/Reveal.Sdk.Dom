@@ -3,6 +3,7 @@
     public enum DataSourceType
     {
         REST,
-        MicrosoftSqlServer
+        MicrosoftSqlServer,
+        MySql
     }
 }

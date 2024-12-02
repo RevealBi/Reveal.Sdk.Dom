@@ -1,3 +1,4 @@
+using Infragistics;
 using Reveal.Sdk;
 using Reveal.Sdk.Data;
 using Reveal.Sdk.Data.Amazon.Athena;
@@ -59,6 +60,7 @@ namespace Sandbox
             RevealSdkSettings.DataSourceProvider = new Sandbox.RevealSDK.DataSourceProvider();
             RevealSdkSettings.AuthenticationProvider = new AuthenticationProvider();
             RevealSdkSettings.DataSources.RegisterMicrosoftSqlServer().RegisterMicrosoftAnalysisServices();
+            RevealSdkSettings.DataSources.RegisterMySql();
 
             _revealView.LinkedDashboardProvider = (string dashboardId, string linkTitle) =>
             {
@@ -175,6 +177,27 @@ namespace Sandbox
             //httpItem.Subtitle = "HTTP Analysis Services Item Subtitle";
             //httpItem.Cube = "Adventure Works";
             //dsi.Add(httpItem);
+
+            var mysqlDS = new RVMySqlDataSource
+            {
+                Id = "mysqlDS",
+                Title = "MySQL DS",
+                Subtitle = "My SQL Datasource",
+                Host = "revealdb01.infragistics.local",
+                Database = "northwind",
+                Port = 3306,
+            };
+            ds.Add(mysqlDS);
+
+            var mysqlDSItem = new RVMySqlDataSourceItem(mysqlDS)
+            {
+                Id = "mysqlDSItem",
+                Title = "MySQL DSItem",
+                Subtitle = "My SQL Datasource order table",
+                Database = "northwind",
+                Table = "orders"
+            };
+            dsi.Add(mysqlDSItem);
 
             e.Callback(new RevealDataSources(ds, dsi, true));
         }
