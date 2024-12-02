@@ -1,7 +1,5 @@
-using System;
 using Reveal.Sdk.Dom.Core.Extensions;
 using Reveal.Sdk.Dom.Data;
-using Reveal.Sdk.Dom.Visualizations;
 using Xunit;
 
 namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
@@ -38,7 +36,5 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
             Assert.True(item.ProcessDataOnServer);
             Assert.True(item.Properties.GetValue<bool>("ServerAggregation"));
         }
-
-
     }
 }

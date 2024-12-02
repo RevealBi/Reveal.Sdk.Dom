@@ -20,23 +20,5 @@ namespace Reveal.Sdk.Dom.Data
             get => Properties.GetValue<string>("Password");
             set => Properties.SetItem("Password", value);
         }
-
-        public int ConnectionTimeout
-        {
-            get => Properties.GetValue<int>("ConnectionTimeout");
-            set => Properties.SetItem("ConnectionTimeout", value);
-        }
-
-        public string SslMode
-        {
-            get => Properties.GetValue<string>("SslMode");
-            set => Properties.SetItem("SslMode", value);
-        }
-
-        public bool Pooling
-        {
-            get => Properties.GetValue<bool>("Pooling");
-            set => Properties.SetItem("Pooling", value);
-        }
     }
 }

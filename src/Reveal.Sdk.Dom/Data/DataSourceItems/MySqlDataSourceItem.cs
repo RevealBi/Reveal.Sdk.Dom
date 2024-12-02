@@ -15,7 +15,7 @@ namespace Reveal.Sdk.Dom.Data
             get => Properties.GetValue<bool>("ServerAggregation");
             set => Properties.SetItem("ServerAggregation", value);
         }
-        
+
         [JsonIgnore]
         public string ConnectionString
         {
