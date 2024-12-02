@@ -39,5 +39,4 @@ namespace Reveal.Sdk.Dom.Data
             set => Properties.SetItem("Pooling", value);
         }
     }
-
 }

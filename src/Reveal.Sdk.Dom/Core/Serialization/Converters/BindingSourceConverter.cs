@@ -4,7 +4,7 @@ using System;
 
 namespace Reveal.Sdk.Dom.Core.Serialization.Converters
 {
-    internal class BindingSourceConverter : TypeMapConverter<BindingSource>
+    internal class BindingSourceConverter : TypeMapConverter<IBindingSource>
     {
         public BindingSourceConverter()
         {

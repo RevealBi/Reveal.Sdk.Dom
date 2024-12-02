@@ -1,4 +1,3 @@
-﻿using NuGet.Frameworks;
 using Reveal.Sdk.Dom.Core.Constants;
 using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations;
