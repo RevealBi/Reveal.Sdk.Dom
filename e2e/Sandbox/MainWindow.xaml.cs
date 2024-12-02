@@ -249,7 +249,8 @@ namespace Sandbox
             //var document = CustomDashboard.CreateDashboard();
             //var document = RestDataSourceDashboards.CreateDashboard();
             //var document = SqlServerDataSourceDashboards.CreateDashboard();
-            //var document = DashboardLinkingDashboard.CreateDashboard();            
+            //var document = DashboardLinkingDashboard.CreateDashboard();
+            //var document = MySqlDataSourceDashboard.CreateDashboard();
 
             var json = document.ToJsonString();
 

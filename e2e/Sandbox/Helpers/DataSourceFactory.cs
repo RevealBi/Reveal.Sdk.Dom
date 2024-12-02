@@ -1,4 +1,5 @@
-﻿using Reveal.Sdk.Dom.Data;
+﻿using Reveal.Sdk.Data.MySql;
+using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations;
 using System.Collections.Generic;
 
@@ -209,6 +210,43 @@ namespace Sandbox.Helpers
                 new NumberField("Close"),
                 new NumberField("Volume"),
             };
+        }
+
+        internal class MySQLDataSourceFactory
+        {
+            static DataSource _mysqlDataSource = new MySQLDataSource()
+            {
+                Id = "MySQL",
+                Title = "MySQL Data Source",
+                Subtitle = "The Data Source for MySQL",
+                Host = "revealdb01.infragistics.local",
+                Database = "northwind",
+                Port = "3306"
+            };
+
+            internal static DataSourceItem GetEmployeeDSItem()
+            {
+                var employeesDSItem = new MySqlDataSourceItem("Employees", _mysqlDataSource)
+                {
+                    Title = "MySQL Employee",
+                    Subtitle = "MySQL DS Item for Employee",
+                    Database = "northwind",
+                    Table = "employees",
+                    Fields = GetEmployeeColumnFields()
+                };
+
+                return employeesDSItem;
+            }
+
+            internal static List<IField> GetEmployeeColumnFields()
+            {
+                return new List<IField>
+                {
+                    new NumberField("ReportsTo"),
+                    new NumberField("EmployeeID"),
+                    new TextField("Country"),
+                };
+            }
         }
     }
 }
