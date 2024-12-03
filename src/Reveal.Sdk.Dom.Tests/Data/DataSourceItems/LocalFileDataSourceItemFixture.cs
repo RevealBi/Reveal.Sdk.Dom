@@ -74,6 +74,27 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         }
 
         [Fact]
+        public void Constructor_CreateExpectedLocalFileDSItem_WithCustomTitleAndDataSource()
+        {
+            // Arrange
+            var dsItemTitle = "Local file data source item title";
+            var dataSource = new PostgreSQLDataSource();
+
+            // Act
+            var mock = new Mock<LocalFileDataSourceItem>(dsItemTitle, dataSource) { CallBase = true };
+            var localFileDataSourceItem = mock.Object;
+
+            // Assert
+            Assert.Equal(dsItemTitle, localFileDataSourceItem.Title);
+            Assert.Equal(DataSourceIds.LOCALFILE, localFileDataSourceItem.DataSourceId);
+            Assert.Equal(DataSourceIds.LOCALFILE, localFileDataSourceItem.DataSource.Id);
+            Assert.Equal(DataSourceIds.LOCALFILE, localFileDataSourceItem.ResourceItemDataSource.Id);
+            Assert.Equal(DataSourceIds.LOCALFILE, localFileDataSourceItem.ResourceItem.DataSource.Id);
+            Assert.Equal(DataSourceIds.LOCALFILE, localFileDataSourceItem.ResourceItem.DataSourceId);
+            Assert.Equal(dsItemTitle, localFileDataSourceItem.ResourceItem.Title);
+        }
+
+        [Fact]
         public void GetPath_ReturnSameValue_WithSetValue()
         {
             // Arrange

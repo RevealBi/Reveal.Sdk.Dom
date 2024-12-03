@@ -11,10 +11,10 @@ namespace Reveal.Sdk.Dom.Data
 {
     public abstract class LocalFileDataSourceItem : DataSourceItem
     {
-        public LocalFileDataSourceItem(string title) : this(title, new LocalFileDataSource())
+        public LocalFileDataSourceItem(string title) : this(title, new DataSource())
         { }
 
-        public LocalFileDataSourceItem(string title, string path) : this(title, new LocalFileDataSource())
+        public LocalFileDataSourceItem(string title, string path) : this(title, new DataSource())
         {
             Path = path;
         }
