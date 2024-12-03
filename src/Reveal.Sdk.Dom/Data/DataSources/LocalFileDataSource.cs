@@ -2,7 +2,7 @@
 
 namespace Reveal.Sdk.Dom.Data
 {
-    internal class LocalFileDataSource : DataSource
+    public class LocalFileDataSource : DataSource
     {
         public LocalFileDataSource()
         {
