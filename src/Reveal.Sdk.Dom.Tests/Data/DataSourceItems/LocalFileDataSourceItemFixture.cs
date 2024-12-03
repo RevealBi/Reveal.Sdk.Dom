@@ -2,14 +2,9 @@
 using Reveal.Sdk.Dom.Core.Constants;
 using Reveal.Sdk.Dom.Core.Extensions;
 using Reveal.Sdk.Dom.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace Reveal.Sdk.Dom.Tests.Data
+namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
 {
     public class LocalFileDataSourceItemFixture
     {
@@ -65,7 +60,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
             var dataSource = new LocalFileDataSource();
 
             // Act
-            var mock = new Mock<LocalFileDataSourceItem>(dsItemTitle, dataSource) { CallBase = true }; 
+            var mock = new Mock<LocalFileDataSourceItem>(dsItemTitle, dataSource) { CallBase = true };
             var localFileDataSourceItem = mock.Object;
 
             // Assert
