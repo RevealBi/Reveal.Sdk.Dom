@@ -36,10 +36,9 @@
     <None Update="Dashboards\Sales.rdash">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Dashboards\" />
+    <None Update="Dashboards\TestGoogleSheet.rdash">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

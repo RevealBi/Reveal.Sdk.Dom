@@ -35,11 +35,11 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
             var identifier = "IdentitiferTest";
 
             // Act
-            dataSourceItem.Identitifer = identifier;
+            dataSourceItem.Identifier = identifier;
 
             // Assert
-            Assert.Equal(identifier, dataSourceItem.Identitifer);
-            Assert.Equal(identifier, dataSourceItem.Properties.GetValue<string>("Identitifer"));
+            Assert.Equal(identifier, dataSourceItem.Identifier);
+            Assert.Equal(identifier, dataSourceItem.Properties.GetValue<string>("Identifier"));
         }
     }
 }
