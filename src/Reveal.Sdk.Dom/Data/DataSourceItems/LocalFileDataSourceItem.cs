@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Reveal.Sdk.Dom.Data
 {
-    public abstract class LocalFileDataSourceItem : DataSourceItem
+    public class LocalFileDataSourceItem : DataSourceItem
     {
         public LocalFileDataSourceItem(string title) : this(title, new DataSource())
         { }
@@ -48,6 +48,37 @@ namespace Reveal.Sdk.Dom.Data
                 DataSourceId = ResourceItemDataSource.Id,
                 Title = title
             };
+        }
+
+        public void UseExcel(string sheet = null, ExcelFileType fileType = ExcelFileType.Xlsx)
+        {
+            ClearJsonConfig();
+            DataSource = new ExcelDataSource();
+
+            var fileExt = fileType == ExcelFileType.Xlsx ? ".xlsx" : ".xls";
+            ResourceItemDataSource.Properties.SetItem("Result-Type", fileExt);
+
+            if (sheet != null)
+                Properties.SetItem("Sheet", sheet);
+        }
+
+        public void UseJson(string configStr = "")
+        {
+            ClearJsonConfig();
+            Parameters.SetItem("config", configStr);
+            DataSource = new JsonDataSource();
+        }
+
+        public void UseCsv()
+        {
+            ClearJsonConfig();
+            DataSource = new CsvDataSource();
+        }
+
+        void ClearJsonConfig()
+        {
+            if (Parameters.ContainsKey("config"))
+                Parameters.Remove("config");
         }
     }
 }
