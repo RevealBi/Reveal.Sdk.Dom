@@ -177,6 +177,21 @@ namespace Sandbox
             //httpItem.Cube = "Adventure Works";
             //dsi.Add(httpItem);
 
+            var mongoDS = new RVMongoDBDataSource();
+            mongoDS.Id = "MyMongoDatasource";
+            mongoDS.Title = "MongoDB Data Source";
+            mongoDS.Subtitle = "MongoDB DS Subtitle";
+            mongoDS.ConnectionString = "mongodb+srv://user01:DustFillingABlack4Times@cluster0.ta2xrrt.mongodb.net/";
+            mongoDS.Database = "test"; //this is required
+            ds.Add(mongoDS);
+
+            var mongoDSItem = new RVMongoDBDataSourceItem(mongoDS);
+            mongoDSItem.Id = "MyMongoDatasourceItem";
+            mongoDSItem.Title = "MongoDB Data Source Item";
+            mongoDSItem.Subtitle = "MongoDBDSI Subtitle";
+            mongoDSItem.Collection = "data";
+            dsi.Add(mongoDSItem);
+
             e.Callback(new RevealDataSources(ds, dsi, true));
         }
 
