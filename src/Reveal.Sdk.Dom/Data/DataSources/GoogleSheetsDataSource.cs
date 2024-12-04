@@ -1,9 +1,12 @@
-﻿namespace Reveal.Sdk.Dom.Data
+﻿using Reveal.Sdk.Dom.Core.Constants;
+
+namespace Reveal.Sdk.Dom.Data
 {
-    internal class GoogleSheetsDataSource : DataSource
+    public class GoogleSheetsDataSource : DataSource
     {
         public GoogleSheetsDataSource()
         {
+            Id = DataSourceIds.GSHEET;
             Provider = DataSourceProvider.GoogleSheets;
         }
     }

@@ -58,7 +58,7 @@ namespace Sandbox
 
             RevealSdkSettings.DataSourceProvider = new Sandbox.RevealSDK.DataSourceProvider();
             RevealSdkSettings.AuthenticationProvider = new AuthenticationProvider();
-            RevealSdkSettings.DataSources.RegisterMicrosoftSqlServer().RegisterMicrosoftAnalysisServices();
+            RevealSdkSettings.DataSources.RegisterMicrosoftSqlServer().RegisterMicrosoftAnalysisServices().RegisterGoogleDrive();
 
             _revealView.LinkedDashboardProvider = (string dashboardId, string linkTitle) =>
             {
@@ -219,14 +219,15 @@ namespace Sandbox
         private async void Create_Dashboard(object sender, RoutedEventArgs e)
         {
             //var document = MarketingDashboard.CreateDashboard();
-            var document = SalesDashboard.CreateDashboard();
+            //var document = SalesDashboard.CreateDashboard();
             //var document = CampaignsDashboard.CreateDashboard();
             //var document = HealthcareDashboard.CreateDashboard();
             //var document = ManufacturingDashboard.CreateDashboard();
             //var document = CustomDashboard.CreateDashboard();
             //var document = RestDataSourceDashboards.CreateDashboard();
             //var document = SqlServerDataSourceDashboards.CreateDashboard();
-            //var document = DashboardLinkingDashboard.CreateDashboard();            
+            //var document = DashboardLinkingDashboard.CreateDashboard();
+            var document = GoogleSheetDataSourceDashboards.CreateDashboard();
 
             var json = document.ToJsonString();
 

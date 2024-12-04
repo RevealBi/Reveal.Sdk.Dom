@@ -3,17 +3,25 @@ using Reveal.Sdk.Dom.Core.Extensions;
 
 namespace Reveal.Sdk.Dom.Data
 {
-    internal class GoogleSheetsDataSourceItem : DataSourceItem
+    public class GoogleSheetsDataSourceItem : DataSourceItem
     {
+        public GoogleSheetsDataSourceItem(string title, string identifier) :
+            base(title, new GoogleSheetsDataSource())
+        {
+            InitializeResourceItem(title, identifier);
+        }
+
         public GoogleSheetsDataSourceItem(string title, DataSource dataSource) :
             base(title, dataSource)
-        { }
+        {
+            InitializeResourceItem(title, null);
+        }
 
         [JsonIgnore]
         public bool FirstRowContainsLabels
         {
-            get => Properties.GetValue<bool>("FirstRowContainsLabels");
-            set => Properties.SetItem("FirstRowContainsLabels", value);
+            get => Parameters.GetValue<bool>("TITLES_IN_FIRST_ROW");
+            set => Parameters.SetItem("TITLES_IN_FIRST_ROW", value);
         }
 
         [JsonIgnore]
@@ -39,6 +47,22 @@ namespace Reveal.Sdk.Dom.Data
         {
             get => Properties.GetValue<string>("Sheet");
             set => Properties.SetItem("Sheet", value);
+        }
+
+        [JsonIgnore]
+        public string Identifier
+        {
+            get => ResourceItem.Properties.GetValue<string>("Identifier");
+            set => ResourceItem.Properties.SetItem("Identifier", value);
+        }
+
+        private void InitializeResourceItem(string title, string identifier)
+        {
+            ResourceItemDataSource = new GoogleDriveDataSource();
+            ResourceItem = new GoogleDriveDataSourceItem(title, ResourceItemDataSource)
+            {
+                Identifier = identifier
+            };
         }
     }
 }

@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Auth.AspNetCore" Version="1.65.0" />
     <PackageReference Include="Reveal.Sdk.Data.Amazon.Athena" Version="1.7.1" />
     <PackageReference Include="Reveal.Sdk.Data.Amazon.Redshift" Version="1.7.1" />
     <PackageReference Include="Reveal.Sdk.Data.Amazon.S3" Version="1.7.1" />
@@ -48,6 +49,9 @@
     <None Update="Dashboards\Sales.rdash">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Data\GoogleServiceAccountAuth.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\Samples.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -58,10 +62,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\" />
   </ItemGroup>
 
 </Project>
