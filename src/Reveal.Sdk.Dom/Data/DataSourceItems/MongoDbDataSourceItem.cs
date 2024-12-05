@@ -3,7 +3,7 @@ using Reveal.Sdk.Dom.Core.Extensions;
 
 namespace Reveal.Sdk.Dom.Data
 {
-    internal class MongoDbDataSourceItem : DataSourceItem, IProcessDataOnServer
+    public class MongoDbDataSourceItem : DataSourceItem, IProcessDataOnServer
     {
         public MongoDbDataSourceItem(string title, DataSource dataSource) :
             base(title, dataSource)
@@ -12,8 +12,8 @@ namespace Reveal.Sdk.Dom.Data
         [JsonIgnore]
         public string Collection
         {
-            get => Properties.GetValue<string>("Collection");
-            set => Properties.SetItem("Collection", value);
+            get => Properties.GetValue<string>("Table");
+            set => Properties.SetItem("Table", value);
         }
 
         [JsonIgnore]

@@ -5,6 +5,7 @@ using Reveal.Sdk.Data;
 using System.Threading.Tasks;
 using Reveal.Sdk.Data.Excel;
 using Reveal.Sdk.Data.Microsoft.AnalysisServices;
+using Reveal.Sdk.Data.MongoDB;
 
 namespace Sandbox.RevealSDK
 {
@@ -59,6 +60,16 @@ namespace Sandbox.RevealSDK
             //    ds.Host = "Brian-Desktop\\SQLEXPRESS";
             //    ds.Database = "Northwind";
             //}
+
+            if (dataSourceItem is RVMongoDBDataSourceItem mongoDbDataSourceItem)
+            {
+                mongoDbDataSourceItem.Collection = "data";
+
+                var ds = mongoDbDataSourceItem.DataSource as RVMongoDBDataSource;
+
+                ds.ConnectionString = "mongodb+srv://user01:*******@cluster0.ta2xrrt.mongodb.net/";
+                ds.Database = "test";
+            }
 
             return Task.FromResult(dataSourceItem);
         }
