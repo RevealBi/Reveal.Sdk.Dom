@@ -1,6 +1,6 @@
 ﻿namespace Reveal.Sdk.Dom.Data
 {
-    internal class PostgreSQLDataSource : SchemaDataSource
+    public class PostgreSQLDataSource : SchemaDataSource
     {
         public PostgreSQLDataSource()
         {

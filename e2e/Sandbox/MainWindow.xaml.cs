@@ -23,6 +23,7 @@ using Reveal.Sdk.Data.Rest;
 using Reveal.Sdk.Data.Snowflake;
 using Reveal.Sdk.Dom;
 using Sandbox.DashboardFactories;
+using Sandbox.Factories;
 using Sandbox.RevealSDK;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,7 @@ namespace Sandbox
             new RestDataSourceDashboard(),
             new SalesDashboard(),
             new SqlServerDataSourceDashboards(),
+            new PostgresqlDashboard()
         };
 
         public MainWindow()
@@ -59,7 +61,7 @@ namespace Sandbox
 
             RevealSdkSettings.DataSourceProvider = new Sandbox.RevealSDK.DataSourceProvider();
             RevealSdkSettings.AuthenticationProvider = new AuthenticationProvider();
-            RevealSdkSettings.DataSources.RegisterMicrosoftSqlServer().RegisterMicrosoftAnalysisServices();
+            RevealSdkSettings.DataSources.RegisterMicrosoftSqlServer().RegisterMicrosoftAnalysisServices().RegisterPostgreSQL();
 
             LoadDashboards();
 
@@ -158,6 +160,27 @@ namespace Sandbox
             sqlDSI.Table = "Customers";
             dsi.Add(sqlDSI);
 
+            var postgresDS = new RVPostgresDataSource
+            {
+                Id = "postgresId",
+                Title = "Postgres DS",
+                Host = "revealdb01.infragistics.local",
+                Database = "northwind",
+                Port = 5432,
+            };
+            ds.Add(postgresDS);
+
+            var postgresDSItem = new RVPostgresDataSourceItem(postgresDS)
+            {
+                Id = "postgresDSItemId",
+                Title = "Postgres DSItem",
+                Description = "Northwind Employees",
+                Database = "northwind",
+                Schema = "public",
+                Table = "employees"
+            };
+            dsi.Add(postgresDSItem);
+
             //var webDS = new RVWebResourceDataSource();
             //webDS.UseAnonymousAuthentication = true;
             //webDS.Title = "Web Resource";
@@ -237,6 +260,11 @@ namespace Sandbox
                 var selectedDashboard = _dashboardCreators.FirstOrDefault(x => x.Name == lastSelectedName);
                 _dashboardTypeSelector.SelectedItem = selectedDashboard;
             }
+        }
+
+        private void _dashboardTypeSelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

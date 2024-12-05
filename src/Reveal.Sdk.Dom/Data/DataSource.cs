@@ -16,6 +16,7 @@ namespace Reveal.Sdk.Dom.Data
         {
             SchemaTypeName = SchemaTypeNames.DataSourceType;
             Properties = new Dictionary<string, object>();
+            Settings = new Dictionary<string, object>();
         }
 
         public string Id
@@ -33,14 +34,18 @@ namespace Reveal.Sdk.Dom.Data
 
         public string Subtitle { get; set; }
 
+        [JsonIgnore]
         public string DefaultRefreshRate
         {
-            get => Properties.GetValue<string>("DefaultRefreshRate");
-            set => Properties.SetItem("DefaultRefreshRate", value);
+            get => Settings.GetValue<string>("DefaultRefreshRate");
+            set => Settings.SetItem("DefaultRefreshRate", value);
         }
 
         [JsonProperty]
         internal Dictionary<string, object> Properties { get; set; }
+
+        [JsonProperty]
+        internal Dictionary<string, object> Settings { get; set; }
 
         public override bool Equals(object obj)
         {
