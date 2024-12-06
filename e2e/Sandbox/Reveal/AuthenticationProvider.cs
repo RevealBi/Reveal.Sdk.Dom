@@ -1,6 +1,7 @@
 ﻿using Reveal.Sdk.Data;
 using Reveal.Sdk.Data.Microsoft.AnalysisServices;
 using Reveal.Sdk.Data.Microsoft.SqlServer;
+using Reveal.Sdk.Data.Snowflake;
 using System.Threading.Tasks;
 
 namespace Sandbox.RevealSDK
@@ -17,6 +18,10 @@ namespace Sandbox.RevealSDK
             else if (dataSource is RVNativeAnalysisServicesDataSource)
             {
                 userCredential = new RVUsernamePasswordDataSourceCredential("username", "password", "domain");
+            }
+            else if (dataSource is RVSnowflakeDataSource)
+            {
+                userCredential = new RVUsernamePasswordDataSourceCredential("snow-flake-username", "snow-flake-password");
             }
             return Task.FromResult(userCredential);
         }
