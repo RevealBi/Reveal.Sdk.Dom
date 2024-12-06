@@ -3,7 +3,7 @@ using Reveal.Sdk.Dom.Core.Extensions;
 
 namespace Reveal.Sdk.Dom.Data
 {
-    internal class WebServiceDataSourceItem : DataSourceItem
+    public class WebServiceDataSourceItem : DataSourceItem
     {
         public WebServiceDataSourceItem(string title, DataSource dataSource) :
             base(title, dataSource)
