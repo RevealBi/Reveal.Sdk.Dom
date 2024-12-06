@@ -22,6 +22,7 @@ using Reveal.Sdk.Data.PostgreSQL;
 using Reveal.Sdk.Data.Rest;
 using Reveal.Sdk.Data.Snowflake;
 using Reveal.Sdk.Dom;
+using Sandbox.DashboardCreators;
 using Sandbox.DashboardFactories;
 using Sandbox.RevealSDK;
 using System;
@@ -51,6 +52,7 @@ namespace Sandbox
             new RestDataSourceDashboard(),
             new SalesDashboard(),
             new SqlServerDataSourceDashboards(),
+            new MySqlDataSourceDashboards()
         };
 
         public MainWindow()
@@ -60,6 +62,8 @@ namespace Sandbox
             RevealSdkSettings.DataSourceProvider = new Sandbox.RevealSDK.DataSourceProvider();
             RevealSdkSettings.AuthenticationProvider = new AuthenticationProvider();
             RevealSdkSettings.DataSources.RegisterMicrosoftSqlServer().RegisterMicrosoftAnalysisServices();
+            RevealSdkSettings.DataSources.RegisterMySql();
+
 
             LoadDashboards();
 
@@ -176,6 +180,27 @@ namespace Sandbox
             //httpItem.Subtitle = "HTTP Analysis Services Item Subtitle";
             //httpItem.Cube = "Adventure Works";
             //dsi.Add(httpItem);
+
+            //var mysqlDS = new RVMySqlDataSource
+            //{
+            //    Id = "mysqlDS",
+            //    Title = "MySQL DS",
+            //    Subtitle = "My SQL Datasource",
+            //    Host = "mysqlserver.local",
+            //    Database = "northwind",
+            //    Port = 3306,
+            //};
+            //ds.Add(mysqlDS);
+
+            //var mysqlDSItem = new RVMySqlDataSourceItem(mysqlDS)
+            //{
+            //    Id = "mysqlDSItem",
+            //    Title = "MySQL DSItem",
+            //    Subtitle = "My SQL Datasource order table",
+            //    Database = "northwind",
+            //    Table = "orders"
+            //};
+            //dsi.Add(mysqlDSItem);
 
             e.Callback(new RevealDataSources(ds, dsi, true));
         }
