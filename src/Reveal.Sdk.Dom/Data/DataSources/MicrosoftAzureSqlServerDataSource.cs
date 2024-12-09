@@ -3,7 +3,7 @@ using Reveal.Sdk.Dom.Core.Extensions;
 
 namespace Reveal.Sdk.Dom.Data
 {
-    internal class MicrosoftAzureSqlServerDataSource : MicrosoftSqlServerDataSource
+    public class MicrosoftAzureSqlServerDataSource : MicrosoftSqlServerDataSource
     {
         public MicrosoftAzureSqlServerDataSource()
         {
