@@ -10,7 +10,11 @@ namespace Sandbox.RevealSDK
         public Task<IRVDataSourceCredential> ResolveCredentialsAsync(RVDashboardDataSource dataSource)
         {
             IRVDataSourceCredential userCredential = null;
-            if (dataSource is RVSqlServerDataSource)
+            if (dataSource is RVAzureSqlDataSource)
+            {
+                userCredential = new RVUsernamePasswordDataSourceCredential("revealAdmin", "Armonsuites1");
+            }
+            else if (dataSource is RVSqlServerDataSource)
             {
                 userCredential = new RVUsernamePasswordDataSourceCredential();
             }
@@ -18,6 +22,7 @@ namespace Sandbox.RevealSDK
             {
                 userCredential = new RVUsernamePasswordDataSourceCredential("username", "password", "domain");
             }
+            
             return Task.FromResult(userCredential);
         }
     }
