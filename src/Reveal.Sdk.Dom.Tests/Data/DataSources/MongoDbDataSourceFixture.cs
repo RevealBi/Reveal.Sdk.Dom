@@ -1,62 +1,60 @@
+using Newtonsoft.Json.Linq;
 using Reveal.Sdk.Dom.Core.Extensions;
 using Reveal.Sdk.Dom.Data;
+using System.Collections.Generic;
 using System.IO;
 using System;
 using Xunit;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 using Reveal.Sdk.Dom.Visualizations;
 
-namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
+namespace Reveal.Sdk.Dom.Tests.Data.DataSources
 {
-    public class MongoDbDataSourceItemFixture
+    public class MongoDbDataSourceFixture
     {
+        [Fact]
+        public void Constructor_SetsProviderToMongoDB_WhenConstructed()
+        {
+            // Act
+            var dataSource = new MongoDBDataSource();
+
+            // Assert
+            Assert.Equal(DataSourceProvider.MongoDB, dataSource.Provider);
+        }
+
         [Theory]
-        [InlineData("Test Item")]
-        [InlineData(null)]
-        public void Constructor_SetsTitleAndDataSource_WhenCalled(string title)
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ProcessDataOnServerDefaultValue_SetsAndGetsValue_WithDifferentInputs(bool defaultValue)
         {
             // Arrange
             var dataSource = new MongoDBDataSource();
 
             // Act
-            var item = new MongoDbDataSourceItem(title, dataSource);
+            dataSource.ProcessDataOnServerDefaultValue = defaultValue;
 
             // Assert
-            Assert.Equal(title, item.Title);
-            Assert.Equal(dataSource, item.DataSource);
+            Assert.Equal(defaultValue, dataSource.ProcessDataOnServerDefaultValue);
+            Assert.Equal(defaultValue, dataSource.Properties.GetValue<bool>("ServerAggregationDefault"));
         }
 
-        [Fact]
-        public void Collection_SetsAndGetsValue_WithInputs()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ProcessDataOnServerReadOnly_SetsAndGetsValue_WithDifferentInputs(bool readOnlyValue)
         {
             // Arrange
-            var item = new MongoDbDataSourceItem("Test Item", new MongoDBDataSource());
+            var dataSource = new MongoDBDataSource();
 
             // Act
-            item.Collection = "TestCollection";
+            dataSource.ProcessDataOnServerReadOnly = readOnlyValue;
 
             // Assert
-            Assert.Equal("TestCollection", item.Collection);
-            Assert.Equal("TestCollection", item.Properties.GetValue<string>("Table"));
+            Assert.Equal(readOnlyValue, dataSource.ProcessDataOnServerReadOnly);
+            Assert.Equal(readOnlyValue, dataSource.Properties.GetValue<bool>("ServerAggregationReadOnly"));
         }
 
         [Fact]
-        public void ProcessDataOnServer_SetsAndGetsValue_WithInputs()
-        {
-            // Arrange
-            var item = new MongoDbDataSourceItem("Test Item", new MongoDBDataSource());
-
-            // Act
-            item.ProcessDataOnServer = true;
-
-            // Assert
-            Assert.True(item.ProcessDataOnServer);
-            Assert.True(item.Properties.GetValue<bool>("ServerAggregation"));
-        }
-
-        [Fact]
-        public void RDashDocument_HasCorrectDataSourceItem_WhenLoadFromFile()
+        public void RDashDocument_HasCorrectDataSource_WhenLoadFromFile()
         {
             // Arrange
             var filePath = Path.Combine(Environment.CurrentDirectory, "Dashboards", "TestMongoDb.rdash");
@@ -64,13 +62,11 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
             // Act
             var document = RdashDocument.Load(filePath);
             var dataSource = document.DataSources[0];
-            var dataSourceItem = document.Visualizations[0].DataDefinition.DataSourceItem;
 
             // Assert
-            Assert.Equal(dataSource.Id, dataSourceItem.DataSourceId);
             Assert.Equal(DataSourceProvider.MongoDB, dataSource.Provider);
-            Assert.NotNull(dataSourceItem.Properties.GetValue<string>("Table"));
-            Assert.True(dataSourceItem.Properties.GetValue<bool>("ServerAggregation"));
+            Assert.NotNull(dataSource.Properties.GetValue<string>("ServerAggregationDefault"));
+            Assert.NotNull(dataSource.Properties.GetValue<string>("ServerAggregationReadOnly"));
         }
 
         [Fact]
@@ -105,24 +101,22 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
 
             var expectedDsJson = """
                 {
-                  "_type": "DataSourceItemType",
-                  "Id": "MyMongoDatasourceItem",
-                  "Title": "MyMongoDatasourceItem",
-                  "Subtitle": "Test Collection",
-                  "DataSourceId": "MyMongoDatasource",
-                  "HasTabularData": true,
-                  "HasAsset": false,
-                  "Properties": {
-                    "Collection": "data"
-                  },
-                  "Parameters": {}
+                    "_type": "DataSourceType",
+                    "Id": "MyMongoDatasource",
+                    "Provider": "MONGODB",
+                    "Description": "MyMongoDatasource",
+                    "Subtitle": "My MongoDB",
+                    "Properties": {
+                        "ServerAggregationDefault": true,
+                        "ServerAggregationReadOnly": false
+                    }
                 }
                 """;
 
             // Act
             var jsonData = document.ToJsonString();
             var jObject = JObject.Parse(jsonData);
-            var datasourceJson = jObject["Widgets"][0]["DataSpec"]["DataSourceItem"];
+            var datasourceJson = jObject["DataSources"][0];
 
             // Deserialize JSON strings to JObjects to make comparing them easier
             var expectedJObject = JObject.Parse(expectedDsJson);
