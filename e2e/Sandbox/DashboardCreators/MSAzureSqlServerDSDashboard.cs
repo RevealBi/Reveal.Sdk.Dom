@@ -1,10 +1,9 @@
 ﻿using Reveal.Sdk.Dom;
 using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations;
-using Sandbox.DashboardFactories;
 using System.Collections.Generic;
 
-namespace Sandbox.DashboardCreators
+namespace Sandbox.DashboardFactories
 {
     public class MSAzureSqlServerDSDashboard : IDashboardCreator
     {
