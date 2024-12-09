@@ -22,6 +22,7 @@ using Reveal.Sdk.Data.PostgreSQL;
 using Reveal.Sdk.Data.Rest;
 using Reveal.Sdk.Data.Snowflake;
 using Reveal.Sdk.Dom;
+using Sandbox.DashboardCreators;
 using Sandbox.DashboardFactories;
 using Sandbox.RevealSDK;
 using System;
@@ -51,6 +52,7 @@ namespace Sandbox
             new RestDataSourceDashboard(),
             new SalesDashboard(),
             new SqlServerDataSourceDashboards(),
+            new WebServiceDataSourceDashboard()
         };
 
         public MainWindow()
@@ -60,7 +62,7 @@ namespace Sandbox
             RevealSdkSettings.DataSourceProvider = new Sandbox.RevealSDK.DataSourceProvider();
             RevealSdkSettings.AuthenticationProvider = new AuthenticationProvider();
             RevealSdkSettings.DataSources.RegisterMicrosoftSqlServer().RegisterMicrosoftAnalysisServices();
-
+            
             LoadDashboards();
 
             _revealView.LinkedDashboardProvider = (string dashboardId, string linkTitle) =>
