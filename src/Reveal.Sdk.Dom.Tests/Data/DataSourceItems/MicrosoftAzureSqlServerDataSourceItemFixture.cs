@@ -1,4 +1,5 @@
-﻿using Reveal.Sdk.Dom.Data;
+﻿using Newtonsoft.Json.Linq;
+using Reveal.Sdk.Dom.Data;
 using Xunit;
 
 namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
@@ -58,6 +59,50 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
             Assert.Equal(expectedDSTitle, dataSourceItem.DataSource.Title);
             Assert.NotSame(dataSource, dataSourceItem.DataSource);
             Assert.IsType<MicrosoftAzureSqlServerDataSource>(dataSourceItem.DataSource);
+        }
+
+        [Fact]
+        public void ToJsonString_CreateExpectedRevealJson_NoConditions()
+        {
+            // Arrange
+            var expectedJson = @"{
+              ""_type"": ""DataSourceItemType"",
+              ""Id"": ""azureSqlDsItemId"",
+              ""Title"": ""Azure SQL DSItem"",
+              ""Subtitle"": ""Azure SQL DS Item SubTitle"",
+              ""DataSourceId"": ""azureSqlId"",
+              ""HasTabularData"": true,
+              ""HasAsset"": false,
+              ""Properties"": {
+                ""ServerAggregation"": true,
+                ""Database"": ""reveal"",
+                ""Table"": ""Categories""
+              },
+              ""Parameters"": {}
+            }";
+            var dataSource = new MicrosoftAzureSqlServerDataSource()
+            {
+                Id = "azureSqlId"
+            };
+            var dataSourceItem = new MicrosoftAzureSqlServerDataSourceItem("Azure SQL DSItem", dataSource)
+            {
+                Id = "azureSqlDsItemId",
+                Subtitle = "Azure SQL DS Item SubTitle",
+                HasTabularData = true,
+                HasAsset = false,
+                ProcessDataOnServer = true,
+                Database = "reveal",
+                Table = "Categories"
+                //DefaultRefreshRate = "161" // TODO: Check the DefaultRefreshRate when get Json, after DefaultRefreshRate is moved to Settings field
+            };
+
+            // Act
+            var json = dataSourceItem.ToJsonString();
+            var expectedJObject = JObject.Parse(expectedJson);
+            var actualJObject = JObject.Parse(json);
+
+            // Assert
+            Assert.Equal(expectedJObject, actualJObject);
         }
     }
 }
