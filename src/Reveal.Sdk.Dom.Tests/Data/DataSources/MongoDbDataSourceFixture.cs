@@ -22,6 +22,38 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         }
 
         [Theory]
+        [InlineData("mongodb://localhost:27017")]
+        [InlineData(null)]
+        public void ConnectionString_SetsAndGetsValue_WithDifferentInputs(string connectionString)
+        {
+            // Arrange
+            var dataSource = new MongoDBDataSource();
+
+            // Act
+            dataSource.ConnectionString = connectionString;
+
+            // Assert
+            Assert.Equal(connectionString, dataSource.ConnectionString);
+            Assert.Equal(connectionString, dataSource.Properties.GetValue<string>("ConnectionString"));
+        }
+
+        [Theory]
+        [InlineData("test")]
+        [InlineData(null)]
+        public void Database_SetsAndGetsValue_WithDifferentInputs(string dbName)
+        {
+            // Arrange
+            var dataSource = new MongoDBDataSource();
+
+            // Act
+            dataSource.Database = dbName;
+
+            // Assert
+            Assert.Equal(dbName, dataSource.Database);
+            Assert.Equal(dbName, dataSource.Properties.GetValue<string>("Database"));
+        }
+
+        [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void ProcessDataOnServerDefaultValue_SetsAndGetsValue_WithDifferentInputs(bool defaultValue)

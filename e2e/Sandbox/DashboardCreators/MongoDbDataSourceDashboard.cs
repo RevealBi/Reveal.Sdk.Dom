@@ -1,4 +1,4 @@
-﻿using Reveal.Sdk.Dom;
+using Reveal.Sdk.Dom;
 using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations;
 using System.Collections.Generic;
@@ -16,6 +16,8 @@ namespace Sandbox.Factories
                 Subtitle = "My MongoDB",
                 ProcessDataOnServerDefaultValue = true,
                 ProcessDataOnServerReadOnly = false,
+                ConnectionString = "mongodb+srv://cluster0.ta2xrrt.mongodb.net",
+                Database = "test"
             };
 
             var testCollection = new MongoDbDataSourceItem("DB Test", mongoDbDs)

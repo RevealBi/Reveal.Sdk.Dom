@@ -11,6 +11,20 @@ namespace Reveal.Sdk.Dom.Data
         }
 
         [JsonIgnore]
+        public string ConnectionString
+        {
+            get => Properties.GetValue<string>("ConnectionString");
+            set => Properties.SetItem("ConnectionString", value);
+        }
+
+        [JsonIgnore]
+        public string Database
+        {
+            get => Properties.GetValue<string>("Database");
+            set => Properties.SetItem("Database", value);
+        }
+
+        [JsonIgnore]
         public bool ProcessDataOnServerDefaultValue
         {
             get => Properties.GetValue<bool>("ServerAggregationDefault");

@@ -61,15 +61,15 @@ namespace Sandbox.RevealSDK
             //    ds.Database = "Northwind";
             //}
 
-            if (dataSourceItem is RVMongoDBDataSourceItem mongoDbDataSourceItem)
-            {
-                mongoDbDataSourceItem.Collection = "data";
+            //if (dataSourceItem is RVMongoDBDataSourceItem mongoDbDataSourceItem)
+            //{
+            //    mongoDbDataSourceItem.Collection = "data";
 
-                var ds = mongoDbDataSourceItem.DataSource as RVMongoDBDataSource;
+            //    var ds = mongoDbDataSourceItem.DataSource as RVMongoDBDataSource;
 
-                ds.ConnectionString = "mongodb+srv://user01:*******@cluster0.ta2xrrt.mongodb.net/";
-                ds.Database = "test";
-            }
+            //    ds.ConnectionString = "mongodb+srv://user01:*******@cluster0.ta2xrrt.mongodb.net/";
+            //    ds.Database = "test";
+            //}
 
             return Task.FromResult(dataSourceItem);
         }
