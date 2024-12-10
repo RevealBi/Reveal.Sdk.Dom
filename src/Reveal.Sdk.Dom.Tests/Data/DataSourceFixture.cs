@@ -93,7 +93,7 @@ namespace Reveal.Sdk.Dom.Tests.Data
 
             // Assert
             Assert.Equal(expectedValue, actualValue);
-            Assert.Equal(expectedValue, dataSource.Properties.GetValue<string>("DefaultRefreshRate"));
+            Assert.Equal(expectedValue, dataSource.Settings.GetValue<string>("DefaultRefreshRate"));
         }
 
         [Fact]

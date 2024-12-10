@@ -25,6 +25,7 @@ namespace Reveal.Sdk.Dom.Data
             {
                 DataSourceType.MicrosoftSqlServer => new MicrosoftSqlServerDataSourceItem(title, dataSource),
                 DataSourceType.REST => new RestDataSourceItem(title, dataSource),
+                DataSourceType.PostgreSQL => new PostgreSqlDataSourceItem(title, dataSource),
                 _ => throw new NotImplementedException($"No builder implemented for provider: {type}")
             };
 
