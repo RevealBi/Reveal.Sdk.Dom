@@ -3,17 +3,17 @@ using Reveal.Sdk.Dom.Core.Extensions;
 
 namespace Reveal.Sdk.Dom.Data
 {
-    internal class GoogleDriveDataSourceItem : DataSourceItem
+    public class GoogleDriveDataSourceItem : DataSourceItem
     {
         public GoogleDriveDataSourceItem(string title, DataSource dataSource) :
             base(title, dataSource)
         { }
 
         [JsonIgnore]
-        public string Identitifer
+        public string Identifier
         {
-            get => Properties.GetValue<string>("Identitifer");
-            set => Properties.SetItem("Identitifer", value);
+            get => Properties.GetValue<string>("Identifier");
+            set => Properties.SetItem("Identifier", value);
         }
     }
 }
