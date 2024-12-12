@@ -4,6 +4,7 @@
     {
         REST,
         MicrosoftSqlServer,
+        Oracle,
         PostgreSQL,
     }
 }

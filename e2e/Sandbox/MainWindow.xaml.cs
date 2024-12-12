@@ -22,6 +22,8 @@ using Reveal.Sdk.Data.PostgreSQL;
 using Reveal.Sdk.Data.Rest;
 using Reveal.Sdk.Data.Snowflake;
 using Reveal.Sdk.Dom;
+using Reveal.Sdk.Dom.Data;
+using Sandbox.DashboardCreators;
 using Sandbox.DashboardFactories;
 using Sandbox.RevealSDK;
 using System;
@@ -69,6 +71,7 @@ namespace Sandbox
             new SalesDashboard(),
             new SnowflakeDashboard(),
             new SqlServerDataSourceDashboards(),
+            new OracleDataSourceDashboard(),
             new WebServiceDataSourceDashboard(),
         };
 
@@ -210,7 +213,7 @@ namespace Sandbox
             //httpItem.Title = "HTTP Analysis Services Item";
             //httpItem.Subtitle = "HTTP Analysis Services Item Subtitle";
             //httpItem.Cube = "Adventure Works";
-            //dsi.Add(httpItem);
+            //dsi.Add(httpItem);           
 
             e.Callback(new RevealDataSources(ds, dsi, true));
         }

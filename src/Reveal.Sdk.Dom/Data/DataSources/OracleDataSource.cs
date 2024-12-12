@@ -3,7 +3,7 @@ using Reveal.Sdk.Dom.Core.Extensions;
 
 namespace Reveal.Sdk.Dom.Data
 {
-    internal class OracleDataSource : HostDataSource
+    public class OracleDataSource : HostDataSource
     {
         public OracleDataSource()
         {
