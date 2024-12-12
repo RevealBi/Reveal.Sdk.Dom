@@ -3,7 +3,7 @@ using Reveal.Sdk.Dom.Core.Extensions;
 
 namespace Reveal.Sdk.Dom.Data
 {
-    internal class AmazonRedshiftDataSource : HostDataSource
+    public class AmazonRedshiftDataSource : HostDataSource
     {
         public AmazonRedshiftDataSource()
         {
