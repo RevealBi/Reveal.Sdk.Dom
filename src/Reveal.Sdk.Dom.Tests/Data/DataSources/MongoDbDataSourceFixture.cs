@@ -133,15 +133,16 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
 
             var expectedDsJson = """
                 {
-                    "_type": "DataSourceType",
-                    "Id": "MyMongoDatasource",
-                    "Provider": "MONGODB",
-                    "Description": "MyMongoDatasource",
-                    "Subtitle": "My MongoDB",
-                    "Properties": {
+                      "_type": "DataSourceType",
+                      "Id": "MyMongoDatasource",
+                      "Provider": "MONGODB",
+                      "Description": "MyMongoDatasource",
+                      "Subtitle": "My MongoDB",
+                      "Properties": {
                         "ServerAggregationDefault": true,
                         "ServerAggregationReadOnly": false
-                    }
+                      },
+                      "Settings": {}
                 }
                 """;
 
@@ -151,7 +152,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
             var datasourceJson = jObject["DataSources"][0];
 
             // Deserialize JSON strings to JObjects to make comparing them easier
-            var expectedJObject = JObject.Parse(expectedDsJson);
+           var expectedJObject = JObject.Parse(expectedDsJson);
 
             // Assert
             Assert.Equal(expectedJObject, datasourceJson);

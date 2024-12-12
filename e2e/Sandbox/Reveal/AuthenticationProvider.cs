@@ -15,6 +15,8 @@ using Reveal.Sdk.Data.MySql;
 using Reveal.Sdk.Data.OData;
 using Reveal.Sdk.Data.Oracle;
 using Reveal.Sdk.Data.Microsoft.SynapseAnalytics;
+using Reveal.Sdk.Data.Snowflake;
+using Reveal.Sdk.Data.PostgreSQL;
 
 namespace Sandbox.RevealSDK
 {
