@@ -2,9 +2,9 @@
 {
     public static class IRestDataSourceItemExtensions
     {
-        public static T SetUri<T>(this T dsi, string uri) where T : RestDataSourceItem
+        public static T SetUrl<T>(this T dsi, string url) where T : RestDataSourceItem
         {
-            dsi.Uri = uri;
+            dsi.Url = url;
             return dsi;
         }
 

@@ -1,11 +1,16 @@
-﻿using Reveal.Sdk.Dom.Core.Constants;
+﻿using Newtonsoft.Json.Linq;
+using Reveal.Sdk.Dom.Core.Constants;
 using Reveal.Sdk.Dom.Core.Extensions;
+using Reveal.Sdk.Dom.Core.Serialization;
 using Reveal.Sdk.Dom.Core.Utilities;
 using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using Xunit;
 
 namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
@@ -94,13 +99,13 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         {
             // Arrange
             var restDataSourceItem = new RestDataSourceItem("Test");
-            var uri = "https://example.com/api/data";
+            var url = "https://example.com/api/data";
 
             // Act
-            restDataSourceItem.Uri = uri;
+            restDataSourceItem.Url = url;
 
             // Assert
-            Assert.Equal(uri, restDataSourceItem.Uri);
+            Assert.Equal(url, restDataSourceItem.Url);
         }
 
         [Fact]
@@ -403,6 +408,100 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
             Assert.Equal(2, document.DataSources.Count);
             Assert.Equal(DataSourceIds.CSV, document.DataSources[0].Id);
             Assert.Equal(DataSourceProvider.CSV, document.DataSources[0].Provider);
+        }
+
+        [Fact]
+        public void RDashDocument_HasCorrectDataSourceItem_WhenLoadFromFile()
+        {
+            // Arrange
+            var filePath = Path.Combine(Environment.CurrentDirectory, "Dashboards", "TestRest.rdash");
+
+            // Act
+            var document = RdashDocument.Load(filePath);
+            var dataSource = document.DataSources.LastOrDefault();
+            var dataSourceItem = document.Visualizations.LastOrDefault().DataDefinition.DataSourceItem;
+
+            // Assert
+            Assert.Equal(DataSourceProvider.REST, dataSource.Provider);
+            Assert.False(dataSourceItem.Properties.GetValue<bool>("ServerAggregation"));
+        }
+
+        [Fact]
+        public void ToJsonString_CreatesFormattedJson_ForRestDataSource()
+        {
+            // Arrange
+            var expectedJson =
+                """
+                {
+                  "_type": "DataSourceItemType",
+                  "Id": "RestItem",
+                  "Title": "Rest DS Item",
+                  "DataSourceId": "__JSON",
+                  "HasTabularData": true,
+                  "HasAsset": false,
+                  "Properties": {},
+                  "Parameters": {
+                    "config": {
+                      "iterationDepth": 0,
+                      "columnsConfig": [
+                        {
+                          "key": "_id",
+                          "type": 0
+                        },
+                        {
+                          "key": "name",
+                          "type": 0
+                        }
+                      ]
+                    }
+                  },
+                  "ResourceItem": {
+                    "_type": "DataSourceItemType",
+                    "Id": "RestItem",
+                    "Title": "DB Test",
+                    "DataSourceId": "Json",
+                    "HasTabularData": true,
+                    "HasAsset": false,
+                    "Properties": {
+                      "Url": "https://excel2json.io/api/share/6e0f06b3-72d3-4fec-7984-08da43f56bb9"
+                    },
+                    "Parameters": {}
+                  }
+                }
+                """;
+
+            var dataSource = new DataSource()
+            {
+                Id = "Json",
+                Title = "Json DS",
+                DefaultRefreshRate = "120",
+                Subtitle = "Excel2Json"
+            };
+
+            var dataSourceItems = new RestDataSourceItem("DB Test", dataSource)
+            {
+                Id = "RestItem",
+                Title = "Rest DS Item",
+                Url = "https://excel2json.io/api/share/6e0f06b3-72d3-4fec-7984-08da43f56bb9",
+                Fields = new List<IField>
+                {
+                    new TextField("_id"),
+                    new TextField("name"),
+                }
+            };
+
+            var document = new RdashDocument("My Dashboard");
+            document.Visualizations.Add(new GridVisualization("Test List", dataSourceItems).SetColumns("name"));
+            var expectedJObject = JObject.Parse(expectedJson);
+
+            // Act
+            RdashSerializer.SerializeObject(document);
+            var json = document.ToJsonString();
+            var jObject = JObject.Parse(json);
+            var actualJObject = jObject["Widgets"].FirstOrDefault()["DataSpec"]["DataSourceItem"];
+
+            // Assert
+            Assert.Equal(expectedJObject, actualJObject);
         }
     }
 }

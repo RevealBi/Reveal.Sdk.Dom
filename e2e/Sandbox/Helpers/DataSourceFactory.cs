@@ -14,14 +14,14 @@ namespace Sandbox.Helpers
             Subtitle = "The Data Source for Excel via REST",
         };
 
-        static string _restExcelUri = "http://dl.infragistics.com/reportplus/reveal/samples/Samples.xlsx";    
+        static string _restExcelUrl = "http://dl.infragistics.com/reportplus/reveal/samples/Samples.xlsx";    
 
         internal static DataSourceItem GetMarketingDataSourceItem()
         {
             var excelDataSourceItem = new RestDataSourceItem("Marketing", _excelDataSource)
             {
                 Subtitle = "Excel Data Source Item",
-                Uri = _restExcelUri,
+                Url = _restExcelUrl,
                 IsAnonymous = true,
                 Fields = GetMarketingDataSourceFields(),
             };
@@ -35,7 +35,7 @@ namespace Sandbox.Helpers
             var excelDataSourceItem = new RestDataSourceItem("Healthcare", _excelDataSource)
             {
                 Subtitle = "Excel Data Source Item",
-                Uri = _restExcelUri,
+                Url = _restExcelUrl,
                 IsAnonymous = true,
                 Fields = GetHealthcareDataSourceFields(),
             };
@@ -49,7 +49,7 @@ namespace Sandbox.Helpers
             var excelDataSourceItem = new RestDataSourceItem("Manufacturing", _excelDataSource)
             {
                 Subtitle = "Excel Data Source Item",
-                Uri = _restExcelUri,
+                Url = _restExcelUrl,
                 IsAnonymous = true,
                 Fields = GetManufacturingDataSourceFields(),
             };
@@ -63,7 +63,7 @@ namespace Sandbox.Helpers
             var excelDataSourceItem = new RestDataSourceItem("Sales", _excelDataSource)
             {
                 Subtitle = "Excel Data Source Item",
-                Uri = _restExcelUri,
+                Url = _restExcelUrl,
                 IsAnonymous = true,
                 Fields = GetSalesDataSourceFields(),
             };

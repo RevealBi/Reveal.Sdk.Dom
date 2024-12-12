@@ -5,7 +5,7 @@ using Sandbox.Helpers;
 
 namespace Sandbox.DashboardFactories
 {
-    internal class RestDataSourceDashboard: IDashboardCreator
+    internal class RestDataSourceDashboard : IDashboardCreator
     {
         public string Name => "REST Data Source";
 
@@ -17,7 +17,7 @@ namespace Sandbox.DashboardFactories
             var jsonDataSourceItem = new RestDataSourceItem("Sales by Category", new DataSource { Title = "JSON DS", Subtitle = "JSON DS Subtitle" })
             {
                 Subtitle = "JSON Data Source Item",
-                Uri = "https://excel2json.io/api/share/6e0f06b3-72d3-4fec-7984-08da43f56bb9",
+                Url = "https://excel2json.io/api/share/6e0f06b3-72d3-4fec-7984-08da43f56bb9",
                 IsAnonymous = true,
                 Fields = DataSourceFactory.GetSalesByCategoryFields(),
             };
@@ -41,7 +41,7 @@ namespace Sandbox.DashboardFactories
             //csv
             var csvDataSourceItem = new RestDataSourceItem("Illinois School Info", new DataSource() { Title = "CSV DS", Subtitle = "CSV DS Subtitle" })
                 .SetSubtitle("CSV Data Source Item")
-                .SetUri("https://query.data.world/s/y32gtgblzpemyyvtig47dz7tedgkto")
+                .SetUrl("https://query.data.world/s/y32gtgblzpemyyvtig47dz7tedgkto")
                 .SetIsAnonymous(true)
                 .SetFields(DataSourceFactory.GetCsvDataSourceFields())
                 .WithCsv();

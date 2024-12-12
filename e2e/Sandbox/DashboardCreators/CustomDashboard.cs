@@ -16,7 +16,7 @@ namespace Sandbox.DashboardFactories
             var excelDataSourceItem = new RestDataSourceItem("Marketing Sheet")
             {
                 Subtitle = "Excel Data Source Item",
-                Uri = "http://dl.infragistics.com/reportplus/reveal/samples/Samples.xlsx",
+                Url = "http://dl.infragistics.com/reportplus/reveal/samples/Samples.xlsx",
                 IsAnonymous = true,
                 Fields = DataSourceFactory.GetMarketingDataSourceFields(),
             };
@@ -25,7 +25,7 @@ namespace Sandbox.DashboardFactories
             var csvDataSourceItem = new RestDataSourceItem("Illinois School Info")
             {
                 Subtitle = "CSV Data Source Item",
-                Uri = "https://query.data.world/s/y32gtgblzpemyyvtig47dz7tedgkto",
+                Url = "https://query.data.world/s/y32gtgblzpemyyvtig47dz7tedgkto",
                 IsAnonymous = true,
                 Fields = DataSourceFactory.GetCsvDataSourceFields(),
             };
@@ -34,7 +34,7 @@ namespace Sandbox.DashboardFactories
             var financialDataSourceItem = new RestDataSourceItem("OHLC")
             {
                 Subtitle = "Financial Data Source Item",
-                Uri = "https://excel2json.io/api/share/8bb2cd78-1b87-4142-00a2-08da188ec9ab",
+                Url = "https://excel2json.io/api/share/8bb2cd78-1b87-4142-00a2-08da188ec9ab",
                 IsAnonymous = true,
                 Fields = DataSourceFactory.GetOHLCDataSourceFields(),
             };
@@ -42,7 +42,7 @@ namespace Sandbox.DashboardFactories
             var revenueDataSourceItem = new RestDataSourceItem("Revenue")
             {
                 Subtitle = "Choropleth Data Source Item",
-                Uri = "https://excel2json.io/api/share/818e7b9a-f463-4565-435d-08da496bf5f2",
+                Url = "https://excel2json.io/api/share/818e7b9a-f463-4565-435d-08da496bf5f2",
                 IsAnonymous = true,
                 Fields = DataSourceFactory.GetRevenueDataSourceFields(),
             };
