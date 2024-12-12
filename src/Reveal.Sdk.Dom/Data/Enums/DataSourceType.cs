@@ -5,5 +5,6 @@
         REST,
         MicrosoftSqlServer,
         PostgreSQL,
+        MongoDB,
     }
 }

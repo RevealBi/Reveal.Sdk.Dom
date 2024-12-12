@@ -36,6 +36,9 @@
     <None Update="Dashboards\Sales.rdash">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="Dashboards\TestMongoDb.rdash">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

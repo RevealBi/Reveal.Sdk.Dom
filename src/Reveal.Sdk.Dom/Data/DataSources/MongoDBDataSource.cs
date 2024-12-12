@@ -3,7 +3,7 @@ using Reveal.Sdk.Dom.Core.Extensions;
 
 namespace Reveal.Sdk.Dom.Data
 {
-    internal class MongoDBDataSource : DatabaseDataSource
+    public class MongoDBDataSource : DataSource
     {
         public MongoDBDataSource()
         {
@@ -15,6 +15,13 @@ namespace Reveal.Sdk.Dom.Data
         {
             get => Properties.GetValue<string>("ConnectionString");
             set => Properties.SetItem("ConnectionString", value);
+        }
+
+        [JsonIgnore]
+        public string Database
+        {
+            get => Properties.GetValue<string>("Database");
+            set => Properties.SetItem("Database", value);
         }
 
         [JsonIgnore]
