@@ -5,6 +5,10 @@ namespace Reveal.Sdk.Dom.Data
 {
     public class MicrosoftAnalysisServicesDataSourceItem : DataSourceItem
     {
+        public MicrosoftAnalysisServicesDataSourceItem(string title) 
+            : base(title, new MicrosoftAnalysisServicesDataSource()) 
+        { }
+
         public  MicrosoftAnalysisServicesDataSourceItem(string title, MicrosoftAnalysisServicesDataSource dataSource) :
             base(title, dataSource)
         { }

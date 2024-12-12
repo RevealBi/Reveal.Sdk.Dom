@@ -7,7 +7,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
     public class MicrosoftAnalysisServicesDataSourceFixture
     {
         [Fact]
-        public void Constructor_SetProviderToMicrosoftAnalysisServices_WhenConstructed()
+        public void Constructor_CreateMSAnalysisDS_WithoutParameters()
         {
             // Act
             var dataSource = new MicrosoftAnalysisServicesDataSource();
@@ -17,7 +17,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         }
 
         [Fact]
-        public void Catalog_SaveValueAndProperties_WhenSet()
+        public void GetCatalog_ReturnSameValue_WithSetValue()
         {
             // Arrange
             var dataSource = new MicrosoftAnalysisServicesDataSource();
@@ -32,7 +32,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         }
 
         [Fact]
-        public void Host_SaveValueAndProperties_WhenSet()
+        public void GetHost_ReturnSameValue_WithSetValue()
         {
             // Arrange
             var dataSource = new MicrosoftAnalysisServicesDataSource();
@@ -47,7 +47,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
         }
 
         [Fact]
-        public void Port_SaveValueAndProperties_WhenSet()
+        public void GetPort_ReturnSameValue_WithSetValue()
         {
             // Arrange
             var dataSource = new MicrosoftAnalysisServicesDataSource();
@@ -61,6 +61,4 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSources
             Assert.Equal(port, dataSource.Properties.GetValue<int>("Port"));
         }
     }
-
-    
 }
