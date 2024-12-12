@@ -39,7 +39,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
 
             // Assert
             Assert.Equal(accountId, dataSourceItem.AccountId);
-            Assert.Equal(accountId, dataSourceItem.Properties.GetValue<string>("AccountId"));
+            Assert.Equal(accountId, dataSourceItem.Properties.GetValue<string>("ga4AccountId"));
         }
 
         [Fact]
@@ -56,6 +56,37 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
             // Assert
             Assert.Equal(propertyId, dataSourceItem.PropertyId);
             Assert.Equal(propertyId, dataSourceItem.Properties.GetValue<string>("PropertyId"));
+        }
+
+        [Fact]
+        public void Id_SameAsPropertyId_WhenSet()
+        {
+            // Arrange
+            var dataSource = new GoogleAnalytics4DataSource();
+            var dataSourceItem = new GoogleAnalytics4DataSourceItem("Test", dataSource);
+            var propertyId = "TestPropertyId";
+
+            // Act
+            dataSourceItem.PropertyId = propertyId;
+
+            // Assert
+            Assert.Equal(propertyId, dataSourceItem.Id);
+        }
+
+        [Fact]
+        public void PropertyName_SaveValueAndProperties_WhenSet()
+        {
+            // Arrange
+            var dataSource = new GoogleAnalytics4DataSource();
+            var dataSourceItem = new GoogleAnalytics4DataSourceItem("Test", dataSource);
+            var propertyName = "TestPropertyName";
+
+            // Act
+            dataSourceItem.PropertyName = propertyName;
+
+            // Assert
+            Assert.Equal(propertyName, dataSourceItem.PropertyName);
+            Assert.Equal(propertyName, dataSourceItem.Properties.GetValue<string>("PropertyName"));
         }
     }
 }

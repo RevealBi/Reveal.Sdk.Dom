@@ -1,12 +1,24 @@
-using Reveal.Sdk.Data;
+﻿using Reveal.Sdk.Data;
 using Reveal.Sdk.Data.Amazon.Athena;
 using Reveal.Sdk.Data.Amazon.S3;
-using Reveal.Sdk.Data;
 using Reveal.Sdk.Data.Microsoft.AnalysisServices;
 using Reveal.Sdk.Data.Microsoft.SqlServer;
 using Reveal.Sdk.Data.Snowflake;
 using Reveal.Sdk.Data.PostgreSQL;
 using System.Threading.Tasks;
+using Reveal.Sdk.Data.Amazon.Redshift;
+using Reveal.Sdk.Data.Google.Analytics4;
+using Reveal.Sdk.Data.Google.BigQuery;
+using Reveal.Sdk.Data.Google.Drive;
+using Reveal.Sdk.Data.Excel;
+using Reveal.Sdk.Data.MongoDB;
+using Reveal.Sdk.Data.MySql;
+using Reveal.Sdk.Data.OData;
+using Reveal.Sdk.Data.Oracle;
+using Reveal.Sdk.Data.Microsoft.SynapseAnalytics;
+using System.IO;
+using System.Text;
+using Google.Apis.Auth.OAuth2;
 
 namespace Sandbox.RevealSDK
 {
@@ -39,7 +51,89 @@ namespace Sandbox.RevealSDK
             {
                 userCredential = new RVAmazonWebServicesCredentials("key", "token");
             }
+            else if (dataSource is RVRedshiftDataSource)
+            {
+                userCredential = new RVUsernamePasswordDataSourceCredential("username", "password");
+            }
+            else if (dataSource is RVGoogleAnalytics4DataSource)
+            {
+                userCredential = new RVBearerTokenDataSourceCredential(RetrieveGoogleAnalyticsBearerToken(), null);
+            }
+            else if (dataSource is RVBigQueryDataSource)
+            {
+                userCredential = new RVBearerTokenDataSourceCredential("token", null);
+            }
+            else if (dataSource is RVGoogleDriveDataSource)
+            {
+                userCredential = new RVBearerTokenDataSourceCredential("token", null);
+            }
+            else if(dataSource is RVGoogleSheetDataSource)
+            {
+
+            }
+            else if(dataSource is RVHttpAnalysisServicesDataSource)
+            {
+                userCredential = new RVUsernamePasswordDataSourceCredential("username", "password");
+            }
+            else if(dataSource is RVAnalysisServicesDataSource)
+            {
+
+            }
+            else if(dataSource is RVAzureAnalysisServicesDataSource)
+            {
+                userCredential = new RVBearerTokenDataSourceCredential("token", null);
+            }
+            else if(dataSource is RVMongoDBDataSource)
+            {
+                userCredential = new RVUsernamePasswordDataSourceCredential("username", "password");
+            }
+            else if(dataSource is RVMySqlDataSource)
+            {
+                userCredential = new RVUsernamePasswordDataSourceCredential("username", "password");
+            }
+            else if(dataSource is RVODataDataSource)
+            {
+                userCredential = new RVBearerTokenDataSourceCredential("token", null);
+            }
+            else if(dataSource is RVOracleDataSource)
+            {
+                new RVUsernamePasswordDataSourceCredential("username", "password");
+            }
+            else if(dataSource is RVAzureSynapseDataSource)
+            {
+
+            }
+
             return Task.FromResult(userCredential);
+        }
+
+        internal static string RetrieveGoogleAnalyticsBearerToken()
+        {
+            var jsonKey = @"
+                {
+                  ""type"": ""service_account"",
+                  ""project_id"": ""reveal-8ed49"",
+                  ""private_key_id"": ""*****"",
+                  ""private_key"": ""*****"",
+                  ""client_email"": ""testga4-491@reveal-8ed49.iam.gserviceaccount.com"",
+                  ""client_id"": ""108455775474842128209"",
+                  ""auth_uri"": ""https://accounts.google.com/o/oauth2/auth"",
+                  ""token_uri"": ""https://oauth2.googleapis.com/token"",
+                  ""auth_provider_x509_cert_url"": ""https://www.googleapis.com/oauth2/v1/certs"",
+                  ""client_x509_cert_url"": ""https://www.googleapis.com/robot/v1/metadata/x509/testga4-491%40reveal-8ed49.iam.gserviceaccount.com"",
+                  ""universe_domain"": ""googleapis.com""
+                }
+            ";
+
+            var memoryStream = new MemoryStream();
+            byte[] jsonKeyBytes = Encoding.UTF8.GetBytes(jsonKey);
+            memoryStream.Write(jsonKeyBytes, 0, jsonKeyBytes.Length);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+            var credential = GoogleCredential.FromStream(memoryStream).CreateScoped("https://www.googleapis.com/auth/analytics.readonly");
+
+            var accessToken = credential.UnderlyingCredential.GetAccessTokenForRequestAsync().Result;
+
+            return accessToken;
         }
     }
 }

@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Google.Apis.Auth.AspNetCore" Version="1.65.0" />
     <PackageReference Include="Reveal.Sdk.Data.Amazon.Athena" Version="1.7.1" />
     <PackageReference Include="Reveal.Sdk.Data.Amazon.Redshift" Version="1.7.1" />
     <PackageReference Include="Reveal.Sdk.Data.Amazon.S3" Version="1.7.1" />
