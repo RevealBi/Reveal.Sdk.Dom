@@ -60,6 +60,7 @@ namespace Sandbox
             new MSAnalysisServiceDashboard(),
             new MSAzureAnalysisServiceDashboard(),
             new MSAzureSqlDashboard(),
+            new MSAzureSynapseAnalyticsDashboard(),
             new MySqlDashboard(),
             new MSAzureSqlServerDSDashboard(),
             new ODataDashboard(),

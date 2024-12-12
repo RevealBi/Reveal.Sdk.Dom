@@ -24,7 +24,11 @@ namespace Sandbox.RevealSDK
         public Task<IRVDataSourceCredential> ResolveCredentialsAsync(RVDashboardDataSource dataSource)
         {
             IRVDataSourceCredential userCredential = null;
-            if (dataSource is RVAzureSqlDataSource)
+            if (dataSource is RVAzureSynapseDataSource)
+            {
+                userCredential = new RVUsernamePasswordDataSourceCredential("azure-synapse-username", "password", "domain");
+            }
+            else if (dataSource is RVAzureSqlDataSource)
             {
                 userCredential = new RVUsernamePasswordDataSourceCredential("azure-username", "password");
             }
