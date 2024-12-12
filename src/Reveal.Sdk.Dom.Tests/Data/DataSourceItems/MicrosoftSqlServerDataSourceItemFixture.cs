@@ -6,7 +6,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
     public class MicrosoftSqlServerDataSourceItemFixture
     {
         [Fact]
-        public void HasTabularData_Should_Be_True()
+        public void HasTabularData_ShouldBeTrue_WhenConstructed()
         {
             // Arrange
             var item = new MicrosoftSqlServerDataSourceItem("Test Item", new MicrosoftSqlServerDataSource());
@@ -16,7 +16,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         }
 
         [Fact]
-        public void HasAsset_Should_Be_False()
+        public void HasAsset_ShouldBeFalse_WhenConstructed()
         {
             // Arrange
             var item = new MicrosoftSqlServerDataSourceItem("Test Item", new MicrosoftSqlServerDataSource());
@@ -25,11 +25,12 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
             Assert.False(item.HasAsset);
         }
 
-        [Fact]
-        public void Table_GetAndSetProperties_ReturnsCorrectValue()
+        [Theory]
+        [InlineData("Test Table")]
+        [InlineData(null)]
+        public void Table_SetsAndGetsValue_WithDifferentInputs(string table)
         {
             // Arrange
-            string table = "Test Table";
             var item = new MicrosoftSqlServerDataSourceItem("Test Item", new MicrosoftSqlServerDataSource());
 
             // Act
@@ -40,7 +41,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         }
 
         [Fact]
-        public void Constructor_WithDataSource_SetsTitleAndDataSource()
+        public void Constructor_SetsTitleAndDataSource_WhenConstructedWithDataSource()
         {
             // Arrange
             string title = "Test Item";
@@ -55,7 +56,7 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         }
 
         [Fact]
-        public void Constructor_WithTable_SetsTitleTableAndDataSource()
+        public void Constructor_SetsTitleTableAndDataSource_WhenConstructedWithTable()
         {
             // Arrange
             string title = "Test Item";
@@ -72,10 +73,12 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         }
 
         [Fact]
-        public void Constructor_WithNonSqlServerDataSource_CreatesSqlServerDataSource()
+        public void Constructor_CreatesSqlServerDataSource_WhenConstructedWithNonSqlServerDataSource()
         {
             // Arrange
             var dataSource = new DataSource();
+
+            // Act
             var item = new MicrosoftSqlServerDataSourceItem("Test Item", dataSource);
 
             // Assert
@@ -83,10 +86,12 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         }
 
         [Fact]
-        public void Constructor_WithSqlServerDataSource_DoesNotCreateNewDataSource()
+        public void Constructor_DoesNotCreateNewDataSource_WhenConstructedWithSqlServerDataSource()
         {
             // Arrange
             var dataSource = new MicrosoftSqlServerDataSource();
+
+            // Act
             var item = new MicrosoftSqlServerDataSourceItem("Test Item", dataSource);
 
             // Assert

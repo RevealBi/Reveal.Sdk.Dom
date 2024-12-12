@@ -4,6 +4,7 @@ using Reveal.Sdk.Data.Amazon.S3;
 using Reveal.Sdk.Data.Microsoft.AnalysisServices;
 using Reveal.Sdk.Data.Microsoft.SqlServer;
 using Reveal.Sdk.Data.Snowflake;
+using Reveal.Sdk.Data.MySql;
 using Reveal.Sdk.Data.PostgreSQL;
 using System.Threading.Tasks;
 using Reveal.Sdk.Data.Amazon.Redshift;
@@ -39,6 +40,10 @@ namespace Sandbox.RevealSDK
             else if (dataSource is RVSnowflakeDataSource)
             {
                 userCredential = new RVUsernamePasswordDataSourceCredential("snow-flake-username", "snow-flake-password");
+            }
+            else if (dataSource is RVMySqlDataSource)
+            {
+                userCredential = new RVUsernamePasswordDataSourceCredential("username", "password");
             }
             else if (dataSource is RVPostgresDataSource)
             {
