@@ -1,5 +1,6 @@
 using Reveal.Sdk;
 using Reveal.Sdk.Data;
+using Reveal.Sdk.Data.Google.Analytics4;
 using Reveal.Sdk.Data.Microsoft.SqlServer;
 using Reveal.Sdk.Dom;
 using Sandbox.DashboardFactories;
@@ -73,7 +74,8 @@ namespace Sandbox
                 .RegisterAmazonRedshift()
                 .RegisterAmazonS3()
                 .RegisterGoogleDrive()
-                .RegisterOracle();
+                .RegisterOracle()
+                .RegisterGoogleAnalytics4();
 
             LoadDashboards();
 
@@ -171,6 +173,29 @@ namespace Sandbox
             sqlDSI.Subtitle = "SQL Server DSI Subtitle";
             sqlDSI.Table = "Customers";
             dsi.Add(sqlDSI);
+
+
+            var ga4Ds = new RVGoogleAnalytics4DataSource()
+            {
+                Id = "ga4Ds",
+                Title = "Google Analytics 4",
+                Subtitle = "Query your data",
+                AccountId = "392932",
+                PropertyId = "325972604",
+            };
+
+            ds.Add(ga4Ds);
+
+            var ga4Dsi = new RVGoogleAnalytics4DataSourceItem(ga4Ds)
+            {
+                Id = "ga4Dsi",
+                Title = "z[STAGING] Roll-up: Infragistics Web Properties - GA4",
+                Subtitle = "Infragistics Inc.",
+                AccountId = "392932",
+                PropertyId = "325972604",
+            };
+            dsi.Add(ga4Dsi);
+
 
 
             //var webDS = new RVWebResourceDataSource();

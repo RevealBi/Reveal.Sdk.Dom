@@ -16,45 +16,71 @@ namespace Sandbox.DashboardFactories
         {
             var ga4DS = new GoogleAnalytics4DataSource()
             {
+                Id = "ga4Ds1",
                 Title = "Google Analytics 4",
-                Subtitle = "Google Analytics 4 Subtitle",
+                Subtitle = "Query your data",
                 AccountId = "392932",
-                PropertyId = "338246105",
-                PropertyName = "RevealBI.io - GA4"
+                PropertyId = "325972604",
+                PropertyName = "z[STAGING] Roll-up: Infragistics Web Properties - GA4"
             };
 
             var gs4DSI = new GoogleAnalytics4DataSourceItem("GA4 DataSource Item", ga4DS)
             {
+                Id = "ga4Dsi1",
+                Title = "z[STAGING] Roll-up: Infragistics Web Properties - GA4",
+                Subtitle = "Infragistics Inc.",
+                AccountId = "392932",
+                PropertyId = "325972604",
                 Fields = new List<IField>
                 {
-                    new DateTimeField("Date")
+                    new TextField("Campaign ID")
                 }
             };
 
-            var visualization = new ColumnChartVisualization("Column Chart", gs4DSI)
-            {
-                Title = "View per page"
-            };
+
+            var visualization = new PivotVisualization("ABC grid", gs4DSI);
+
+            var document = new RdashDocument("My Dashboard");
+            document.DataSources.Add(ga4DS);
+            //document.Visualizations.Add(grid);
+            //return document;
+
 
             visualization.DataDefinition.AsXmla().DataFilters.Add(new XmlaHierarchy()
             {
-                DimensionType = XmlaDimensionType.Date,
+                UniqueName = "date",
+                Caption = "Date",
                 XmlaFilter = new XmlaFilter()
                 {
-                    Filter = new XmlaDateFilter() {
+                    Filter = new XmlaDateFilter()
+                    {
                         RuleType = DateRuleType.LastMonth,
                         FilterType = FilterType.FilterByRule,
-                    }
-                }
+                        SelectedValues = new List<FilterValue>(),
+                        IncludeToday = true,
+                    },
+                    DataType = DataType.String,
+                    ElementType = XmlaElementType.Dimension,
+                    IsDynamic = false
+                },
+                DimensionType = XmlaDimensionType.Date,
+                DrillDownElements = new List<string>(),
+                Sorting = SortingType.None,
+                FieldSortingByLabel = false,
+                FullyExpandedLevels = 0,
+                ExpandedItems = new List<string>(),
+                DateAggregationType = DateAggregationType.Year,
+                DateFiscalYearStartMonth = 0,
+
             });
 
-            visualization.Labels.Add(new DimensionColumn()
+            visualization.Rows.Add(new DimensionColumn()
             {
                 XmlaElement = new XmlaHierarchy()
                 {
-                    UniqueName = "unifiedScreenName",
-                    Caption = "Page title and screen name",
-                    DimensionUniqueName = "Page / Screen",
+                    UniqueName = "campaignId",
+                    Caption = "Campaign ID",
+                    DimensionUniqueName = "Attribution",
                     DimensionType = XmlaDimensionType.Regular,
                     DateAggregationType = DateAggregationType.Year,
                     DateFiscalYearStartMonth = 0,
@@ -62,31 +88,31 @@ namespace Sandbox.DashboardFactories
                 }
             });
 
-            visualization.Values.Add(new MeasureColumn()
-            {
-                XmlaMeasure = new XmlaMeasure()
-                {
-                    UniqueName = "screenPageViewsPerSession",
-                    Caption = "Views per session",
-                    MeasureGroupName = "Page / Screen",
-                    Formatting = new NumberFormatting()
-                    {
-                        FormatType = NumberFormattingType.Number,
-                        DecimalDigits = 0,
-                        ShowGroupingSeparator = true,
-                        NegativeFormat = NegativeFormatType.MinusSign
-                    }
-                }
-            });
+            //visualization.Values.Add(new MeasureColumn()
+            //{
+            //    XmlaMeasure = new XmlaMeasure()
+            //    {
+            //        UniqueName = "screenPageViewsPerSession",
+            //        Caption = "Views per session",
+            //        MeasureGroupName = "Page / Screen",
+            //        Formatting = new NumberFormatting()
+            //        {
+            //            FormatType = NumberFormattingType.Number,
+            //            DecimalDigits = 0,
+            //            ShowGroupingSeparator = true,
+            //            NegativeFormat = NegativeFormatType.MinusSign
+            //        }
+            //    }
+            //});
 
-            var document = new RdashDocument("My Dashboard");
+
 
             document.Visualizations.Add(visualization);
             document.DataSources.Add(ga4DS);
 
             var jsonData = document.ToJsonString();
 
-            var filePath = "D:\\Dropbox\\Ohio\\infragistic\\my_test\\nodejs-js\\myDashboards\\testga4.rdash";
+            var filePath = "E:\\testga4.rdash";
 
             try
             {

@@ -15,7 +15,7 @@ namespace Reveal.Sdk.Dom.Core.Utilities
         public static string GetNonCanonicalUniqueDataSourceIdentifier(DataSourceProvider provider, Dictionary<string, object> properties)
         {
             var s = "provider=" + EnumUtil.GetEnumMemberAttrValue(provider);
-            s = s + "&properties=" + GetNonCanonicalUniqueIdentifierForDictionary(properties);
+            //s = s + "&properties=" + GetNonCanonicalUniqueIdentifierForDictionary(properties);
             return s;
         }
 

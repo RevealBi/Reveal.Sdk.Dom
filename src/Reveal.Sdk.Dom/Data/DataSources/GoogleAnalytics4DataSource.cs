@@ -6,9 +6,9 @@ namespace Reveal.Sdk.Dom.Data
 {
     public class GoogleAnalytics4DataSource : DataSource
     {
-        public GoogleAnalytics4DataSource()
+        public GoogleAnalytics4DataSource() : base()
         {
-            Id = DataSourceHelper.GetNonCanonicalUniqueDataSourceIdentifier(DataSourceProvider.GoogleAnalytics4, Properties);
+            //Id = DataSourceHelper.GetNonCanonicalUniqueDataSourceIdentifier(DataSourceProvider.GoogleAnalytics4, Properties);
             Provider = DataSourceProvider.GoogleAnalytics4;
         }
 
