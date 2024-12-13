@@ -38,6 +38,7 @@ namespace Sandbox.DashboardFactories
 
             visualization.DataDefinition.AsXmla().DataFilters.Add(new XmlaHierarchy()
             {
+                DimensionType = XmlaDimensionType.Date,
                 XmlaFilter = new XmlaFilter()
                 {
                     Filter = new XmlaDateFilter() {
@@ -81,6 +82,7 @@ namespace Sandbox.DashboardFactories
             var document = new RdashDocument("My Dashboard");
 
             document.Visualizations.Add(visualization);
+            document.DataSources.Add(ga4DS);
 
             var jsonData = document.ToJsonString();
 
