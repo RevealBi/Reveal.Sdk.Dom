@@ -53,9 +53,9 @@ namespace Reveal.Sdk.Dom.Visualizations
         public static T AddFilters<T>(this T visualization, params string[] fields)
             where T : IVisualization
         {
-            foreach (var filter in fields)
+            foreach (var field in fields)
             {
-                visualization.AddFilter(filter);
+                visualization.AddFilter(field);
             }
             return visualization;
         }
@@ -66,6 +66,7 @@ namespace Reveal.Sdk.Dom.Visualizations
             return visualization.ConnectDashboardFilter(dashboardFilter, null);
         }
 
+        // TODO: Do we need to check if the field is not found?
         public static T ConnectDashboardFilter<T>(this T visualization, DashboardFilter dashboardFilter, string fieldName)
             where T : IVisualization
         {
