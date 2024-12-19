@@ -39,6 +39,10 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Extensions
         // TODO: We should find a faster way to create Generic constructor / method 
         [Theory]
         [InlineData(typeof(TextFilter), typeof(TextField))]
+        [InlineData(typeof(DateTimeFilter), typeof(DateTimeField))]
+        [InlineData(typeof(NumberFilter), typeof(NumberField))]
+        [InlineData(typeof(TimeFilter), typeof(TimeField))]
+        [InlineData(typeof(DateTimeFilter), typeof(DateField))]
         public void AddDataFilter_UpdateDataDefinition_ForTabularDataDefinition(Type filterType, Type fieldType)
         {
             // Arrange
@@ -80,6 +84,10 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Extensions
         // TODO: Need to check how to write unit test to cover all the cases of the catch block
         [Theory]
         [InlineData(typeof(TextFilter), typeof(TextField))]
+        [InlineData(typeof(DateTimeFilter), typeof(DateTimeField))]
+        [InlineData(typeof(NumberFilter), typeof(NumberField))]
+        [InlineData(typeof(TimeFilter), typeof(TimeField))]
+        [InlineData(typeof(DateTimeFilter), typeof(DateField))]
         public void AddDataFilter_ThrowException_WithNotFoundField(Type filterType, Type fieldType)
         {
             // Arrange
@@ -116,6 +124,10 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Extensions
         // TODO: Need to check how to write unit test to cover all the cases of the catch block
         [Theory]
         [InlineData(typeof(TextFilter), typeof(TextField))]
+        [InlineData(typeof(DateTimeFilter), typeof(DateTimeField))]
+        [InlineData(typeof(NumberFilter), typeof(NumberField))]
+        [InlineData(typeof(TimeFilter), typeof(TimeField))]
+        [InlineData(typeof(DateTimeFilter), typeof(DateField))]
         public void AddDataFilter_ThrowException_WithGeneralException(Type filterType, Type fieldType)
         {
             // Arrange
