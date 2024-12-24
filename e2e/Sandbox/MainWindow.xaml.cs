@@ -60,6 +60,7 @@ namespace Sandbox
             new PostgresqlDashboard(),
             new RestDataSourceDashboard(),
             new SalesDashboard(),
+            new SplineChartDashboard(),
             new SnowflakeDashboard(),
             new SqlServerDataSourceDashboards(),
             new OracleDataSourceDashboard(),
