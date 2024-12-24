@@ -50,6 +50,7 @@ namespace Sandbox
             new DashboardLinkingDashboard(),
             new GoogleBigQueryDashboard(),
             new GoogleSheetDashboard(),
+            new GridVisualizationDashboard(),
             new HealthcareDashboard(),
             new ManufacturingDashboard(),
             new MarketingDashboard(),
@@ -57,6 +58,7 @@ namespace Sandbox
             new MSAzureSynapseAnalyticsDashboard(),
             new MySqlDataSourceDashboards(),
             new MSAzureSqlServerDSDashboard(),
+            new PivotVisualizationDashboard(),
             new PostgresqlDashboard(),
             new RestDataSourceDashboard(),
             new SalesDashboard(),
@@ -88,7 +90,6 @@ namespace Sandbox
                 .RegisterAmazonS3()
                 .RegisterGoogleDrive()
                 .RegisterOracle();
-            RevealSdkSettings.DataSources.RegisterMySql();
 
             LoadDashboards();
 
