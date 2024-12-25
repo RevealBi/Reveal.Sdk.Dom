@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Reveal.Sdk.Dom.Visualizations.VisualizationSpecs
 {
-    internal class CategoryVisualizationDataSpec : LabelsVisualizationDataSpec
+    public class CategoryVisualizationDataSpec : LabelsVisualizationDataSpec
     {
 		public DimensionColumn Category { get; set; }
 
