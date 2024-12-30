@@ -26,6 +26,6 @@ namespace Reveal.Sdk.Dom.Visualizations
         }
 
         [JsonProperty(Order = 7)]
-        public CategoryVisualizationDataSpec VisualizationDataSpec { get; set; } = new CategoryVisualizationDataSpec();
+        internal CategoryVisualizationDataSpec VisualizationDataSpec { get; set; } = new CategoryVisualizationDataSpec();
     }
 }

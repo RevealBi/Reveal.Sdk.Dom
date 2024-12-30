@@ -41,6 +41,6 @@ namespace Reveal.Sdk.Dom.Visualizations
         public List<MeasureColumn> Values { get { return VisualizationDataSpec.Values; } }
 
         [JsonProperty(Order = 7)]
-        public PivotVisualizationDataSpec VisualizationDataSpec { get; set; } = new PivotVisualizationDataSpec();
+        internal PivotVisualizationDataSpec VisualizationDataSpec { get; set; } = new PivotVisualizationDataSpec();
     }
 }

@@ -27,7 +27,7 @@ namespace Reveal.Sdk.Dom.Visualizations
         public TimeSeriesVisualization(string title, DataSourceItem dataSourceItem) : base(title, dataSourceItem) { ChartType = ChartType.TimeSeries; }
 
         [JsonProperty(Order = 7)]
-        public TimeSeriesVisualizationDataSpec VisualizationDataSpec { get; set; } = new TimeSeriesVisualizationDataSpec();
+        internal TimeSeriesVisualizationDataSpec VisualizationDataSpec { get; set; } = new TimeSeriesVisualizationDataSpec();
 
         [JsonIgnore]
         public List<MeasureColumn> Values { get { return VisualizationDataSpec.Values; } }

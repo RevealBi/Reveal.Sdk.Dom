@@ -43,6 +43,6 @@ namespace Reveal.Sdk.Dom.Visualizations
         }
 
         [JsonProperty(Order = 7)]
-        public VisualizationDataSpec VisualizationDataSpec { get; set; } = new GridVisualizationDataSpec();
+        internal VisualizationDataSpec VisualizationDataSpec { get; set; } = new GridVisualizationDataSpec();
     }
 }

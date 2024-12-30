@@ -1,6 +1,6 @@
 ﻿namespace Reveal.Sdk.Dom.Visualizations.VisualizationSpecs
 {
-    public class LabelsVisualizationDataSpec : HierarchyVisualizationDataSpec
+    internal class LabelsVisualizationDataSpec : HierarchyVisualizationDataSpec
     {
     }
 }

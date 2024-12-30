@@ -2,7 +2,7 @@
 
 namespace Reveal.Sdk.Dom.Visualizations.VisualizationSpecs
 {
-    public class TimeSeriesVisualizationDataSpec : CategoryVisualizationDataSpec
+    internal class TimeSeriesVisualizationDataSpec : CategoryVisualizationDataSpec
 	{
         public TimeSeriesVisualizationDataSpec()
         {

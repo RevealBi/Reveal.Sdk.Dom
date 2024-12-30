@@ -5,7 +5,7 @@ using Reveal.Sdk.Dom.Core.Serialization.Converters;
 namespace Reveal.Sdk.Dom.Visualizations.VisualizationSpecs
 {
     [JsonConverter(typeof(VisualizationDataSpecConverter))]
-    public class VisualizationDataSpec : SchemaType
+    internal class VisualizationDataSpec : SchemaType
     {
     }
 }

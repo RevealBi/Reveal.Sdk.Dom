@@ -2,7 +2,7 @@
 
 namespace Reveal.Sdk.Dom.Visualizations
 {
-    public sealed class AdHocExpandedElement
+    internal sealed class AdHocExpandedElement
     {
         public List<string> Path { get; set; }
     }
