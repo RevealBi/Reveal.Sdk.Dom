@@ -12,7 +12,7 @@ namespace Reveal.Sdk.Dom.Visualizations
         protected FinancialVisualizationBase(string title, DataSourceItem dataSourceItem) : base(title, dataSourceItem) { }
 
         [JsonProperty(Order = 7)]
-        FinancialVisualizationDataSpec VisualizationDataSpec { get; set; } = new FinancialVisualizationDataSpec();
+        internal FinancialVisualizationDataSpec VisualizationDataSpec { get; set; } = new FinancialVisualizationDataSpec();
 
         [JsonIgnore]
         public List<DimensionColumn> Labels { get { return VisualizationDataSpec.Rows; } }

@@ -2,7 +2,7 @@
 
 namespace Reveal.Sdk.Dom.Visualizations.VisualizationSpecs
 {
-	internal class HierarchyVisualizationDataSpec : VisualizationDataSpec
+    internal class HierarchyVisualizationDataSpec : VisualizationDataSpec
     {
 		public int? AdHocFields { get; set; }
 		public int FormatVersion { get; set; }
