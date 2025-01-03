@@ -16,9 +16,10 @@ public class StackedBarChartVisualizationFixture
     [Fact]
     public void Constructor_InitializesDefaultValues_WhenInstanceIsCreated()
     {
+        //Act
         var visualization = new StackedBarChartVisualization();
 
-        Assert.NotNull(visualization);
+        //Assert
         Assert.Equal(ChartType.StackedBar, visualization.ChartType);
         Assert.Equal(0, visualization.ColumnSpan);
         Assert.Null(visualization.DataDefinition);
@@ -292,7 +293,7 @@ public class StackedBarChartVisualizationFixture
 
         document.Filters.Add(new DashboardDateFilter("My Date Filter"));
 
-        RdashSerializer.SerializeObject(document);
+        //Act
         var json = document.ToJsonString();
         var actualJson = JObject.Parse(json)["Widgets"];
         var actualNormalized = JsonConvert.SerializeObject(actualJson, Formatting.Indented);
