@@ -259,7 +259,6 @@ public class DoughnutChartVisualizationFixture
         document.Filters.Add(new DashboardDateFilter("My Date Filter"));
 
         //Act
-        RdashSerializer.SerializeObject(document);
         var json = document.ToJsonString();
         var actualJson = JObject.Parse(json)["Widgets"];
         var actualNormalized = JsonConvert.SerializeObject(actualJson, Formatting.Indented);
