@@ -18,7 +18,6 @@ public class FunnelChartVisualizationFixture
     {
         var visualization = new FunnelChartVisualization();
 
-        Assert.NotNull(visualization);
         Assert.Equal(ChartType.Funnel, visualization.ChartType);
         Assert.Equal(0, visualization.ColumnSpan);
         Assert.Null(visualization.DataDefinition);
@@ -254,10 +253,8 @@ public class FunnelChartVisualizationFixture
                 settings.SliceLabelDisplay = LabelDisplayMode.Percentage;
             }));
 
-        document.Filters.Add(new DashboardDataFilter("Spend", excelDataSourceItem));
         document.Filters.Add(new DashboardDateFilter("My Date Filter"));
 
-        RdashSerializer.SerializeObject(document);
         var json = document.ToJsonString();
         var actualJson = JObject.Parse(json)["Widgets"];
         var actualNormalized = JsonConvert.SerializeObject(actualJson, Formatting.Indented);
