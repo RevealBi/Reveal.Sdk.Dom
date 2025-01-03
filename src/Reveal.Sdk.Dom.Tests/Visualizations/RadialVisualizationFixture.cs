@@ -16,9 +16,10 @@ public class RadialVisualizationFixture
     [Fact]
     public void Constructor_InitializesDefaultValues_WhenInstanceIsCreated()
     {
+        //Act
         var visualization = new RadialVisualization();
 
-        Assert.NotNull(visualization);
+        //Assert
         Assert.Equal(ChartType.Radial, visualization.ChartType);
         Assert.Equal(0, visualization.ColumnSpan);
         Assert.Null(visualization.DataDefinition);
@@ -263,10 +264,9 @@ public class RadialVisualizationFixture
             .SetValues("Spend", "Budget")
             .ConfigureSettings(settings => { settings.ShowLegend = true; }));
 
-        document.Filters.Add(new DashboardDataFilter("Spend", excelDataSourceItem));
         document.Filters.Add(new DashboardDateFilter("My Date Filter"));
 
-        RdashSerializer.SerializeObject(document);
+        //Act
         var json = document.ToJsonString();
         var actualJson = JObject.Parse(json)["Widgets"];
         var actualNormalized = JsonConvert.SerializeObject(actualJson, Formatting.Indented);
