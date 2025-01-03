@@ -18,7 +18,6 @@ public class DoughnutChartVisualizationFixture
     {
         var visualization = new DoughnutChartVisualization();
 
-        Assert.NotNull(visualization);
         Assert.Equal(ChartType.Doughnut, visualization.ChartType);
         Assert.Equal(0, visualization.ColumnSpan);
         Assert.Null(visualization.DataDefinition);
@@ -259,6 +258,7 @@ public class DoughnutChartVisualizationFixture
         document.Filters.Add(new DashboardDataFilter("Spend", excelDataSourceItem));
         document.Filters.Add(new DashboardDateFilter("My Date Filter"));
 
+        //Act
         RdashSerializer.SerializeObject(document);
         var json = document.ToJsonString();
         var actualJson = JObject.Parse(json)["Widgets"];
