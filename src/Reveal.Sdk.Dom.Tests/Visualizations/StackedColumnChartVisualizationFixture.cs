@@ -16,9 +16,10 @@ public class StackedColumnChartVisualizationFixture
     [Fact]
     public void Constructor_InitializesDefaultValues_WhenInstanceIsCreated()
     {
+        //Act
         var visualization = new StackedColumnChartVisualization();
 
-        Assert.NotNull(visualization);
+        //Assert
         Assert.Equal(ChartType.StackedColumn, visualization.ChartType);
         Assert.Equal(0, visualization.ColumnSpan);
         Assert.Null(visualization.DataDefinition);
@@ -292,10 +293,9 @@ public class StackedColumnChartVisualizationFixture
                 .SetValues("Paid Traffic", "Organic Traffic", "Other Traffic")
                 .ConfigureSettings(settings => { settings.IsPercentageDistributed = true; }));
 
-        document.Filters.Add(new DashboardDataFilter("Spend", excelDataSourceItem));
         document.Filters.Add(new DashboardDateFilter("My Date Filter"));
-
-        RdashSerializer.SerializeObject(document);
+        
+        //Act
         var json = document.ToJsonString();
         var actualJson = JObject.Parse(json)["Widgets"];
         var actualNormalized = JsonConvert.SerializeObject(actualJson, Formatting.Indented);
