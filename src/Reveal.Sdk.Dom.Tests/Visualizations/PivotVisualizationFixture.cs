@@ -366,18 +366,18 @@ public class PivotVisualizationFixture
         // Assert
         Assert.Equal(expectedNormalized.Trim(), actualNormalized.Trim());
     }
-}
-
-public class MockDimensionDataField : IDimensionDataField
-{
-    public MockDimensionDataField(string fieldName)
+    
+    private class MockDimensionDataField : IDimensionDataField
     {
-        FieldName = fieldName;
+        public MockDimensionDataField(string fieldName)
+        {
+            FieldName = fieldName;
+        }
+
+        public string Caption { get; set; }
+        public IDictionary<string, object> Properties { get; } = new Dictionary<string, object>();
+
+        public string FieldName { get; set; }
+        public string Description { get; set; }
     }
-
-    public string Caption { get; set; }
-    public IDictionary<string, object> Properties { get; } = new Dictionary<string, object>();
-
-    public string FieldName { get; set; }
-    public string Description { get; set; }
 }
