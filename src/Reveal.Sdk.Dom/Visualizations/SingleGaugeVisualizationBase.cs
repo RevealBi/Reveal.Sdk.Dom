@@ -22,6 +22,6 @@ namespace Reveal.Sdk.Dom.Visualizations
         public List<MeasureColumn> Values { get { return VisualizationDataSpec.Value; } }
 
         [JsonProperty(Order = 7)]
-        SingleGaugeVisualizationDataSpec VisualizationDataSpec { get; set; } = new SingleGaugeVisualizationDataSpec();
+        internal SingleGaugeVisualizationDataSpec VisualizationDataSpec { get; set; } = new SingleGaugeVisualizationDataSpec();
     }
 }
