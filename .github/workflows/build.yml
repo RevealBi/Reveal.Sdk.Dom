@@ -15,6 +15,10 @@ jobs:
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
+    - name: Install Mono
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y mono-complete
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
