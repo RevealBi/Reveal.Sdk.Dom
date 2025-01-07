@@ -88,7 +88,6 @@ namespace Sandbox
                 .RegisterAmazonS3()
                 .RegisterGoogleDrive()
                 .RegisterOracle();
-            RevealSdkSettings.DataSources.RegisterMySql();
 
             LoadDashboards();
 
