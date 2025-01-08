@@ -71,7 +71,6 @@
 	  <Folder Include="Visualizations\Extensions\" />
     <Folder Include="Visualizations\DataDefinitions\" />
     <Folder Include="Visualizations\VisualizationSpecs\" />
-    <Folder Include="Visualizations\Settings\" />
   </ItemGroup>
 
 </Project>
