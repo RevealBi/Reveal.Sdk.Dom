@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using Reveal.Sdk.Dom.Core.Constants;
 using Reveal.Sdk.Dom.Visualizations;
@@ -15,7 +16,6 @@ public class GaugeVisualizationSettingsFixture
         var settings = new GaugeVisualizationSettings();
 
         // Assert
-        Assert.NotNull(settings);
         Assert.Null(settings.Minimum);
         Assert.Null(settings.Maximum);
         Assert.NotNull(settings.GaugeBands);
@@ -53,6 +53,9 @@ public class GaugeVisualizationSettingsFixture
         Assert.Equal(valueComparisonType, settings.UpperBand.ValueComparisonType);
         Assert.Equal(valueComparisonType, settings.MiddleBand.ValueComparisonType);
         Assert.Equal(valueComparisonType, settings.LowerBand.ValueComparisonType);
+        Assert.Contains(settings.UpperBand, settings.GaugeBands);
+        Assert.Contains(settings.MiddleBand, settings.GaugeBands);
+        Assert.Contains(settings.LowerBand, settings.GaugeBands);
     }
     
     [Fact]
@@ -115,5 +118,106 @@ public class GaugeVisualizationSettingsFixture
 
         // Assert
         Assert.Equal(expectedJObject, actualJObject);
+    }
+    
+    private class TestGaugeVisualizationSettings : GaugeVisualizationSettings<TestBand>
+    {
+    }
+
+    private class TestBand : Band
+    {
+    }
+    
+    [Fact]
+    public void Constructor_InitializesDefaultValues_WhenInstanceIsCreated()
+    {
+        // Act
+        var settings = new TestGaugeVisualizationSettings();
+
+        // Assert
+        Assert.NotNull(settings);
+        Assert.NotNull(settings.GaugeBands);
+        Assert.Equal(3, settings.GaugeBands.Count);
+        Assert.Contains(settings.UpperBand, settings.GaugeBands);
+        Assert.Contains(settings.MiddleBand, settings.GaugeBands);
+        Assert.Contains(settings.LowerBand, settings.GaugeBands);
+        Assert.Equal(SchemaTypeNames.GaugeVisualizationSettingsType, settings.SchemaTypeName);
+        Assert.Equal(VisualizationTypes.GAUGE, settings.VisualizationType);
+        Assert.Equal(BandColor.Green, settings.UpperBand.Color);
+        Assert.Equal(80.0, settings.UpperBand.Value);
+        Assert.Equal(BandColor.Yellow, settings.MiddleBand.Color);
+        Assert.Equal(50.0, settings.MiddleBand.Value);
+        Assert.Equal(BandColor.Red, settings.LowerBand.Color);
+    }
+
+    [Fact]
+    public void GaugeBands_CanBeReplacedAndUpdated_WhenSet()
+    {
+        // Arrange
+        var settings = new TestGaugeVisualizationSettings();
+        var newBands = new List<TestBand>
+        {
+            new TestBand { Color = BandColor.Yellow, Value = 90.0 },
+            new TestBand { Color = BandColor.Green, Value = 60.0 },
+        };
+
+        // Act
+        settings.GaugeBands = newBands;
+
+        // Assert
+        Assert.Equal(newBands, settings.GaugeBands);
+        Assert.DoesNotContain(settings.UpperBand, settings.GaugeBands);
+    }
+
+    [Fact]
+    public void ToJsonString_SerializesSettings_GeneratesCorrectJson()
+    {
+        // Arrange
+        var expectedJson =
+            """
+            {
+              "_type" : "GaugeVisualizationSettingsType",
+              "ViewType" : "Circular",
+              "GaugeBands" : [ {
+                "Type" : "Percentage",
+                "Color" : "Green",
+                "Value" : 90.0
+              }, {
+                "Type" : "Percentage",
+                "Color" : "Red",
+                "Value" : 60.0
+              } ],
+              "VisualizationType" : "GAUGE"
+            }
+            """;
+
+        var settings = new TestGaugeVisualizationSettings
+        {
+            GaugeBands = new List<TestBand>
+            {
+                new TestBand { Color = BandColor.Green, Value = 90.0 },
+                new TestBand { Color = BandColor.Red, Value = 60.0 },
+            },
+        };
+
+        // Act
+        var actualJson = settings.ToJsonString();
+        var expectedJObject = JObject.Parse(expectedJson);
+        var actualJObject = JObject.Parse(actualJson);
+
+        // Assert
+        Assert.Equal(expectedJObject, actualJObject);
+    }
+
+    [Fact]
+    public void UpperMiddleLowerBands_ReflectCorrectGaugeBands_WhenInstanceIsCreated()
+    {
+        // Arrange
+        var settings = new TestGaugeVisualizationSettings();
+
+        // Act & Assert
+        Assert.Equal(settings.GaugeBands[0], settings.UpperBand);
+        Assert.Equal(settings.GaugeBands[1], settings.MiddleBand);
+        Assert.Equal(settings.GaugeBands[2], settings.LowerBand);
     }
 }
