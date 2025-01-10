@@ -79,7 +79,10 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
             DataSourceItem dsItem = null;
 
             // Act & Assert
-            Assert.Throws<ArgumentNullException>(() => new JoinTable(alis, dsItem));
+            var ex = Assert.Throws<ArgumentNullException>(() => new JoinTable(alis, dsItem));
+            var msg = $"JoinTable: {nameof(dsItem)}";
+            Assert.Equal("Value cannot be null.\r\nParameter name: JoinTable: dataSourceItem", ex.Message);
+            Assert.Equal("JoinTable: dataSourceItem", ex.ParamName);
         }
 
         [Fact]
