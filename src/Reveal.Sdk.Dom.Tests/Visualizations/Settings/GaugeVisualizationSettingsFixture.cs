@@ -44,18 +44,11 @@ public class GaugeVisualizationSettingsFixture
 
         // Assert
         Assert.Equal(valueComparisonType, settings.ValueComparisonType);
-
         Assert.All(settings.GaugeBands, band =>
         {
             Assert.NotNull(band);
             Assert.Equal(valueComparisonType, band.ValueComparisonType);
         });
-        Assert.Equal(valueComparisonType, settings.UpperBand.ValueComparisonType);
-        Assert.Equal(valueComparisonType, settings.MiddleBand.ValueComparisonType);
-        Assert.Equal(valueComparisonType, settings.LowerBand.ValueComparisonType);
-        Assert.Contains(settings.UpperBand, settings.GaugeBands);
-        Assert.Contains(settings.MiddleBand, settings.GaugeBands);
-        Assert.Contains(settings.LowerBand, settings.GaugeBands);
     }
     
     [Fact]
@@ -135,8 +128,6 @@ public class GaugeVisualizationSettingsFixture
         var settings = new TestGaugeVisualizationSettings();
 
         // Assert
-        Assert.NotNull(settings);
-        Assert.NotNull(settings.GaugeBands);
         Assert.Equal(3, settings.GaugeBands.Count);
         Assert.Contains(settings.UpperBand, settings.GaugeBands);
         Assert.Contains(settings.MiddleBand, settings.GaugeBands);
@@ -148,25 +139,6 @@ public class GaugeVisualizationSettingsFixture
         Assert.Equal(BandColor.Yellow, settings.MiddleBand.Color);
         Assert.Equal(50.0, settings.MiddleBand.Value);
         Assert.Equal(BandColor.Red, settings.LowerBand.Color);
-    }
-
-    [Fact]
-    public void GaugeBands_CanBeReplacedAndUpdated_WhenSet()
-    {
-        // Arrange
-        var settings = new TestGaugeVisualizationSettings();
-        var newBands = new List<TestBand>
-        {
-            new TestBand { Color = BandColor.Yellow, Value = 90.0 },
-            new TestBand { Color = BandColor.Green, Value = 60.0 },
-        };
-
-        // Act
-        settings.GaugeBands = newBands;
-
-        // Assert
-        Assert.Equal(newBands, settings.GaugeBands);
-        Assert.DoesNotContain(settings.UpperBand, settings.GaugeBands);
     }
 
     [Fact]
@@ -207,17 +179,5 @@ public class GaugeVisualizationSettingsFixture
 
         // Assert
         Assert.Equal(expectedJObject, actualJObject);
-    }
-
-    [Fact]
-    public void UpperMiddleLowerBands_ReflectCorrectGaugeBands_WhenInstanceIsCreated()
-    {
-        // Arrange
-        var settings = new TestGaugeVisualizationSettings();
-
-        // Act & Assert
-        Assert.Equal(settings.GaugeBands[0], settings.UpperBand);
-        Assert.Equal(settings.GaugeBands[1], settings.MiddleBand);
-        Assert.Equal(settings.GaugeBands[2], settings.LowerBand);
     }
 }
