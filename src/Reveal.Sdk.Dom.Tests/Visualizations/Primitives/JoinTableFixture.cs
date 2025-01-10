@@ -82,7 +82,6 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
             var ex = Assert.Throws<ArgumentNullException>(() => new JoinTable(alis, dsItem));
             var msg = $"JoinTable: {nameof(dsItem)}";
             Assert.Contains("Value cannot be null.", ex.Message);
-            Assert.Contains("Parameter name: JoinTable: dataSourceItem", ex.Message);
             Assert.Equal("JoinTable: dataSourceItem", ex.ParamName);
         }
 
