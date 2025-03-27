@@ -6,6 +6,8 @@ on:
 
 jobs:
   build-and-test:
+    name: Build & Test Reveal.Sdk.Dom
+
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -17,6 +19,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+            fetch-depth: 0
 
       - name: Setup .NET ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v4
