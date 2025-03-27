@@ -27,6 +27,11 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
 
+      - name: Generate global.json for SDK pinning
+        run: |
+          VERSION=$(dotnet --version)
+          echo "{ \"sdk\": { \"version\": \"$VERSION\" } }" > ../../global.json
+
       - name: Restore dependencies
         run: dotnet restore
 
