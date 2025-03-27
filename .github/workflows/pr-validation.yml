@@ -27,10 +27,10 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
 
-    - name: Confirm installed SDKs
-      run: |
-        dotnet --list-sdks
-        dotnet --info
+      - name: Confirm installed SDKs
+        run: |
+            dotnet --list-sdks
+            dotnet --info
 
       - name: Restore dependencies
         run: dotnet restore
