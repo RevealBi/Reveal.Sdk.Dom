@@ -1,20 +1,38 @@
-# name: Build - Reveal.Sdk.Dom
+name: Build & Test
 
-# on:
-#   push:
-#     branches: [ "main" ]
-#     paths:
-#     - '.github/workflows/**'
-#     - 'src/Reveal.Sdk.Dom.sln'
-#     - 'src/Reveal.Sdk.Dom/**'
-#     - 'src/Reveal.Sdk.Dom.Tests/**'
-#   pull_request:
-#     branches: [ "main" ]
-#     paths: 
-#     - 'src/Reveal.Sdk.Dom.sln'
-#     - 'src/Reveal.Sdk.Dom/**'
-#     - 'src/Reveal.Sdk.Dom.Tests/**'
+on:
+  pull_request:
+    branches: [ main ]
+  pus:h:
+    branches: [ main ]
 
-# jobs:
-#   build:
-#     uses: ./.github/workflows/build.yml
+jobs:
+  build-and-test:
+    name: Build & Test Reveal.Sdk.Dom
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+          6.x
+          7.x
+          8.x
+          9.x
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.3
+
+    - name: Restore NuGet packages
+      run: nuget restore src/Reveal.Sdk.Dom.sln
+
+    - name: Build (.NET Framework & .NET Core)
+      run: msbuild src/Reveal.Sdk.Dom.sln /p:Configuration=Release
+
+    - name: Run .NET Core tests
+      run: dotnet test src/Reveal.Sdk.Dom.Tests/Reveal.Sdk.Dom.Tests.csproj --no-build --configuration Release --verbosity normal
