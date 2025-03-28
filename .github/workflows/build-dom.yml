@@ -3,7 +3,7 @@ name: Build & Test
 on:
   pull_request:
     branches: [ main ]
-  pus:h:
+  publish:
     branches: [ main ]
 
 jobs:
