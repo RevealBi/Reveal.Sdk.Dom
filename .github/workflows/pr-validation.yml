@@ -48,4 +48,4 @@ jobs:
         run: dotnet build --configuration Release --no-restore -p:TargetFramework=${{ steps.tfm.outputs.framework }}
 
       - name: Run tests
-        run: dotnet test --no-build --verbosity normal -f ${{ steps.tfm.outputs.framework }}
+        run: dotnet test Reveal.Sdk.Dom.Tests/Reveal.Sdk.Dom.Tests.csproj --no-build --configuration Release --verbosity normal -f ${{ steps.tfm.outputs.framework }}
