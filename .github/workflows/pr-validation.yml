@@ -28,16 +28,29 @@ jobs:
           dotnet-version: ${{ matrix.dotnet-version }}
           include-prerelease: true
 
+      - name: Select compatible TFM
+        id: tfm
+        run: |
+          if [[ "${{ matrix.dotnet-version }}" == 6.* ]]; then
+            echo "framework=net6.0" >> $GITHUB_OUTPUT
+          elif [[ "${{ matrix.dotnet-version }}" == 7.* ]]; then
+            echo "framework=net7.0" >> $GITHUB_OUTPUT
+          elif [[ "${{ matrix.dotnet-version }}" == 8.* ]]; then
+            echo "framework=net8.0" >> $GITHUB_OUTPUT
+          elif [[ "${{ matrix.dotnet-version }}" == 9.* ]]; then
+            echo "framework=net9.0" >> $GITHUB_OUTPUT
+          fi
+
       - name: Confirm installed SDKs
         run: |
             dotnet --list-sdks
             dotnet --info
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore -p:TargetFramework=${{ steps.tfm.outputs.framework }}
 
       - name: Build
-        run: dotnet build --no-restore
+        run: dotnet build --no-restore -p:TargetFramework=${{ steps.tfm.outputs.framework }}
 
       - name: Run tests
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test --no-build --verbosity normal -f ${{ steps.tfm.outputs.framework }}
