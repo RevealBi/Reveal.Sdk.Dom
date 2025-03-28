@@ -80,13 +80,13 @@ namespace Reveal.Sdk.Dom.Core.Utilities
         {
             var ds = document.DataSources?.FirstOrDefault(x => x.Id == dsi.DataSourceId);
             if (ds == null)
-                Debug.WriteLine($"Warning: Data source with id {dsi.DataSourceId} not found in the RdashDocument.DataSources collection.","warn");
+                Trace.WriteLine($"Warning: Data source with id {dsi.DataSourceId} not found in the RdashDocument.DataSources collection.","warn");
 
             if (dsi.ResourceItem != null)
             {
                 var rds = document.DataSources?.FirstOrDefault(x => x.Id == dsi.ResourceItem.DataSourceId);
                 if (rds == null)
-                Debug.WriteLine($"Warning: ResourceItem with Data source id {dsi.ResourceItem.DataSourceId} not found in the RdashDocument.DataSources collection.", "warn");
+                    Trace.WriteLine($"Warning: ResourceItem with Data source id {dsi.ResourceItem.DataSourceId} not found in the RdashDocument.DataSources collection.", "warn");
             }
         }
 
