@@ -1,4 +1,4 @@
-name: Build Reveal.Sdk.Dom
+name: Build
 
 on:
   pull_request:
@@ -8,4 +8,5 @@ on:
 
 jobs:
   build-and-test:
+    name: Reveal.Sdk.Dom
     uses: ./.github/workflows/build-and-test.yml
