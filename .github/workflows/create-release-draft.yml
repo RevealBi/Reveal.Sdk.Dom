@@ -1,0 +1,52 @@
+name: Create Draft Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    uses: ./.github/workflows/build-and-test.yml
+
+  create-draft-release:
+    name: Create Draft Release
+    runs-on: windows-latest
+    needs: build-and-test
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.x
+
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v1
+      with:
+        versionSpec: '5.x'
+
+    - name: Run GitVersion
+      id: gitversion
+      uses: gittools/actions/gitversion/execute@v1
+
+    - name: Pack NuGet
+      run: dotnet pack src/Reveal.Sdk.Dom/Reveal.Sdk.Dom.csproj --configuration Release --output ./artifacts
+
+    - name: Zip source code
+      run: git archive --format=zip --output ./artifacts/Reveal.Sdk.Dom.${{ steps.gitversion.outputs.SemVer }}.zip HEAD
+
+    - name: Create GitHub draft release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.gitversion.outputs.SemVer }}
+        name: ${{ steps.gitversion.outputs.SemVer }}
+        draft: true
+        generate_release_notes: true
+        files: |
+          ./artifacts/*.nupkg
+          ./artifacts/*.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
