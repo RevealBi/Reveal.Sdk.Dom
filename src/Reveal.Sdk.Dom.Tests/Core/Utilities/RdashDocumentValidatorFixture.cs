@@ -247,19 +247,6 @@ namespace Reveal.Sdk.Dom.Tests.Core.Utilities
             document.Visualizations.Add(viz);
 
             // Act & Assert
-
-            //using (var listener = new DebugOutputListener())
-            //{
-            //    Trace.Listeners.Add(listener);
-
-            //    RdashDocumentValidator.Validate(document);
-
-            //    Trace.Listeners.Remove(listener);
-
-            //    Assert.Equal("warn: Warning: Data source with id TEST not found in the RdashDocument.DataSources collection.", listener.GetOutput().Replace("\r","").Replace("\n", "")); //replace line endings to make the test work on either Windows and Linux
-            //}
-
-            // Act & Assert
             using (var listener = new DebugOutputListener())
             {
                 Trace.Listeners.Add(listener);
@@ -273,9 +260,6 @@ namespace Reveal.Sdk.Dom.Tests.Core.Utilities
                 var output = listener.GetOutput().Trim()
                     .Replace("\r\n", "\n")  // Normalize Windows line endings
                     .Replace("\r", "\n");   // Normalize old Mac line endings (just in case)
-
-                // Optional: log to test output for debugging in CI
-                Console.WriteLine("Captured Trace Output: " + output);
 
                 // Assert using a more resilient check
                 Assert.Contains("warn: Warning: Data source with id TEST not found in the RdashDocument.DataSources collection.", output);
