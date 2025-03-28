@@ -8,5 +8,4 @@ on:
 
 jobs:
   build-and-test:
-    name: Build & Test
     uses: ./.github/workflows/build-and-test.yml
