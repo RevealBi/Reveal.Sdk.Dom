@@ -5,6 +5,7 @@ on:
 
 jobs:
   build-and-test:
+    name: Build & Test
     runs-on: windows-latest
 
     steps:
