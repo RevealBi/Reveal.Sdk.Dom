@@ -16,11 +16,7 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: |
-          6.x
-          7.x
-          8.x
-          9.x
+        dotnet-version: 9.x
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1.3
