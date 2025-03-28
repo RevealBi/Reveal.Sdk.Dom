@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-test:
-    name: Build & Test Reveal.Sdk.Dom
+    name: Reveal.Sdk.Dom
     runs-on: windows-latest
 
     steps:
