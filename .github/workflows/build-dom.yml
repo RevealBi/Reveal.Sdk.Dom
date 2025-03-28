@@ -1,20 +1,20 @@
-name: Build - Reveal.Sdk.Dom
+# name: Build - Reveal.Sdk.Dom
 
-on:
-  push:
-    branches: [ "main" ]
-    paths:
-    - '.github/workflows/**'
-    - 'src/Reveal.Sdk.Dom.sln'
-    - 'src/Reveal.Sdk.Dom/**'
-    - 'src/Reveal.Sdk.Dom.Tests/**'
-  pull_request:
-    branches: [ "main" ]
-    paths: 
-    - 'src/Reveal.Sdk.Dom.sln'
-    - 'src/Reveal.Sdk.Dom/**'
-    - 'src/Reveal.Sdk.Dom.Tests/**'
+# on:
+#   push:
+#     branches: [ "main" ]
+#     paths:
+#     - '.github/workflows/**'
+#     - 'src/Reveal.Sdk.Dom.sln'
+#     - 'src/Reveal.Sdk.Dom/**'
+#     - 'src/Reveal.Sdk.Dom.Tests/**'
+#   pull_request:
+#     branches: [ "main" ]
+#     paths: 
+#     - 'src/Reveal.Sdk.Dom.sln'
+#     - 'src/Reveal.Sdk.Dom/**'
+#     - 'src/Reveal.Sdk.Dom.Tests/**'
 
-jobs:
-  build:
-    uses: ./.github/workflows/build.yml
+# jobs:
+#   build:
+#     uses: ./.github/workflows/build.yml

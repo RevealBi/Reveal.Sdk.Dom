@@ -41,16 +41,11 @@ jobs:
             echo "framework=net9.0" >> $GITHUB_OUTPUT
           fi
 
-      - name: Confirm installed SDKs
-        run: |
-            dotnet --list-sdks
-            dotnet --info
-
       - name: Restore dependencies
         run: dotnet restore -p:TargetFramework=${{ steps.tfm.outputs.framework }}
 
       - name: Build
-        run: dotnet build --no-restore -p:TargetFramework=${{ steps.tfm.outputs.framework }}
+        run: dotnet build --configuration Release --no-restore -p:TargetFramework=${{ steps.tfm.outputs.framework }}
 
       - name: Run tests
         run: dotnet test --no-build --verbosity normal -f ${{ steps.tfm.outputs.framework }}
