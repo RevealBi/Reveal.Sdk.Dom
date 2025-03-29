@@ -36,8 +36,11 @@ jobs:
       id: gitversion
       uses: gittools/actions/gitversion/execute@v1
 
-    - name: Pack NuGet
-      run: dotnet pack src/Reveal.Sdk.Dom/Reveal.Sdk.Dom.csproj --configuration Release --output ./artifacts
+    - name: Download NuGet package
+      uses: actions/download-artifact@v4
+      with:
+        name: nuget-package
+        path: ./artifacts
 
     - name: Zip source code
       run: git archive --format=zip --output ./artifacts/Reveal.Sdk.Dom.${{ steps.gitversion.outputs.SemVer }}.zip HEAD

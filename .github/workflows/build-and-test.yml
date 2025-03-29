@@ -33,3 +33,12 @@ jobs:
 
     - name: Run .NET Core tests
       run: dotnet test src/Reveal.Sdk.Dom.Tests/Reveal.Sdk.Dom.Tests.csproj --no-build --configuration Release --verbosity normal
+
+    - name: Pack NuGet
+      run: dotnet pack src/Reveal.Sdk.Dom/Reveal.Sdk.Dom.csproj --configuration Release --output ./nupkgs
+
+    - name: Upload NuGet package
+      uses: actions/upload-artifact@v4
+      with:
+        name: nuget-package
+        path: ./nupkgs/*.nupkg    
