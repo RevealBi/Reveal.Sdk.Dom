@@ -122,6 +122,7 @@ public class ColumnChartVisualizationFixture
                 "ZoomScaleHorizontal" : 1.0,
                 "ZoomScaleVertical" : 1.0,
                 "LeftAxisLogarithmic" : false,
+                "AxisTitlesMode" : "None",
                 "ShowLegends" : true,
                 "ChartType" : "Column",
                 "VisualizationType" : "CHART"

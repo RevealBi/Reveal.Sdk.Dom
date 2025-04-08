@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Reveal.Sdk.Dom.Visualizations.Settings
 {
@@ -23,5 +24,12 @@ namespace Reveal.Sdk.Dom.Visualizations.Settings
         /// </summary>
         [JsonProperty]
         public double? LeftAxisMaxValue { get; set; }
+
+        /// <summary>
+        /// Gets or sets if axis titles are shown. Default value is None.
+        /// </summary>
+        [JsonProperty("AxisTitlesMode")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public AxisTitleMode AxisTitleMode { get; set; } = AxisTitleMode.None;
     }
 }

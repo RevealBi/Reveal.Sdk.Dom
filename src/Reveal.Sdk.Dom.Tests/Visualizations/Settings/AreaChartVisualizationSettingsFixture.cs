@@ -50,6 +50,7 @@ public class AreaChartVisualizationSettingsFixture
               "LeftAxisLogarithmic" : false,
               "LeftAxisMinValue" : null,
               "LeftAxisMaxValue" : null,
+              "AxisTitlesMode" : "None",
               "ShowLegends" : true,
               "BrushOffsetIndex" : null,
               "ChartType" : "Area",

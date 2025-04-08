@@ -35,6 +35,7 @@ public class BubbleVisualizationSettingsFixture
               "LeftAxisLogarithmic": true,
               "LeftAxisMinValue": 16.2,
               "LeftAxisMaxValue": 150.6,
+              "AxisTitlesMode" : "None",
               "ShowLegends": true,
               "BrushOffsetIndex": 3,
               "ChartType": "Bubble",

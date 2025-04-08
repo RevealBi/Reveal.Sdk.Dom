@@ -89,7 +89,8 @@ public class SharedChartVisualizationSettingsFixture
               "ZoomScaleVertical" : 1.0,
               "LeftAxisLogarithmic" : false,
               "ShowLegends" : true,
-              "VisualizationType" : "CHART"
+              "VisualizationType" : "CHART",
+              "AxisTitlesMode" : "None",
             }
             """;
 
