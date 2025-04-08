@@ -15,5 +15,10 @@ namespace Reveal.Sdk.Dom.Visualizations
         /// Gets or sets the description of the data field.
         /// </summary>
         string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the axis title.
+        /// </summary>
+        string AxisTitle { get; set; }
     }
 }

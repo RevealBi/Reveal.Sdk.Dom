@@ -412,5 +412,6 @@ public class TimeSeriesVisualizationFixture
 
         public string FieldName { get; set; }
         public string Description { get; set; }
+        public string AxisTitle { get; set; }
     }
 }

@@ -27,16 +27,24 @@ namespace Sandbox.DashboardCreators
                 Description = "Playing with the Fixed Lines API"
             };
 
+            //document.Visualizations.Add(new ColumnChartVisualization("Column", excelDataSourceItem)
+            //    .SetLabel("Date").SetValues("Paid Traffic")
+            //    .AddFixedLine(new FixedLineAverage("My Title"))
+            //    .AddFixedLine(new FixedLineMaximum())
+            //    .AddFixedLine(new FixedLineData("Spend")
+            //    {
+            //        LineStyle = LineStyle.Dashed,
+            //        Color = "#F06292",                    
+            //    })
+            //    .AddFixedLine(new FixedLineMinimum()));
+
             document.Visualizations.Add(new ColumnChartVisualization("Column", excelDataSourceItem)
-                .SetLabel("Date").SetValues("Paid Traffic")
-                .AddFixedLine(new FixedLineAverage("My Title"))
-                .AddFixedLine(new FixedLineMaximum())
-                .AddFixedLine(new FixedLineData("Spend")
+                .SetLabel(new TextDataField("CampaignID") { AxisTitle = "Campaigns" })
+                .SetValues(new NumberDataField("Spend") { AxisTitle = "Spend" })
+                .ConfigureSettings(settings =>
                 {
-                    LineStyle = LineStyle.Dashed,
-                    Color = "#F06292",                    
-                })
-                .AddFixedLine(new FixedLineMinimum()));
+                    settings.AxisTitleMode = AxisTitleMode.Both;
+                }));
 
             return document;
         }

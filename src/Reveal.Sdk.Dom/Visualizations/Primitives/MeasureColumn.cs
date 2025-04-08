@@ -5,6 +5,8 @@ namespace Reveal.Sdk.Dom.Visualizations
 {
     public sealed class MeasureColumn : ColumnBase
     {
+        NumberDataField _dataField;
+
         public MeasureColumn()
         {
             SchemaTypeName = SchemaTypeNames.MeasureColumnSpecType;
@@ -14,14 +16,27 @@ namespace Reveal.Sdk.Dom.Visualizations
         {            
             DataField = dataField;
         }
-
+        
         /// <summary>
         /// Gets or sets the <see cref="DataField"/>.
         /// </summary>
         [JsonProperty("SummarizationField")]
-        public NumberDataField DataField { get; set; }
+        public NumberDataField DataField
+        {
+            get => _dataField;
+            set
+            {
+                _dataField = value;
+                SyncAxisFromField();
+            }
+        }
 
         [JsonProperty("XmlaMeasure")]
         public XmlaMeasure XmlaMeasure { get; set; }
+
+        protected override IDataField GetDataField()
+        {
+            return DataField;
+        }
     }
 }

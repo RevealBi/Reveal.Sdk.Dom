@@ -23,5 +23,10 @@ namespace Reveal.Sdk.Dom.Visualizations
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]
         public SortingType Sorting { get; set; } = SortingType.None;
+
+        protected override IDataField GetDataField()
+        {
+            return null;
+        }
     }
 }

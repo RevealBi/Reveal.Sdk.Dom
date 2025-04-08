@@ -1,4 +1,5 @@
-﻿using Reveal.Sdk.Dom.Core;
+﻿using Newtonsoft.Json;
+using Reveal.Sdk.Dom.Core;
 
 namespace Reveal.Sdk.Dom.Visualizations
 {
@@ -14,5 +15,11 @@ namespace Reveal.Sdk.Dom.Visualizations
 
         /// <inheritdoc/>
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets the axis title.
+        /// </summary>
+        [JsonIgnore]
+        public string AxisTitle { get; set; }
     }
 }
