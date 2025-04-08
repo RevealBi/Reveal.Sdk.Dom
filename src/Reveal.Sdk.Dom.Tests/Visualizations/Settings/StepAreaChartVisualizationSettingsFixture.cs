@@ -36,7 +36,8 @@ public class StepAreaChartVisualizationSettingsFixture
               "LeftAxisLogarithmic" : false,
               "ShowLegends" : true,
               "ChartType" : "StepArea",
-              "VisualizationType" : "CHART"
+              "VisualizationType" : "CHART",
+              "AxisTitlesMode" : "None",
             }
             """;
 

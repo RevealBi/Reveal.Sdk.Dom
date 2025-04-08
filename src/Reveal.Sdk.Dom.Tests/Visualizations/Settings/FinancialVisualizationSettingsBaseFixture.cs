@@ -34,6 +34,7 @@ public class FinancialVisualizationSettingsBaseFixture
               "LeftAxisLogarithmic" : true,
               "LeftAxisMinValue" : 10.5,
               "LeftAxisMaxValue" : 100.75,
+              "AxisTitlesMode" : "None",
               "ChartType" : "Column",
               "VisualizationType" : "CHART"
             }

@@ -22,11 +22,12 @@ public class CandleStickVisualizationSettingsFixture
     public void ToJsonString_GeneratesCorrectJson_WhenSerialized()
     {
         // Arrange
-        var expectedJson = 
+        var expectedJson =
             """
             {
               "_type" : "ChartVisualizationSettingsType",
               "LeftAxisLogarithmic" : false,
+              "AxisTitlesMode" : "None",
               "ChartType" : "Candlestick",
               "VisualizationType" : "CHART"
             }

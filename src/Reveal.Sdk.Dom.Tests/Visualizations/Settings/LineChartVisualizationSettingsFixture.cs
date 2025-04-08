@@ -36,7 +36,8 @@ public class LineChartVisualizationSettingsFixture
               "LeftAxisLogarithmic" : false,
               "ShowLegends" : true,
               "ChartType" : "Line",
-              "VisualizationType" : "CHART"
+              "VisualizationType" : "CHART",
+              "AxisTitlesMode" : "None",
             }
             """;
 

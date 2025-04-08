@@ -26,13 +26,14 @@ public class YAxisVisualizationSettingsFixture
     public void ToJsonString_GeneratesCorrectJson_WhenSerialized()
     {
         // Arrange
-        var expectedJson = 
+        var expectedJson =
             """
             {
               "_type" : "ChartVisualizationSettingsType",
               "LeftAxisLogarithmic" : true,
               "LeftAxisMinValue" : 10.0,
               "LeftAxisMaxValue" : 100.0,
+              "AxisTitlesMode" : "None",
               "ShowLegends" : true,
               "ChartType" : "Column",
               "VisualizationType" : "CHART"

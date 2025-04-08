@@ -47,7 +47,8 @@ public class StackedVisualizationSettingsBaseFixture
               "LeftAxisLogarithmic" : false,
               "ShowLegends" : true,
               "ChartType" : "Column",
-              "VisualizationType" : "CHART"
+              "VisualizationType" : "CHART",
+              "AxisTitlesMode" : "None",
             }
             """;
         var settings = new TestStackedVisualizationSettingsBase

@@ -38,10 +38,11 @@ public class ScatterVisualizationSettingsFixture
               "LeftAxisLogarithmic": true,
               "LeftAxisMinValue": 100.0,
               "LeftAxisMaxValue": 9000.0,
+              "AxisTitlesMode" : "None",
               "ShowLegends": true,
               "BrushOffsetIndex": 1,
               "ChartType": "Scatter",
-              "VisualizationType": "CHART"
+              "VisualizationType": "CHART",
             }
             """;
 

@@ -36,7 +36,8 @@ public class TimeSeriesVisualizationSettingsFixture
               "LeftAxisLogarithmic" : false,
               "ShowLegends" : true,
               "ChartType" : "TimeSeries",
-              "VisualizationType" : "CHART"
+              "VisualizationType" : "CHART",
+              "AxisTitlesMode" : "None",
             }
             """;
 

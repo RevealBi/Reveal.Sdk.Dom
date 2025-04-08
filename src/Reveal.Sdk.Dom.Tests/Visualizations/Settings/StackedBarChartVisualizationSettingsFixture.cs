@@ -34,7 +34,8 @@ public class StackedBarChartVisualizationSettingsFixture
               "LeftAxisLogarithmic" : false,
               "ShowLegends" : true,
               "ChartType" : "StackedBar",
-              "VisualizationType" : "CHART"
+              "VisualizationType" : "CHART",
+              "AxisTitlesMode" : "None",
             }
             """;
 

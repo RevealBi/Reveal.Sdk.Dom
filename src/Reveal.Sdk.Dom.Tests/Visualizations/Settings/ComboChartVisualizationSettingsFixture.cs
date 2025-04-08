@@ -102,7 +102,7 @@ public class ComboChartVisualizationSettingsFixture
     public void ToJsonString_GeneratesCorrectJson_WhenSerialized()
     {
         // Arrange
-        var expectedJson = 
+        var expectedJson =
             """
             {
               "_type" : "ChartVisualizationSettingsType",
@@ -116,7 +116,8 @@ public class ComboChartVisualizationSettingsFixture
               "LeftAxisLogarithmic" : false,
               "ShowLegends" : true,
               "ChartType" : "Composite",
-              "VisualizationType" : "CHART"
+              "VisualizationType" : "CHART",
+              "AxisTitlesMode" : "None",
             }
             """;
 

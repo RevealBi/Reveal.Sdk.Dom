@@ -143,6 +143,7 @@ public class BubbleVisualizationFixture
                   "ShowAxisX": true,
                   "ShowAxisY": true,
                   "LeftAxisLogarithmic": true,
+                  "AxisTitlesMode" : "None",
                   "ShowLegends": true,
                   "BrushOffsetIndex": 1,
                   "ChartType": "Bubble",
