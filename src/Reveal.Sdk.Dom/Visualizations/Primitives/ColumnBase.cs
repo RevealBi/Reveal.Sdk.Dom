@@ -6,6 +6,6 @@ namespace Reveal.Sdk.Dom.Visualizations
     public abstract class ColumnBase : SchemaType
     {
         [JsonProperty("Axis")]
-        internal Axis Axis { get; set; }
+        internal ColumnAxis Axis { get; set; }
     }
 }
