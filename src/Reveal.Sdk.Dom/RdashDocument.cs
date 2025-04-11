@@ -15,7 +15,7 @@ using Reveal.Sdk.Dom.Core.Utilities;
 
 namespace Reveal.Sdk.Dom
 {
-    public sealed class RdashDocument
+    public sealed class RdashDocument : IAIMetadata
     {
         private VisualizationCollection _visualizations;
 
@@ -33,6 +33,12 @@ namespace Reveal.Sdk.Dom
             Title = title;
             _visualizations = new VisualizationCollection(this);
         }
+
+        /// <summary>
+        /// Gets or sets the AI metadata for the dashboard. This is not meant for public use.
+        /// </summary>
+        [JsonProperty("AI")]
+        AIProperties IAIMetadata.AIProperties { get; set; }
 
         /// <summary>
         /// Gets or sets the title of the dashboard.

@@ -23,7 +23,7 @@ namespace Reveal.Sdk.Dom.Visualizations
         public TSettings Settings { get; internal set; } = new TSettings();
     }
 
-    public abstract class Visualization : IVisualization, IParentDocument
+    public abstract class Visualization : IVisualization, IParentDocument, IAIMetadata
     {
         protected Visualization(string title, DataSourceItem dataSourceItem)
         {
@@ -149,5 +149,11 @@ namespace Reveal.Sdk.Dom.Visualizations
                 UpdateDataSourceItem(dataSourceItem);
             }
         }
+
+        /// <summary>
+        /// Gets or sets the AI metadata for the visualization. This is not meant for public use.
+        /// </summary>
+        [JsonProperty("AI")]
+        AIProperties IAIMetadata.AIProperties { get; set; }
     }
 }
