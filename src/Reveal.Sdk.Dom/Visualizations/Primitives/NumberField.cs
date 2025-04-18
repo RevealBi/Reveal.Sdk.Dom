@@ -9,5 +9,7 @@ namespace Reveal.Sdk.Dom.Visualizations
         {
             ((IFieldDataType)this).DataType = DataType.Number;
         }
+
+        public NumberFormatting Formatting { get; set; }
     }
 }
