@@ -3,6 +3,9 @@ using Reveal.Sdk.Dom.Core.Extensions;
 
 namespace Reveal.Sdk.Dom.Data
 {
+    /// <summary>
+    /// DO NOT MAKE PUBLIC. WE ARE NOT SUPPORTING THIS YET.
+    /// </summary>
     internal class DropboxDataSourceItem : DataSourceItem
     {
         public DropboxDataSourceItem(string title, DataSource dataSource) :

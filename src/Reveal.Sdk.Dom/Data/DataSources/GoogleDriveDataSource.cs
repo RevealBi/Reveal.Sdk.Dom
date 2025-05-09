@@ -1,6 +1,9 @@
 ﻿namespace Reveal.Sdk.Dom.Data
 {
-    public class GoogleDriveDataSource : DataSource
+    /// <summary>
+    /// DO NOT MAKE PUBLIC. WE ARE NOT SUPPORTING THIS YET.
+    /// </summary>
+    internal class GoogleDriveDataSource : DataSource
     {
         public GoogleDriveDataSource()
         {
