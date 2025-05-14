@@ -73,11 +73,12 @@ public class GridVisualizationSettingsBaseFixture
     public void ToJsonString_GeneratesCorrectJson_WhenSerialized()
     {
         // Arrange
-        var expectedJson = 
+        var expectedJson =
             """
             {
               "_type" : null,
               "FontSize" : "Large",
+              "VisualizationColumns": null,
               "Style" : {
                 "FixedLeftColumns" : false,
                 "TextAlignment" : "Left",
