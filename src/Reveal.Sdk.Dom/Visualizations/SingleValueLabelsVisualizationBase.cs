@@ -19,6 +19,10 @@ namespace Reveal.Sdk.Dom.Visualizations
                 {
                     return vizSpec.Rows;
                 }
+                else if (VisualizationDataSpec is CategoryVisualizationDataSpec categorySpec)
+                {
+                    return categorySpec.Rows;
+                }
                 else
                 {
                     return new List<DimensionColumn>();
@@ -33,6 +37,10 @@ namespace Reveal.Sdk.Dom.Visualizations
                 if (VisualizationDataSpec is SingleValueLabelsVisualizationDataSpec vizSpec)
                 {
                     return vizSpec.Value;
+                }
+                else if(VisualizationDataSpec is CategoryVisualizationDataSpec categorySpec)
+                {
+                    return categorySpec.Values;
                 }
                 else
                 {

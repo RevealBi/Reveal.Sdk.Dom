@@ -52,12 +52,35 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations
         }
 
         [Fact]
-        public void GetLabels_ReturnsEmptyList_IfDataSpecIsNotSingleValueLabelsVisDataSpec()
+        public void GetLabels_ReturnsVisualizationSpecRows_IfDataSpecIsCategoryVisDataSpec()
+        {
+            //Arrange
+            var dataSourceItem = new DataSourceItem();
+            var visualization = new TestSingleValueLabelsVisualization("testTitle", dataSourceItem);
+            var visSpec = new CategoryVisualizationDataSpec();
+            visSpec.Rows = new List<DimensionColumn>
+            {
+                new DimensionColumn(){DataField = new TestDimensionDataField("Row1") },
+                new DimensionColumn(){DataField = new TestDimensionDataField("Row2") },
+            };
+            visualization.VisualizationDataSpec = visSpec;
+
+            //Act
+            var labels = visualization.Labels;
+
+            //Assert
+            Assert.Equal(visualization.Labels.Count, 2);
+            Assert.Equal(labels[0].DataField.FieldName, "Row1");
+            Assert.Equal(labels[1].DataField.FieldName, "Row2");
+        }
+
+        [Fact]
+        public void GetLabels_ReturnsEmptyList_IfDataSpecIsUnexpected()
         {
             // Arrange
             var dataSourceItem = new DataSourceItem();
             var visualization = new TestSingleValueLabelsVisualization("testTitle", dataSourceItem);
-            var visSpec = new CategoryVisualizationDataSpec();
+            var visSpec = new VisualizationDataSpec();
             visualization.VisualizationDataSpec = visSpec;
 
             // Act
@@ -91,12 +114,36 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations
         }
 
         [Fact]
-        public void GetValues_ReturnsEmptyList_IfDataSpecIsNotSingleValueLabelsVisDataSpec()
+        public void GetValues_ReturnsVisualizationSpecValues_IfDataSpecIsCategoryVisDataSpec()
+        {
+            //Arrange
+            var dataSourceItem = new DataSourceItem();
+            var visualization = new TestSingleValueLabelsVisualization("testTitle", dataSourceItem);
+            var visSpec = new CategoryVisualizationDataSpec();
+            visSpec.Values = new List<MeasureColumn>
+            {
+                new MeasureColumn(){DataField = new NumberDataField("Value1") },
+                new MeasureColumn(){DataField = new NumberDataField("Value2") }
+            };
+            visualization.VisualizationDataSpec = visSpec;
+
+            //Act
+            var values = visualization.Values;
+
+            //Assert
+
+            Assert.Equal(visualization.Values.Count, 2);
+            Assert.Equal(values[0].DataField.FieldName, "Value1");
+            Assert.Equal(values[1].DataField.FieldName, "Value2");
+        }
+
+        [Fact]
+        public void GetValues_ReturnsEmptyList_IfDataSpecIsUnexpected()
         {
             // Arrange
             var dataSourceItem = new DataSourceItem();
             var visualization = new TestSingleValueLabelsVisualization("testTitle", dataSourceItem);
-            var visSpec = new CategoryVisualizationDataSpec();
+            var visSpec = new VisualizationDataSpec();
             visualization.VisualizationDataSpec = visSpec;
 
             // Act
@@ -104,6 +151,13 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations
 
             // Assert
             Assert.Empty(values);
+        }
+
+        private class TestDimensionDataField : DimensionDataField
+        {
+            public TestDimensionDataField(string fieldName) : base(fieldName)
+            {
+            }
         }
 
 
