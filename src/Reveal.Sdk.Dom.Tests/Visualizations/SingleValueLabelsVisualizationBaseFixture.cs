@@ -60,8 +60,8 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations
             var visSpec = new CategoryVisualizationDataSpec();
             visSpec.Rows = new List<DimensionColumn>
             {
-                new DimensionColumn(){DataField = new TestDimensionDataField("Row1") },
-                new DimensionColumn(){DataField = new TestDimensionDataField("Row2") },
+                new DimensionColumn(){DataField = new TextDataField("Row1") },
+                new DimensionColumn(){DataField = new TextDataField("Row2") },
             };
             visualization.VisualizationDataSpec = visSpec;
 
@@ -152,14 +152,6 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations
             // Assert
             Assert.Empty(values);
         }
-
-        private class TestDimensionDataField : DimensionDataField
-        {
-            public TestDimensionDataField(string fieldName) : base(fieldName)
-            {
-            }
-        }
-
 
         private class TestSingleValueLabelsVisualization : SingleValueLabelsVisualizationBase<TestVisualizationSettings>
         {
