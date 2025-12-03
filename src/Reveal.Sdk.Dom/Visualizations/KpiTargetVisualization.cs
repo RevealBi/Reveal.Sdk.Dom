@@ -3,6 +3,7 @@ using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations.Settings;
 using Reveal.Sdk.Dom.Visualizations.VisualizationSpecs;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Reveal.Sdk.Dom.Visualizations
 {
@@ -29,6 +30,14 @@ namespace Reveal.Sdk.Dom.Visualizations
             Settings.VisualizationDataSpec = VisualizationDataSpec;
             ChartType = ChartType.KpiTarget;
         }
+
+        [OnDeserialized]
+        internal void OnDeserializedMethod(StreamingContext context)
+        {
+            //needed to update the settings object after deserialization
+            Settings.VisualizationDataSpec = VisualizationDataSpec;
+        }
+
 
         [JsonIgnore]
         public DimensionColumn Date

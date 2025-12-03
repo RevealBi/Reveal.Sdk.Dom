@@ -22,6 +22,7 @@ namespace Reveal.Sdk.Dom.Visualizations.Settings
             set { VisualizationDataSpec.IndicatorType = ConvertKpiTimePeriodToIndicatorVisualizationType(value); }
         }
 
+        [JsonIgnore]
         internal IndicatorVisualizationDataSpec VisualizationDataSpec { get; set; }
 
         internal IndicatorVisualizationType ConvertKpiTimePeriodToIndicatorVisualizationType(KpiTimePeriod timePeriod)
