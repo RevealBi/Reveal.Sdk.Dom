@@ -21,7 +21,8 @@ namespace Reveal.Sdk.Dom.Visualizations.Settings
             get { return VisualizationDataSpec.DateFilterType; }
             set { VisualizationDataSpec.DateFilterType = value; } 
         }
-        
+
+        [JsonIgnore]
         internal IndicatorTargetVisualizationDataSpec VisualizationDataSpec { get; set; }
     }
 }

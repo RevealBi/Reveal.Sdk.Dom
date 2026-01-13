@@ -3,6 +3,7 @@ using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations.Settings;
 using Reveal.Sdk.Dom.Visualizations.VisualizationSpecs;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Reveal.Sdk.Dom.Visualizations
 {
@@ -51,5 +52,15 @@ namespace Reveal.Sdk.Dom.Visualizations
 
         [JsonProperty(Order = 7)]
         internal IndicatorVisualizationDataSpec VisualizationDataSpec { get; set; } = new IndicatorVisualizationDataSpec();
+
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext context)
+        {
+            // Re-establish the shared reference after deserialization
+            if (Settings != null && VisualizationDataSpec != null)
+            {
+                Settings.VisualizationDataSpec = VisualizationDataSpec;
+            }
+        }
     }
 }

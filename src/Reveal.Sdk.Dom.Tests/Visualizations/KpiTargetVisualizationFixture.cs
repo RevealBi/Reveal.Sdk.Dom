@@ -326,4 +326,62 @@ public class KpiTargetVisualizationFixture
         // Assert
         Assert.Equal(expectedNormalized.Trim(), actualNormalized.Trim());
     }
+
+    [Fact]
+    public void Deserialize_MaintainsSharedReference_BetweenVisualizationAndSettings()
+    {
+        // Arrange - Create and serialize
+        var document = new RdashDocument("KPI Dashboard");
+        var excelDataSourceItem = new RestDataSourceItem("Marketing Sheet")
+        {
+            Id = "080cc17d-4a0a-4837-aa3f-ef2571ea443a",
+            Subtitle = "Excel Data Source Item",
+            Url = "http://dl.infragistics.com/reportplus/reveal/samples/Samples.xlsx",
+            IsAnonymous = true,
+            ResourceItem = new DataSourceItem
+            {
+                Id = "d593dd79-7161-4929-afc9-c26393f5b650",
+                DataSourceId = "33077d1e-19c5-44fe-b981-6765af3156a6",
+                Title = "Marketing Sheet",
+                Subtitle = "Excel Data Source Item",
+                HasTabularData = true,
+                HasAsset = false,
+                Properties = new Dictionary<string, object>
+                {
+                    { "Url", "http://dl.infragistics.com/reportplus/reveal/samples/Samples.xlsx" }
+                }
+            },
+            Fields = new List<IField>
+            {
+                new DateField("Date"),
+                new NumberField("Budget"),
+                new NumberField("Spend"),
+            }
+        };
+        excelDataSourceItem.UseExcel("Marketing");
+
+        document.Visualizations.Add(new KpiTargetVisualization("KPI vs Target", excelDataSourceItem)
+        .SetDate("Date")
+        .SetValue("Spend")
+        .SetTarget("Budget")
+        .ConfigureSettings(settings =>
+        {
+            settings.DifferenceMode = IndicatorDifferenceMode.ValueAndPercentage;
+            settings.GoalPeriod = KpiGoalPeriod.ThisYear;
+        }));
+
+        var json = document.ToJsonString();
+
+        // Act - ACTUALLY DESERIALIZE from JSON (not just reference the existing object!)
+        var deserializedDocument = RdashDocument.LoadFromJson(json);
+        var visualization = (KpiTargetVisualization)deserializedDocument.Visualizations[0];
+
+        // Assert - verify the shared reference is maintained AFTER deserialization
+        Assert.NotNull(visualization.Settings.VisualizationDataSpec);
+        Assert.Same(visualization.VisualizationDataSpec, visualization.Settings.VisualizationDataSpec);
+
+        // Verify GoalPeriod works correctly after deserialization
+        visualization.Settings.GoalPeriod = KpiGoalPeriod.ThisYear;
+        Assert.Equal(KpiGoalPeriod.ThisYear, visualization.VisualizationDataSpec.DateFilterType);
+    }
 }
