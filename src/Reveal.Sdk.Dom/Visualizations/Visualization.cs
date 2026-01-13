@@ -104,10 +104,13 @@ namespace Reveal.Sdk.Dom.Visualizations
                 dataSourceItem.Fields = tdd.Fields.Clone();
             }
 
-            IParentDocument viz = this;
-            dataSourceItem.DataSource = viz.Document.DataSources.Where(x => x.Id == dataSourceItem.DataSourceId).First();
-            if (dataSourceItem.ResourceItem != null)
-                dataSourceItem.ResourceItemDataSource = viz.Document.DataSources.Where(x => x.Id == dataSourceItem.ResourceItem.DataSourceId).First();
+            var document = ((IParentDocument)this).Document;
+            if (document != null)
+            {
+                dataSourceItem.DataSource = document.DataSources.FirstOrDefault(x => x.Id == dataSourceItem.DataSourceId);
+                if (dataSourceItem.ResourceItem != null)
+                    dataSourceItem.ResourceItemDataSource = document.DataSources.FirstOrDefault(x => x.Id == dataSourceItem.ResourceItem.DataSourceId);
+            }
 
             return dataSourceItem;
         }
