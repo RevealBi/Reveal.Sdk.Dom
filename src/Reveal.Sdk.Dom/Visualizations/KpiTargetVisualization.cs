@@ -31,14 +31,6 @@ namespace Reveal.Sdk.Dom.Visualizations
             ChartType = ChartType.KpiTarget;
         }
 
-        [OnDeserialized]
-        internal void OnDeserializedMethod(StreamingContext context)
-        {
-            //needed to update the settings object after deserialization
-            Settings.VisualizationDataSpec = VisualizationDataSpec;
-        }
-
-
         [JsonIgnore]
         public DimensionColumn Date
         {
@@ -66,5 +58,15 @@ namespace Reveal.Sdk.Dom.Visualizations
 
         [JsonProperty(Order = 7)]
         internal IndicatorTargetVisualizationDataSpec VisualizationDataSpec { get; set; } = new IndicatorTargetVisualizationDataSpec();
+
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext context)
+        {
+            // Re-establish the shared reference after deserialization
+            if (Settings != null && VisualizationDataSpec != null)
+            {
+                Settings.VisualizationDataSpec = VisualizationDataSpec;
+            }
+        }
     }
 }
