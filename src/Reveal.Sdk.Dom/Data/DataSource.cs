@@ -26,7 +26,7 @@ namespace Reveal.Sdk.Dom.Data
         }
 
         [JsonProperty]
-        internal string Provider { get; set; }
+        public string Provider { get; set; }
 
         [JsonProperty("Description")]
         public string Title { get; set; }
@@ -41,10 +41,10 @@ namespace Reveal.Sdk.Dom.Data
         }
 
         [JsonProperty]
-        internal Dictionary<string, object> Properties { get; set; }
+        public Dictionary<string, object> Properties { get; set; }
 
         [JsonProperty]
-        internal Dictionary<string, object> Settings { get; set; }
+        public Dictionary<string, object> Settings { get; set; }
 
         public override bool Equals(object obj)
         {
