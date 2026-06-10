@@ -8,10 +8,14 @@ using System.Collections.Generic;
 
 namespace Reveal.Sdk.Dom.Data
 {
+    /// <summary>
+    /// Represents a data source in Reveal. A data source contains the necessary information for Reveal to connect to and retrieve data from a specific provider, such as a database or an API.
+    /// </summary>
     public class DataSource : SchemaType, IEquatable<DataSource>
     {
         private string _id = Guid.NewGuid().ToString();
 
+        
         public DataSource()
         {
             SchemaTypeName = SchemaTypeNames.DataSourceType;
@@ -19,30 +23,52 @@ namespace Reveal.Sdk.Dom.Data
             Settings = new Dictionary<string, object>();
         }
 
+        /// <summary>
+        /// The unique identifier for the data source.
+        /// </summary>
         public string Id
         {
             get => _id;
             set => _id = string.IsNullOrEmpty(value) ? Guid.NewGuid().ToString() : value; //do not allow a null Id
         }
 
+
+        /// <summary>
+        /// The provider used by this data source.
+        /// </summary>
         [JsonProperty]
         public string Provider { get; set; }
 
+        /// <summary>
+        /// The title of the data source. Used as the display name for the data source in the UI.
+        /// </summary>
         [JsonProperty("Description")]
         public string Title { get; set; }
 
+        /// <summary>
+        /// The subtitle of the data source.
+        /// </summary>
         public string Subtitle { get; set; }
 
         [JsonIgnore]
+        /// <summary>
+        /// The default refresh rate for the cached data accessed by this data source.
+        /// </summary>
         public string DefaultRefreshRate
         {
             get => Settings.GetValue<string>("DefaultRefreshRate");
             set => Settings.SetItem("DefaultRefreshRate", value);
         }
 
+        /// <summary>
+        /// A dictionary of additional properties specific to the data source provider.
+        /// </summary>
         [JsonProperty]
         public Dictionary<string, object> Properties { get; set; }
 
+        /// <summary> 
+        /// A dictionary of additional settings for the data source.
+        /// </summary>
         [JsonProperty]
         public Dictionary<string, object> Settings { get; set; }
 
