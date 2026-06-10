@@ -26,8 +26,7 @@ namespace Reveal.Sdk.Dom.Data
         }
 
         [JsonProperty]
-        [JsonConverter(typeof(StringEnumConverter))]
-        internal DataSourceProvider Provider { get; set; }
+        internal string Provider { get; set; }
 
         [JsonProperty("Description")]
         public string Title { get; set; }
@@ -62,7 +61,7 @@ namespace Reveal.Sdk.Dom.Data
             int hashCode = -258580624;
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(SchemaTypeName);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Id);
-            hashCode = hashCode * -1521134295 + EqualityComparer<DataSourceProvider>.Default.GetHashCode(Provider);
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Provider);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Title);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Subtitle);
             return hashCode;
