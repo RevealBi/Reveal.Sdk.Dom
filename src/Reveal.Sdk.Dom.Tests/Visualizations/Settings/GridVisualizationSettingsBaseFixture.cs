@@ -15,6 +15,7 @@ public class GridVisualizationSettingsBaseFixture
         var settings = new TestGridVisualizationSettings();
 
         // Assert
+        Assert.Empty(settings.ColumnSettings);
         Assert.Equal(FontSize.Small, settings.FontSize);
         Assert.NotNull(settings.Style);
         Assert.Equal(default(Alignment), settings.DateFieldAlignment);
@@ -78,7 +79,7 @@ public class GridVisualizationSettingsBaseFixture
             {
               "_type" : null,
               "FontSize" : "Large",
-              "VisualizationColumns": null,
+              "VisualizationColumns": [],
               "Style" : {
                 "FixedLeftColumns" : false,
                 "TextAlignment" : "Left",

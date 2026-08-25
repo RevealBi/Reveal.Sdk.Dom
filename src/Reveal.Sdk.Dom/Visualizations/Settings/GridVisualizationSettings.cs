@@ -1,5 +1,6 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Reveal.Sdk.Dom.Core.Constants;
+using System.Collections.Generic;
 
 namespace Reveal.Sdk.Dom.Visualizations.Settings
 {
@@ -10,6 +11,24 @@ namespace Reveal.Sdk.Dom.Visualizations.Settings
             SchemaTypeName = SchemaTypeNames.GridVisualizationSettingsType;
             VisualizationType = VisualizationTypes.GRID;
         }
+
+        /// <summary>
+        /// Gets or sets the columns used to group rows, in grouping priority order.
+        /// </summary>
+        [JsonProperty("GroupedColumns")]
+        public List<GridColumnGrouping> GroupedColumns { get; set; } = new List<GridColumnGrouping>();
+
+        /// <summary>
+        /// Gets or sets the columns used to sort rows, in sorting priority order.
+        /// </summary>
+        [JsonProperty("SortedColumns")]
+        public List<GridColumnSort> SortedColumns { get; set; } = new List<GridColumnSort>();
+
+        /// <summary>
+        /// Gets or sets the columns that display summary calculations.
+        /// </summary>
+        [JsonProperty("SummarizedColumns")]
+        public List<GridColumnSummary> SummarizedColumns { get; set; } = new List<GridColumnSummary>();
 
         /// <summary>
         /// Gets or sets whether the grid should have paging enabled. 

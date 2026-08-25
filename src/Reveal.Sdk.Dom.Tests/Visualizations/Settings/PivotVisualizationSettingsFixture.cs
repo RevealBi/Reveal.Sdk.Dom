@@ -18,6 +18,7 @@ public class PivotVisualizationSettingsFixture
         // Assert
         Assert.Equal(SchemaTypeNames.PivotVisualizationSettingsType, settings.SchemaTypeName);
         Assert.Equal(VisualizationTypes.PIVOT, settings.VisualizationType);
+        Assert.Empty(settings.ColumnSettings);
         Assert.Null(settings._visualizationDataSpec);
     }
 
@@ -30,6 +31,7 @@ public class PivotVisualizationSettingsFixture
             {
               "_type" : "PivotVisualizationSettingsType",
               "FontSize" : "Large",
+              "VisualizationColumns" : [],
               "Style" : {
                 "FixedLeftColumns" : false,
                 "TextAlignment" : "Center",
