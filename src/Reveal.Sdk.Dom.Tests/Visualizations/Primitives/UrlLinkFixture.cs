@@ -1,10 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Reveal.Sdk.Dom.Visualizations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
@@ -20,6 +16,7 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
             // Assert
             Assert.Null(instance.Title);
             Assert.Null(instance.Url);
+            Assert.Equal(UrlLinkTarget.NewTab, instance.Target);
             Assert.Equal(LinkType.OpenUrl, instance.Type);
         }
 
@@ -32,7 +29,41 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
             // Assert
             Assert.Equal("Title", instance.Title);
             Assert.Equal("http://url", instance.Url);
+            Assert.Equal(UrlLinkTarget.NewTab, instance.Target);
             Assert.Equal(LinkType.OpenUrl, instance.Type);
+        }
+
+        [Fact]
+        public void Constructor_SetsTarget_WhenProvided()
+        {
+            // Act
+            var instance = new UrlLink("Title", "http://url", UrlLinkTarget.SameTab);
+
+            // Assert
+            Assert.Equal(UrlLinkTarget.SameTab, instance.Target);
+        }
+
+        [Fact]
+        public void Target_UsesRevealJsonValues_WhenRoundTripped()
+        {
+            // Arrange
+            var instance = new UrlLink("Title", "http://url", UrlLinkTarget.SameTab);
+
+            // Act
+            var json = instance.ToJsonString();
+            var deserialized = JsonConvert.DeserializeObject<UrlLink>(
+                """
+                {
+                  "Title": "Title",
+                  "Url": "http://url",
+                  "Target": "Blank",
+                  "Type": "OpenUrl"
+                }
+                """);
+
+            // Assert
+            Assert.Equal("Self", JObject.Parse(json)["Target"]?.Value<string>());
+            Assert.Equal(UrlLinkTarget.NewTab, deserialized.Target);
         }
 
         [Fact]

@@ -1,0 +1,32 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace Reveal.Sdk.Dom.Visualizations.Settings
+{
+    /// <summary>
+    /// Configures a grid column used to sort rows.
+    /// </summary>
+    public sealed class GridColumnSort
+    {
+        public GridColumnSort() { }
+
+        public GridColumnSort(string columnName, SortingType sortDirection = SortingType.Asc)
+        {
+            ColumnName = columnName;
+            SortDirection = sortDirection;
+        }
+
+        /// <summary>
+        /// Gets or sets the rendered column name used for sorting.
+        /// </summary>
+        [JsonProperty("ColumnName")]
+        public string ColumnName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the direction used to sort the column values.
+        /// </summary>
+        [JsonProperty("SortDirection")]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public SortingType SortDirection { get; set; } = SortingType.Asc;
+    }
+}

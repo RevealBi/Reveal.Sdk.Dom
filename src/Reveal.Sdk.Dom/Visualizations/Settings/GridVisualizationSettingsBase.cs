@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.Collections.Generic;
 
@@ -9,10 +9,11 @@ namespace Reveal.Sdk.Dom.Visualizations.Settings
         protected GridVisualizationSettingsBase() { }
 
         /// <summary>
-        /// Gets or sets the format settings for the columns in the grid.
+        /// Gets or sets the appearance and behavior settings for individual grid columns.
+        /// A column is identified by its rendered column name.
         /// </summary>
         [JsonProperty("VisualizationColumns")]
-        public List<GridColumnFormat> ColumnFormats { get; set; }
+        public List<GridColumnSettings> ColumnSettings { get; set; } = new List<GridColumnSettings>();
 
         /// <summary>
         /// Gets or sets the alignment of text in a date field.

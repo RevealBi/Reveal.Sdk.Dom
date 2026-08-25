@@ -18,6 +18,7 @@ public class SparklineVisualizationSettingsFixture
         // Assert
         Assert.Equal(SchemaTypeNames.SparklineVisualizationSettingsType, settings.SchemaTypeName);
         Assert.Equal(VisualizationTypes.SPARKLINE, settings.VisualizationType);
+        Assert.Empty(settings.ColumnSettings);
         Assert.Equal(SparklineChartType.Line, settings.ChartType);
         Assert.True(settings.ShowLastTwoValues);
         Assert.True(settings.ShowDifference);
@@ -37,6 +38,7 @@ public class SparklineVisualizationSettingsFixture
               "ShowLastTwoValues" : false,
               "ShowDifference" : false,
               "FontSize" : "Medium",
+              "VisualizationColumns" : [],
               "Style" : {
                 "FixedLeftColumns" : false,
                 "TextAlignment" : "Inherit",

@@ -119,6 +119,7 @@ public class SparklineVisualizationFixture
                 "PositiveIsRed" : false,
                 "ShowLastTwoValues" : false,
                 "ShowDifference" : true,
+                "VisualizationColumns" : [],
                 "FontSize" : "Small",
                 "Style" : {
                   "FixedLeftColumns" : false,

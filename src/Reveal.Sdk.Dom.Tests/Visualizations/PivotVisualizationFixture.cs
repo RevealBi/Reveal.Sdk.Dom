@@ -182,6 +182,7 @@ public class PivotVisualizationFixture
                                "RowSpan": 0,
                                "VisualizationSettings": {
                                  "_type": "PivotVisualizationSettingsType",
+                                 "VisualizationColumns": [],
                                  "FontSize": "Large",
                                  "Style": {
                                    "FixedLeftColumns": false,

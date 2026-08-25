@@ -104,6 +104,7 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
                 },
                 {
                   "Url": "https://dash.board/url",
+                  "Target": "Blank",
                   "Parameters": [],
                   "Title": "My Url",
                   "Type": "OpenUrl"

@@ -139,8 +139,12 @@ public class GridVisualizationFixture
               "RowSpan" : 0,
               "VisualizationSettings" : {
                 "_type" : "GridVisualizationSettingsType",
+                "GroupedColumns" : [],
+                "SortedColumns" : [],
+                "SummarizedColumns" : [],
                 "PagedRows" : true,
                 "PagedRowsSize" : 50,
+                "VisualizationColumns" : [],
                 "FontSize" : "Large",
                 "Style" : {
                   "FixedLeftColumns" : true,
