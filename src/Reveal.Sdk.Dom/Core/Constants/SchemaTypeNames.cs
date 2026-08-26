@@ -80,6 +80,9 @@ namespace Reveal.Sdk.Dom.Core.Constants
         internal const string XmlaHierarchyType = "XmlaHierarchyType";
         internal const string XmlaSetType = "XmlaSetType";
 
+        //******************* Chart Annotations *****************
+        internal const string ChartAnnotationType = "ChartAnnotationType";
+
         //******************* Fixed Lines *****************
         internal const string FixedLineAverageType = "FixedLineAverageType";
         internal const string FixedLineDataType = "FixedLineDataType";

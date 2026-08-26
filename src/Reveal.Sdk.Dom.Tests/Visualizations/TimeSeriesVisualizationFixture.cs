@@ -167,6 +167,7 @@ public class TimeSeriesVisualizationFixture
               "RowSpan" : 0,
               "VisualizationSettings" : {
                 "_type" : "ChartVisualizationSettingsType",
+                "Annotations" : [],
                 "ShowTotalsInTooltip" : true,
                 "TrendlineType" : "LinearFit",
                 "AutomaticLabelRotation" : true,

@@ -115,6 +115,7 @@ public class ColumnChartVisualizationFixture
                 "_type" : "ChartVisualizationSettingsType",
                 "CategoryAxisGap": 0.4,
                 "CategoryAxisOverlap": -0.2,
+                "Annotations" : [],
                 "ShowTotalsInTooltip" : false,
                 "TrendlineType" : "LinearFit",
                 "AutomaticLabelRotation" : true,

@@ -27,6 +27,7 @@ public class StepAreaChartVisualizationSettingsFixture
             """
             {
               "_type" : "ChartVisualizationSettingsType",
+              "Annotations" : [],
               "ShowTotalsInTooltip" : false,
               "TrendlineType" : "None",
               "AutomaticLabelRotation" : true,

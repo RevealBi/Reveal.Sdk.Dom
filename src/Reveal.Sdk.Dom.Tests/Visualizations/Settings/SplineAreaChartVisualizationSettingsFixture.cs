@@ -27,6 +27,7 @@ public class SplineAreaChartVisualizationSettingsFixture
             """
             {
               "_type" : "ChartVisualizationSettingsType",
+              "Annotations" : [],
               "ShowTotalsInTooltip" : false,
               "TrendlineType" : "None",
               "AutomaticLabelRotation" : true,

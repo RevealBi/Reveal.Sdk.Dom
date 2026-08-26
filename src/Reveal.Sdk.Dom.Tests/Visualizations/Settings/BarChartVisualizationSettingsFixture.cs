@@ -40,6 +40,7 @@ public class BarChartVisualizationSettingsFixture
             """
             {
               "_type" : "ChartVisualizationSettingsType",
+              "Annotations" : [],
               "CategoryAxisGap": 0.4,
               "CategoryAxisOverlap": -0.2,
               "ShowTotalsInTooltip" : false,

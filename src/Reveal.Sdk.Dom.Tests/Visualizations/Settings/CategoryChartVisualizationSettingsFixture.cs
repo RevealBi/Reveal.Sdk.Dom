@@ -39,6 +39,7 @@ public class CategoryChartVisualizationSettingsFixture
             """
             {
               "_type" : "ChartVisualizationSettingsType",
+              "Annotations" : [],
               "ShowTotalsInTooltip" : true,
               "TrendlineType" : "LinearFit",
               "AutomaticLabelRotation" : true,
