@@ -112,6 +112,7 @@ public class SplineAreaChartVisualizationFixture
               "RowSpan" : 0,
               "VisualizationSettings" : {
                 "_type" : "ChartVisualizationSettingsType",
+                "Annotations" : [],
                 "ShowTotalsInTooltip" : true,
                 "TrendlineType" : "ExponentialFit",
                 "AutomaticLabelRotation" : true,

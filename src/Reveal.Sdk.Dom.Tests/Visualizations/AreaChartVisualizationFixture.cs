@@ -114,6 +114,7 @@ public class AreaChartVisualizationFixture
               "RowSpan" : 0,
               "VisualizationSettings" : {
                 "_type" : "ChartVisualizationSettingsType",
+                "Annotations" : [],
                 "ShowTotalsInTooltip" : false,
                 "TrendlineType" : "LinearFit",
                 "AutomaticLabelRotation" : true,

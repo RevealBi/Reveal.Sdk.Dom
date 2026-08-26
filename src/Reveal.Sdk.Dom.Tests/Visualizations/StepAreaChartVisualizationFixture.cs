@@ -111,6 +111,7 @@ public class StepAreaChartVisualizationFixture
               "RowSpan" : 0,
               "VisualizationSettings" : {
                 "_type" : "ChartVisualizationSettingsType",
+                "Annotations" : [],
                 "ShowTotalsInTooltip" : false,
                 "TrendlineType" : "ExponentialAverage",
                 "AutomaticLabelRotation" : true,

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Collections.Generic;
 
 namespace Reveal.Sdk.Dom.Visualizations.Settings
 {
@@ -8,8 +9,17 @@ namespace Reveal.Sdk.Dom.Visualizations.Settings
     /// </summary>
     public abstract class CategoryChartVisualizationSettings : SharedChartVisualizationSettings
     {
+        /// <summary>
+        /// Initializes a new instance of category-chart visualization settings.
+        /// </summary>
         protected CategoryChartVisualizationSettings() : base() { }
-        
+
+        /// <summary>
+        /// Gets or sets the annotations displayed on the chart.
+        /// </summary>
+        [JsonProperty("Annotations")]
+        public List<ChartAnnotation> Annotations { get; set; } = new List<ChartAnnotation>();
+
         /// <summary>
         /// Gets or sets whether a total (sum) of values will be displayed in the tooltip. Only applied when categories have been added to the visualization.
         /// </summary>
