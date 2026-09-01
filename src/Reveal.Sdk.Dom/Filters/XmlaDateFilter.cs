@@ -11,6 +11,10 @@ namespace Reveal.Sdk.Dom.Filters
         public DateRange CustomDateRange { get; set; }
         public bool IncludeToday { get; set; } = true;
 
+        // The relative rule applied when RuleType is CustomRule; ignored otherwise. Omitted from
+        // the JSON when null.
+        public DateRule CustomRule { get; set; }
+
         public XmlaDateFilter()
         {
             SchemaTypeName = SchemaTypeNames.XmlaDateFilterType;

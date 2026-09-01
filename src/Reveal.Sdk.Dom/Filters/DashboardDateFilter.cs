@@ -13,6 +13,10 @@ namespace Reveal.Sdk.Dom.Filters
         [JsonConverter(typeof(StringEnumConverter))]
         public DateRuleType RuleType { get; set; } = DateRuleType.LastYear;
 
+        // The relative rule applied when RuleType is CustomRule; ignored otherwise. Omitted from
+        // the JSON when null.
+        public DateRule CustomRule { get; set; }
+
         public DashboardDateFilter() : this("Date Filter") { }
 
         public DashboardDateFilter(string title)
