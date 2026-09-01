@@ -22,6 +22,7 @@
 		NextMonth,
 		NextQuarter,
 		NextYear,
-		TrailingTwelveMonths
+		TrailingTwelveMonths,
+		CustomRule
 	}
 }
