@@ -1,4 +1,5 @@
-﻿using Reveal.Sdk.Dom.Core.Constants;
+using System;
+using Reveal.Sdk.Dom.Core.Constants;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -6,18 +7,42 @@ namespace Reveal.Sdk.Dom.Filters
 {
     public sealed class XmlaDateFilter : FilterBase, IDateRuleFilter
     {
+        // Raw schema fields — internal. The public date selection is exposed through Rule.
+        [JsonProperty("RuleType")]
         [JsonConverter(typeof(StringEnumConverter))]
-        public DateRuleType RuleType { get; set; } = DateRuleType.AllTime;
-        public DateRange CustomDateRange { get; set; }
-        public bool IncludeToday { get; set; } = true;
+        internal DateRuleType RuleType { get; set; } = DateRuleType.AllTime;
 
-        // Applied when RuleType is CustomRule; set via SetRelativePeriod. Wire name stays "CustomRule".
+        [JsonProperty("CustomDateRange")]
+        internal DateRange CustomDateRange { get; set; }
+
+        [JsonProperty("IncludeToday")]
+        internal bool IncludeToday { get; set; } = true;
+
         [JsonProperty("CustomRule")]
-        public RelativePeriod RelativePeriod { get; internal set; }
+        internal RelativePeriod CustomRule { get; set; }
 
-        public XmlaDateFilter()
+        DateRuleType IDateRuleFilter.RuleType { get => RuleType; set => RuleType = value; }
+        RelativePeriod IDateRuleFilter.CustomRule { get => CustomRule; set => CustomRule = value; }
+        DateRange IDateRuleFilter.CustomDateRange { get => CustomDateRange; set => CustomDateRange = value; }
+
+        /// <summary>The date selection this filter applies. Build it with the <see cref="DateFilterRule"/> factories.</summary>
+        [JsonIgnore]
+        public DateFilterRule Rule
+        {
+            get => DateFilterRule.FromFilter(this);
+            set => (value ?? throw new ArgumentNullException(nameof(value))).ApplyTo(this);
+        }
+
+        // Used by the deserializer.
+        internal XmlaDateFilter()
         {
             SchemaTypeName = SchemaTypeNames.XmlaDateFilterType;
+        }
+
+        /// <summary>Creates an XMLA date filter with the given date selection.</summary>
+        public XmlaDateFilter(DateFilterRule rule) : this()
+        {
+            Rule = rule ?? throw new ArgumentNullException(nameof(rule));
         }
     }
 }

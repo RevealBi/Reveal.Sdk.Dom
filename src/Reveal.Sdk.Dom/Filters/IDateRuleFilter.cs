@@ -1,24 +1,15 @@
 namespace Reveal.Sdk.Dom.Filters
 {
     /// <summary>
-    /// A date filter that supports rule-based windows — a <see cref="DateRuleType"/> with an optional
-    /// custom range or <see cref="RelativePeriod"/>. Implemented by <see cref="DashboardDateFilter"/>,
-    /// <see cref="DateTimeFilter"/>, and <see cref="XmlaDateFilter"/> so the rule-building helpers in
-    /// <see cref="IDateRuleFilterExtensions"/> are written once.
+    /// Internal seam over the raw date-rule schema fields shared by <see cref="DashboardDateFilter"/>,
+    /// <see cref="DateTimeFilter"/>, and <see cref="XmlaDateFilter"/>, so the mapping to and from the
+    /// public <see cref="DateFilterRule"/> is written once. Not part of the public API — user code uses
+    /// each filter's <c>Rule</c> property.
     /// </summary>
-    public interface IDateRuleFilter
+    internal interface IDateRuleFilter
     {
-        /// <summary>The kind of date rule the filter applies.</summary>
         DateRuleType RuleType { get; set; }
-
-        /// <summary>The explicit range used when <see cref="RuleType"/> is <see cref="DateRuleType.CustomRange"/>.</summary>
+        RelativePeriod CustomRule { get; set; }
         DateRange CustomDateRange { get; set; }
-
-        /// <summary>The relative window used when <see cref="RuleType"/> is <see cref="DateRuleType.CustomRule"/>.
-        /// Set it through <see cref="IDateRuleFilterExtensions.SetRelativePeriod{T}"/>.</summary>
-        RelativePeriod RelativePeriod { get; }
-
-        /// <summary>Whether today is included, for the built-in relative rule types.</summary>
-        bool IncludeToday { get; set; }
     }
 }

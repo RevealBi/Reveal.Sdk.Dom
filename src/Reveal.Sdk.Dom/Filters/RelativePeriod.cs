@@ -6,39 +6,28 @@ using Newtonsoft.Json.Converters;
 namespace Reveal.Sdk.Dom.Filters
 {
     /// <summary>
-    /// A relative date window (e.g. "Last 3 Years", "Next 7 Days") applied to a date filter.
-    /// Create one through <see cref="IDateRuleFilterExtensions.SetRelativePeriod{T}"/> rather than
-    /// directly; the setters are internal so the filter's rule type and range stay consistent.
-    /// Serialized with <c>_type</c> "DateRuleType" to match the dashboard schema.
+    /// Serialized shape of a relative date window (the "CustomRule" object, <c>_type</c> "DateRuleType").
+    /// Internal — user code works with the public <see cref="DateFilterRule"/> facade instead.
     /// </summary>
-    public sealed class RelativePeriod : SchemaType
+    internal sealed class RelativePeriod : SchemaType
     {
         // [JsonProperty] is required so the deserializer writes these internal setters.
 
-        /// <summary>How the window relates to the current date (Last, Previous, This, ToDate, Next).</summary>
         [JsonProperty]
         [JsonConverter(typeof(StringEnumConverter))]
         public PeriodRelation Relation { get; internal set; } = PeriodRelation.All;
 
-        /// <summary>Number of periods in the window (e.g. 3 for "Last 3 Years").</summary>
         [JsonProperty]
         public int Count { get; internal set; } = 1;
 
-        /// <summary>The unit of time the window is measured in.</summary>
         [JsonProperty]
         [JsonConverter(typeof(StringEnumConverter))]
         public PeriodType Period { get; internal set; } = PeriodType.Day;
 
-        /// <summary>
-        /// Whether today is included in the window. Only meaningful for <see cref="PeriodRelation.Last"/>
-        /// and <see cref="PeriodRelation.ToDate"/>; omitted from the JSON when null. For a relative
-        /// period this is the flag the engine reads (not the filter-level IncludeToday).
-        /// </summary>
         [JsonProperty]
         public bool? IncludeToday { get; internal set; }
 
-        // Public parameterless ctor is required by the deserializer; user code builds instances
-        // through the SetRelativePeriod extension, not this ctor.
+        // Parameterless ctor is used by the deserializer.
         public RelativePeriod()
         {
             SchemaTypeName = SchemaTypeNames.DateRuleType;

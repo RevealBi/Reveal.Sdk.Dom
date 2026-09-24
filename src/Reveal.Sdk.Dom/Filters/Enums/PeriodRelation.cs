@@ -1,9 +1,10 @@
 namespace Reveal.Sdk.Dom.Filters
 {
     // Mirrors the engine's Infragistics.ReportPlus.DashboardModel.PeriodRelation. Member names are
-    // serialized verbatim (StringEnumConverter) into a DateRule's "Relation", so they must match the
-    // engine spelling exactly.
-    public enum PeriodRelation
+    // serialized verbatim (StringEnumConverter) into a RelativePeriod's "Relation", so they must match
+    // the engine spelling exactly. Internal — the relation is chosen by the DateFilterRule factory
+    // (Last/Next/This/…), so it isn't part of the public API.
+    internal enum PeriodRelation
     {
         /// <summary>All time.</summary>
         All,
