@@ -7,23 +7,19 @@ namespace Reveal.Sdk.Dom.Filters
 {
     public sealed class XmlaDateFilter : FilterBase, IDateRuleFilter
     {
-        // Raw schema fields — internal. The public date selection is exposed through Rule.
-        [JsonProperty("RuleType")]
+        // Pre-existing public schema fields — kept public for backward compatibility.
         [JsonConverter(typeof(StringEnumConverter))]
-        internal DateRuleType RuleType { get; set; } = DateRuleType.AllTime;
+        public DateRuleType RuleType { get; set; } = DateRuleType.AllTime;
 
-        [JsonProperty("CustomDateRange")]
-        internal DateRange CustomDateRange { get; set; }
+        public DateRange CustomDateRange { get; set; }
 
-        [JsonProperty("IncludeToday")]
-        internal bool IncludeToday { get; set; } = true;
+        public bool IncludeToday { get; set; } = true;
 
+        // Introduced by this feature — internal; user code goes through Rule / DateFilterRule.
         [JsonProperty("CustomRule")]
         internal RelativePeriod CustomRule { get; set; }
 
-        DateRuleType IDateRuleFilter.RuleType { get => RuleType; set => RuleType = value; }
         RelativePeriod IDateRuleFilter.CustomRule { get => CustomRule; set => CustomRule = value; }
-        DateRange IDateRuleFilter.CustomDateRange { get => CustomDateRange; set => CustomDateRange = value; }
 
         /// <summary>The date selection this filter applies. Build it with the <see cref="DateFilterRule"/> factories.</summary>
         [JsonIgnore]
