@@ -4,7 +4,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Reveal.Sdk.Dom.Filters
 {
-    public sealed class DateTimeFilter : FilterBase
+    public sealed class DateTimeFilter : FilterBase, IDateRuleFilter
     {
         public DateTimeFilter()
         {
@@ -20,10 +20,10 @@ namespace Reveal.Sdk.Dom.Filters
 
         public DateRange CustomDateRange { get; set; }
 
-        // The relative rule applied when RuleType is CustomRule; ignored otherwise. Omitted from
-        // the JSON when null.
-        public DateRule CustomRule { get; set; }
-        
+        // Applied when RuleType is CustomRule; set via SetRelativePeriod. Wire name stays "CustomRule".
+        [JsonProperty("CustomRule")]
+        public RelativePeriod RelativePeriod { get; internal set; }
+
         public bool IncludeToday { get; set; } = true;
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json.Linq;
 using Reveal.Sdk.Dom.Filters;
 using Xunit;
@@ -7,32 +8,25 @@ namespace Reveal.Sdk.Dom.Tests
     public class DateRuleCustomRuleFixture
     {
         [Fact]
-        public void GlobalDateFilter_WithCustomRule_SerializesToExpectedJson()
+        public void SetRelativePeriod_SerializesToExpectedJson()
         {
             // Mirrors the target JSON from RevealBi/Reveal.Sdk#713.
             var document = new RdashDocument("Custom rule test");
-            document.Filters.Add(new DashboardDateFilter("Date Filter")
-            {
-                RuleType = DateRuleType.CustomRule,
-                IncludeToday = true,
-                CustomRule = new DateRule
-                {
-                    Relation = PeriodRelation.Last,
-                    Count = 3,
-                    Period = PeriodType.Year
-                }
-            });
+            var filter = new DashboardDateFilter("Date Filter")
+                .SetRelativePeriod(PeriodRelation.Last, 3, PeriodType.Year);
+            document.Filters.Add(filter);
 
             var json = JObject.Parse(document.ToJsonString());
-            var filter = json["GlobalFilters"]![0]!;
+            var f = json["GlobalFilters"]![0]!;
 
-            Assert.Equal("DateGlobalFilterType", (string)filter["_type"]!);
-            Assert.Equal("_date", (string)filter["Id"]!);
-            Assert.Equal("Date Filter", (string)filter["Title"]!);
-            Assert.Equal("CustomRule", (string)filter["RuleType"]!);
-            Assert.True((bool)filter["IncludeToday"]!);
+            Assert.Equal("DateGlobalFilterType", (string)f["_type"]!);
+            Assert.Equal("_date", (string)f["Id"]!);
+            Assert.Equal("Date Filter", (string)f["Title"]!);
+            Assert.Equal("CustomRule", (string)f["RuleType"]!);
+            Assert.True((bool)f["IncludeToday"]!);
 
-            var rule = filter["CustomRule"]!;
+            // Wire name stays "CustomRule" even though the API property is RelativePeriod.
+            var rule = f["CustomRule"]!;
             Assert.Equal("DateRuleType", (string)rule["_type"]!);
             Assert.Equal("Last", (string)rule["Relation"]!);
             Assert.Equal(3, (int)rule["Count"]!);
@@ -40,37 +34,74 @@ namespace Reveal.Sdk.Dom.Tests
         }
 
         [Fact]
-        public void DateFilter_WithoutCustomRule_OmitsCustomRuleProperty()
+        public void DateFilter_WithoutRelativePeriod_OmitsCustomRuleProperty()
         {
-            // A null CustomRule must not appear in the JSON (NullValueHandling.Ignore).
+            // A null RelativePeriod must not appear in the JSON (NullValueHandling.Ignore).
             var document = new RdashDocument("No custom rule");
             document.Filters.Add(new DashboardDateFilter("Date Filter") { RuleType = DateRuleType.LastYear });
 
             var json = JObject.Parse(document.ToJsonString());
-            var filter = json["GlobalFilters"]![0]!;
+            var f = json["GlobalFilters"]![0]!;
 
-            Assert.Null(filter["CustomRule"]);
+            Assert.Null(f["CustomRule"]);
         }
 
         [Fact]
-        public void GlobalDateFilter_CustomRule_RoundTrips()
+        public void SetRelativePeriod_RoundTrips()
         {
             var document = new RdashDocument("Round trip");
             document.Filters.Add(new DashboardDateFilter("Date Filter")
-            {
-                RuleType = DateRuleType.CustomRule,
-                CustomRule = new DateRule { Relation = PeriodRelation.Next, Count = 7, Period = PeriodType.Day, IncludeToday = false }
-            });
+                .SetRelativePeriod(PeriodRelation.Next, 7, PeriodType.Day, includeToday: false));
 
             var roundTripped = RdashDocument.LoadFromJson(document.ToJsonString());
             var filter = Assert.IsType<DashboardDateFilter>(roundTripped.Filters[0]);
 
             Assert.Equal(DateRuleType.CustomRule, filter.RuleType);
-            Assert.NotNull(filter.CustomRule);
-            Assert.Equal(PeriodRelation.Next, filter.CustomRule!.Relation);
-            Assert.Equal(7, filter.CustomRule.Count);
-            Assert.Equal(PeriodType.Day, filter.CustomRule.Period);
-            Assert.False(filter.CustomRule.IncludeToday);
+            Assert.NotNull(filter.RelativePeriod);
+            Assert.Equal(PeriodRelation.Next, filter.RelativePeriod!.Relation);
+            Assert.Equal(7, filter.RelativePeriod.Count);
+            Assert.Equal(PeriodType.Day, filter.RelativePeriod.Period);
+            Assert.False(filter.RelativePeriod.IncludeToday!.Value);
+        }
+
+        [Fact]
+        public void SetRelativePeriod_ClearsAnyCustomRange()
+        {
+            var filter = new DashboardDateFilter("Date Filter")
+                .SetCustomRange(new DateTime(2024, 1, 1), new DateTime(2024, 12, 31))
+                .SetRelativePeriod(PeriodRelation.Last, 3, PeriodType.Year);
+
+            Assert.Equal(DateRuleType.CustomRule, filter.RuleType);
+            Assert.NotNull(filter.RelativePeriod);
+            Assert.Null(filter.CustomDateRange);
+        }
+
+        [Fact]
+        public void SetCustomRange_SetsRuleTypeAndClearsRelativePeriod()
+        {
+            var filter = new DashboardDateFilter("Date Filter")
+                .SetRelativePeriod(PeriodRelation.Last, 3, PeriodType.Year)
+                .SetCustomRange(new DateTime(2024, 1, 1), new DateTime(2024, 12, 31));
+
+            Assert.Equal(DateRuleType.CustomRange, filter.RuleType);
+            Assert.Null(filter.RelativePeriod);
+            Assert.NotNull(filter.CustomDateRange);
+            Assert.Equal(new DateTime(2024, 1, 1), filter.CustomDateRange.From);
+            Assert.Equal(new DateTime(2024, 12, 31), filter.CustomDateRange.To);
+        }
+
+        [Fact]
+        public void SetRelativePeriod_WorksForAllDateRuleFilterTypes()
+        {
+            // The helper is defined once on IDateRuleFilter and applies to every date filter type.
+            var dateTime = new DateTimeFilter().SetRelativePeriod(PeriodRelation.Last, 30, PeriodType.Day);
+            var xmla = new XmlaDateFilter().SetRelativePeriod(PeriodRelation.Next, 2, PeriodType.Quarter);
+
+            Assert.Equal(DateRuleType.CustomRule, dateTime.RuleType);
+            Assert.Equal(30, dateTime.RelativePeriod!.Count);
+
+            Assert.Equal(DateRuleType.CustomRule, xmla.RuleType);
+            Assert.Equal(PeriodType.Quarter, xmla.RelativePeriod!.Period);
         }
     }
 }
