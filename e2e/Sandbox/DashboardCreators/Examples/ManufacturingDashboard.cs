@@ -81,12 +81,7 @@ namespace Sandbox.DashboardFactories
             };
 
             var field = visualization.DataDefinition.AsTabular().Fields.Where(x => x.FieldName == "Date").First() as DateField;
-            field.DataFilter = new DateTimeFilter(DateFilterRule.Last(1, PeriodType.Year))
-            {
-                FilterType = FilterType.FilterByRule,
-                DateFiscalYearStartMonth = 0,
-                DisplayInLocalTimeZone = false
-            };
+            field.DataFilter = new DateTimeFilter(DateFilterRule.Last(1, PeriodType.Year));
 
             visualization.Labels.Add(new DimensionColumn()
             {
@@ -134,12 +129,7 @@ namespace Sandbox.DashboardFactories
             };
 
             var field = visualization.DataDefinition.AsTabular().Fields.Where(x => x.FieldName == "Date").First() as DateField;
-            field.DataFilter = new DateTimeFilter(DateFilterRule.Last(1, PeriodType.Month))
-            {
-                FilterType = FilterType.FilterByRule,
-                DateFiscalYearStartMonth = 0,
-                DisplayInLocalTimeZone = false
-            };
+            field.DataFilter = new DateTimeFilter(DateFilterRule.Last(1, PeriodType.Month));
 
             visualization.Labels.Add(new DimensionColumn()
             {
@@ -172,12 +162,7 @@ namespace Sandbox.DashboardFactories
             };
 
             var field = visualization.DataDefinition.AsTabular().Fields.Where(x => x.FieldName == "Date").First() as DateField;
-            field.DataFilter = new DateTimeFilter(DateFilterRule.Last(1, PeriodType.Month))
-            {
-                FilterType = FilterType.FilterByRule,
-                DateFiscalYearStartMonth = 0,
-                DisplayInLocalTimeZone = false
-            };
+            field.DataFilter = new DateTimeFilter(DateFilterRule.Last(1, PeriodType.Month));
 
             visualization.Labels.Add(new DimensionColumn()
             {
@@ -305,12 +290,7 @@ namespace Sandbox.DashboardFactories
             };
 
             var field = visualization.DataDefinition.AsTabular().Fields.Where(x => x.FieldName == "Date").First() as DateField;
-            field.DataFilter = new DateTimeFilter(DateFilterRule.Last(1, PeriodType.Year))
-            {
-                FilterType = FilterType.FilterByRule,
-                DateFiscalYearStartMonth = 0,
-                DisplayInLocalTimeZone = false
-            };
+            field.DataFilter = new DateTimeFilter(DateFilterRule.Last(1, PeriodType.Year));
 
             visualization.Labels.Add(new DimensionColumn()
             {

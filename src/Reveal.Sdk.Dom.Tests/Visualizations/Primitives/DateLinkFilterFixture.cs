@@ -12,10 +12,10 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
     public class DateLinkFilterFixture
     {
         [Fact]
-        public void Constructor_SetDefaultValues_WhenConstructed()
+        public void LegacyJson_SetsMissingDefaults_WhenDeserialized()
         {
             // Act
-            var instance = new DateLinkFilter();
+            var instance = Newtonsoft.Json.JsonConvert.DeserializeObject<DateLinkFilter>("{}");
 
             // Assert
             Assert.Equal("Date Filter", instance.Name);
@@ -37,7 +37,7 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
             }
             """;
 
-            var instance = new DateLinkFilter();
+            var instance = Newtonsoft.Json.JsonConvert.DeserializeObject<DateLinkFilter>("{}");
 
             // Act
             var actualJson = instance.ToJsonString();

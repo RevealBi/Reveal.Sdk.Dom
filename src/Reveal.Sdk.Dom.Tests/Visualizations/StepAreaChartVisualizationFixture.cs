@@ -245,7 +245,7 @@ public class StepAreaChartVisualizationFixture
                   }
                 } ],
                 "FixedLines": [],
-                "FormatVersion" : 0,
+                "FormatVersion" : 1,
                 "AdHocExpandedElements" : [ ],
                 "Rows" : [ {
                   "_type" : "DimensionColumnSpecType",
@@ -256,7 +256,16 @@ public class StepAreaChartVisualizationFixture
                     "ExpandedItems" : [ ],
                     "FieldName" : "Date"
                   }
-                } ]
+                }, {
+                  "_type" : "DimensionColumnSpecType",
+                  "SummarizationField" : {
+                    "_type" : "SummarizationDateFieldType",
+                    "DateAggregationType" : "Day",
+                    "DrillDownElements" : [ ],
+                    "ExpandedItems" : [ ],
+                    "FieldName" : "Date"
+                  }
+                } ], "AdHocFields": 2
               }
             } ]
             """;

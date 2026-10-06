@@ -209,7 +209,7 @@ public class PieChartVisualizationFixture
                     "FieldName" : "Conversions"
                   }
                 } ],
-                "FormatVersion" : 0,
+                "FormatVersion" : 1,
                 "AdHocExpandedElements" : [ ],
                 "Rows" : [ {
                   "_type" : "DimensionColumnSpecType",

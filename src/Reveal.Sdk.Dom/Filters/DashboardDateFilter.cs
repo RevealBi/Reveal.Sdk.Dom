@@ -1,6 +1,7 @@
 using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.Runtime.Serialization;
 using Reveal.Sdk.Dom.Core.Constants;
 
 namespace Reveal.Sdk.Dom.Filters
@@ -47,8 +48,12 @@ namespace Reveal.Sdk.Dom.Filters
         {
             SchemaTypeName = SchemaTypeNames.DateGlobalFilterType;
             Title = "Date Filter";
-            // New DOM documents still use format 6, whose SDK migration expects this legacy ID.
-            // Loaded modern documents preserve their explicit IDs through the inherited Id property.
+        }
+
+        [OnDeserializing]
+        internal void ReadLegacyId(StreamingContext context)
+        {
+            // Only old JSON with no ID needs this fallback; creation uses DashboardFilter's GUID.
             Id = "_date";
         }
 

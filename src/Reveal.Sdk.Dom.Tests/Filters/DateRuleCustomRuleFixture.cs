@@ -17,7 +17,7 @@ namespace Reveal.Sdk.Dom.Tests
             var f = JObject.Parse(document.ToJsonString())["GlobalFilters"]![0]!;
 
             Assert.Equal("DateGlobalFilterType", (string)f["_type"]!);
-            Assert.Equal("_date", (string)f["Id"]!);
+            Assert.True(Guid.TryParse((string)f["Id"]!, out _));
             Assert.Equal("Date Filter", (string)f["Title"]!);
             Assert.Equal("CustomRule", (string)f["RuleType"]!);
 

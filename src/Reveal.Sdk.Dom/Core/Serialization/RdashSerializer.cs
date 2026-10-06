@@ -5,6 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace Reveal.Sdk.Dom.Core.Serialization
 {
@@ -68,10 +69,17 @@ namespace Reveal.Sdk.Dom.Core.Serialization
 
         internal static string SerializeObject(object @object)
         {
-            return JsonConvert.SerializeObject(@object, Formatting.Indented, new JsonSerializerSettings()
+            var json = JsonConvert.SerializeObject(@object, Formatting.Indented, new JsonSerializerSettings()
             {
                 NullValueHandling = NullValueHandling.Ignore,
             });
+            if (@object is RdashDocument document && document.FormatVersion >= 7)
+            {
+                var wireDocument = JObject.Parse(json);
+                ModernDocumentWriter.Prepare(wireDocument);
+                return wireDocument.ToString(Formatting.Indented);
+            }
+            return json;
         }
 
         internal static void Save(RdashDocument dashboard, string filePath)

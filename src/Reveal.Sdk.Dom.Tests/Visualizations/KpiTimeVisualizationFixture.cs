@@ -217,7 +217,7 @@ public class KpiTimeVisualizationFixture
                     "FieldName" : "Traffic"
                   }
                 } ],
-                "FormatVersion" : 0,
+                "FormatVersion" : 1,
                 "AdHocExpandedElements" : [ ],
                 "Rows" : [ ]
               }

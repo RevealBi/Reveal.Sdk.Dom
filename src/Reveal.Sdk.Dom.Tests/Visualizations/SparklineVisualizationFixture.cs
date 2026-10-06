@@ -231,7 +231,7 @@ public class SparklineVisualizationFixture
                     "FieldName" : "Spend"
                   }
                 } ],
-                "FormatVersion" : 0,
+                "FormatVersion" : 1,
                 "AdHocExpandedElements" : [ ],
                 "Rows" : [ {
                   "_type" : "DimensionColumnSpecType",

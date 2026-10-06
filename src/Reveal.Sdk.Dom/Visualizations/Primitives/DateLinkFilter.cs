@@ -1,14 +1,17 @@
 ﻿using Newtonsoft.Json;
 using System;
 using Reveal.Sdk.Dom.Filters;
+using System.Runtime.Serialization;
 
 namespace Reveal.Sdk.Dom.Visualizations
 {
     public sealed class DateLinkFilter : LinkFilter
     {
-        // Retains the wire defaults when reading legacy link JSON.
         [JsonConstructor]
-        internal DateLinkFilter()
+        internal DateLinkFilter() { }
+
+        [OnDeserializing]
+        internal void ReadLegacyLink(StreamingContext context)
         {
             Name = "Date Filter";
             Value = "_date.Date Filter";

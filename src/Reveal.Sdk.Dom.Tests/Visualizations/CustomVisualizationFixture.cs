@@ -265,7 +265,7 @@ public class CustomVisualizationFixture
                   }
                 } ],
                 "ShowGrandTotals" : false,
-                "FormatVersion" : 0,
+                "FormatVersion" : 1,
                 "AdHocExpandedElements" : [ ],
                 "Rows" : [ {
                   "_type" : "DimensionColumnSpecType",

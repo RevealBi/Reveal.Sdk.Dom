@@ -267,7 +267,7 @@ public class KpiTargetVisualizationFixture
                     "FieldName" : "Spend"
                   }
                 } ],
-                "FormatVersion" : 0,
+                "FormatVersion" : 1,
                 "AdHocExpandedElements" : [ ],
                 "Rows" : [ ]
               }

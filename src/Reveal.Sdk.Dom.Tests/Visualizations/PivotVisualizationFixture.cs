@@ -301,7 +301,7 @@ public class PivotVisualizationFixture
                                  ],
                                  "Values": [],
                                  "ShowGrandTotals": false,
-                                 "FormatVersion": 0,
+                                 "FormatVersion": 1,
                                  "AdHocExpandedElements": [],
                                  "Rows": []
                                }

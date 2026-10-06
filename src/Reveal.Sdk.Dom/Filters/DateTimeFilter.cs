@@ -7,9 +7,11 @@ namespace Reveal.Sdk.Dom.Filters
 {
     public sealed class DateTimeFilter : FilterBase, IDateRuleFilter
     {
-        public int DateFiscalYearStartMonth { get; set; }
+        [JsonProperty]
+        internal int DateFiscalYearStartMonth { get; set; }
 
-        public bool DisplayInLocalTimeZone { get; set; }
+        [JsonProperty]
+        internal bool DisplayInLocalTimeZone { get; set; }
 
         // Retained only for RDASH serialization; callers select a rule through Rule.
         [JsonProperty]
