@@ -11,8 +11,6 @@ namespace Reveal.Sdk.Dom.Core.Utilities
     {
         public static void Import(RdashDocument targetDocument, RdashDocument sourceDocument, IVisualization visualization = null, ImportOptions options = null)
         {
-            DocumentCompatibility.CheckImport(targetDocument, sourceDocument);
-
             if (visualization == null)
             {
                 sourceDocument.Visualizations.ForEach(viz => ImportVisualization(targetDocument, sourceDocument, viz, options));

@@ -103,7 +103,7 @@ var dateLink = new DateLinkFilter(sourceDate, targetDate);
 
 Fiscal-year and local-time settings belong on `DateField.Settings` or `DateTimeField.Settings` (a `DateTimeFieldSettings`), rather than on `DateTimeFilter`. The old filter-level properties are internal for JSON compatibility.
 
-**Existing files:** loading, saving, and importing older dashboards are best-effort operations. Loaded documents retain their version, and internal serialization members preserve legacy date selections and IDs. The DOM warns when a legacy document contains IDs an SDK migration may rewrite, or when legacy visualizations are imported into a modern document; neither condition blocks the operation. Warnings use `System.Diagnostics.Trace` with the `warn` category, once per issue per document, and contain no dashboard data. If runtime filtering, rendering, or links differ, saving with a current Reveal SDK and reloading can resolve the issue. Malformed JSON still reports a parse error.
+**Existing files:** older dashboards load, save, and import through the normal serialization path. Loaded documents retain their version, and internal serialization members preserve legacy date selections and IDs. Malformed JSON still reports a parse error.
 
 The tested runtime baseline is Reveal SDK **2.2.1**. This is not a claim about the earliest supported release. SDK 1.7.3 rewrites date-filter IDs even in a document marked as modern and is incompatible with new GUID-based creation. Existing legacy date selections and omitted-ID JSON remain readable without exposing the old creation API.
 

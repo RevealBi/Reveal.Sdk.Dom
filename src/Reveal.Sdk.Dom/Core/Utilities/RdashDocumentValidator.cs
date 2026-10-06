@@ -12,8 +12,6 @@ namespace Reveal.Sdk.Dom.Core.Utilities
     {
         internal static void Validate(RdashDocument document)
         {
-            DocumentCompatibility.CheckDateIds(document);
-
             FixVisualizations(document);
             ReorderDashboardFilters(document);
         }
