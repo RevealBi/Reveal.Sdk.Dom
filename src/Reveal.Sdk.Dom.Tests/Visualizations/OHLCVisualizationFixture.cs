@@ -349,7 +349,7 @@ public class OHLCVisualizationFixture
             .ConfigureSettings(settings => { settings.SchemaTypeName = "SampleSchema"; }));
 
         document.Filters.Add(new DashboardDataFilter("Spend", excelDataSourceItem));
-        document.Filters.Add(new DashboardDateFilter("My Date Filter"));
+        document.Filters.Add(new DashboardDateFilter("My Date Filter", DateFilterRule.Last(1, PeriodType.Year)));
 
         RdashSerializer.SerializeObject(document);
         var json = document.ToJsonString();

@@ -25,7 +25,7 @@ namespace Sandbox.DashboardFactories
                 UseAutoLayout = true,
             };
 
-            document.Filters.Add(new DashboardDateFilter());
+            document.Filters.Add(new DashboardDateFilter(DateFilterRule.Last(1, PeriodType.Year)));
 
             //create the funnel chart
             var funnelViz = new FunnelChartVisualization("Conversions by Campaign", excelDataSourceItem).SetLabel("CampaignID").SetValue("Conversions");

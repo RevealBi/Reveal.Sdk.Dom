@@ -1,6 +1,6 @@
 ﻿namespace Reveal.Sdk.Dom.Filters
 {
-    public enum DateRuleType
+    internal enum DateRuleType
 	{
 		None,
 		CustomRange,

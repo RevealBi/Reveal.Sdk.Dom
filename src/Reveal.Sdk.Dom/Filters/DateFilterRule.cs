@@ -20,6 +20,7 @@ namespace Reveal.Sdk.Dom.Filters
         internal DateRuleType RuleType { get; private set; }
         internal RelativePeriod RelativePeriod { get; private set; }
         internal DateRange CustomDateRange { get; private set; }
+        private bool IncludeToday { get; set; } = true;
 
         private DateFilterRule() { }
 
@@ -28,7 +29,7 @@ namespace Reveal.Sdk.Dom.Filters
         public static DateFilterRule Last(int count, PeriodType period, bool includeToday = true)
             => Relative(PeriodRelation.Last, count, period, includeToday);
 
-        /// <summary>The next <paramref name="count"/> <paramref name="period"/>(s) starting from tomorrow (e.g. Next 7 Days).</summary>
+        /// <summary>The next <paramref name="count"/> complete <paramref name="period"/>(s), starting at the beginning of the next period.</summary>
         public static DateFilterRule Next(int count, PeriodType period)
             => Relative(PeriodRelation.Next, count, period, null);
 
@@ -45,31 +46,46 @@ namespace Reveal.Sdk.Dom.Filters
         public static DateFilterRule ToDate(PeriodType period, bool includeToday = true)
             => Relative(PeriodRelation.ToDate, 1, period, includeToday);
 
-        /// <summary>An explicit date range.</summary>
-        public static DateFilterRule Custom(DateTime from, DateTime to)
-            => new DateFilterRule
+        /// <summary>An inclusive date range. A null endpoint leaves that side of the range unrestricted.</summary>
+        public static DateFilterRule Custom(DateTime? from, DateTime? to)
+        {
+            if (from > to)
+                throw new ArgumentException("The end of the range must not precede its start.", nameof(to));
+
+            return new DateFilterRule
             {
                 RuleType = DateRuleType.CustomRange,
                 CustomDateRange = new DateRange { From = from, To = to }
             };
+        }
 
         /// <summary>Matches all dates (no date restriction).</summary>
         public static DateFilterRule AllTime => new DateFilterRule { RuleType = DateRuleType.AllTime };
 
         private static DateFilterRule Relative(PeriodRelation relation, int count, PeriodType period, bool? includeToday)
-            => new DateFilterRule
+        {
+            if (count <= 0)
+                throw new ArgumentOutOfRangeException(nameof(count), "The number of periods must be greater than zero.");
+            if (!Enum.IsDefined(typeof(PeriodType), period))
+                throw new ArgumentOutOfRangeException(nameof(period));
+
+            return new DateFilterRule
             {
                 RuleType = DateRuleType.CustomRule,
                 RelativePeriod = new RelativePeriod(relation, count, period, includeToday)
             };
+        }
 
         // Rebuilds the facade from a filter's raw fields (used by the filter's Rule getter).
         internal static DateFilterRule FromFilter(IDateRuleFilter filter)
             => new DateFilterRule
             {
                 RuleType = filter.RuleType,
-                RelativePeriod = filter.CustomRule,
-                CustomDateRange = filter.CustomDateRange
+                RelativePeriod = filter.RuleType == DateRuleType.CustomRule ? filter.CustomRule : null,
+                CustomDateRange = filter.RuleType == DateRuleType.CustomRange ? filter.CustomDateRange : null,
+                // Built-in rules read the outer flag; custom rules read their own nullable flag.
+                // Preserve both when a rule loaded from an older RDASH is assigned to another filter.
+                IncludeToday = filter.IncludeToday
             };
 
         // Writes this rule onto a filter's raw fields (used by the filter's Rule setter).
@@ -78,6 +94,14 @@ namespace Reveal.Sdk.Dom.Filters
             filter.RuleType = RuleType;
             filter.CustomRule = RelativePeriod;
             filter.CustomDateRange = CustomDateRange;
+            filter.IncludeToday = IncludeToday;
+
+            // A field filter with AllValues would silently ignore the supplied date rule.
+            if (filter is FilterBase fieldFilter)
+            {
+                fieldFilter.FilterType = FilterType.FilterByRule;
+                fieldFilter.SelectedValues = null;
+            }
         }
     }
 }

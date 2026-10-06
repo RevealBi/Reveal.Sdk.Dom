@@ -292,7 +292,7 @@ public class GridVisualizationFixture
             }));
 
         document.Filters.Add(new DashboardDataFilter("Spend", excelDataSourceItem));
-        document.Filters.Add(new DashboardDateFilter("My Date Filter"));
+        document.Filters.Add(new DashboardDateFilter("My Date Filter", DateFilterRule.Last(1, PeriodType.Year)));
 
         RdashSerializer.SerializeObject(document);
         var json = document.ToJsonString();

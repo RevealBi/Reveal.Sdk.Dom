@@ -49,7 +49,7 @@ namespace Sandbox.DashboardCreators
                 UseAutoLayout = false,
             };
 
-            var dateFilter = new DashboardDateFilter("My Date Filter");
+            var dateFilter = new DashboardDateFilter("My Date Filter", DateFilterRule.Last(1, PeriodType.Year));
             document.Filters.Add(dateFilter);
 
             var countryFilter = new DashboardDataFilter("Country", mysqlDSItem);

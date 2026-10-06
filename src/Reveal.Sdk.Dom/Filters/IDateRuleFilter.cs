@@ -11,5 +11,6 @@ namespace Reveal.Sdk.Dom.Filters
         DateRuleType RuleType { get; set; }
         RelativePeriod CustomRule { get; set; }
         DateRange CustomDateRange { get; set; }
+        bool IncludeToday { get; set; }
     }
 }

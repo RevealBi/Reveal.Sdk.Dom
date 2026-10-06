@@ -24,10 +24,7 @@ namespace Sandbox.DashboardFactories
                 UseAutoLayout = false,
             };
 
-            var dateFilter = new DashboardDateFilter()
-            {
-                RuleType = DateRuleType.TrailingTwelveMonths
-            };
+            var dateFilter = new DashboardDateFilter(DateFilterRule.Previous(12, PeriodType.Month));
             document.Filters.Add(dateFilter);
 
             var campaignIdFilter = new DashboardDataFilter(excelDataSourceItem)

@@ -24,7 +24,7 @@ namespace Sandbox.DashboardFactories
                 UseAutoLayout = false,
             };
 
-            document.Filters.Add(new DashboardDateFilter());
+            document.Filters.Add(new DashboardDateFilter(DateFilterRule.Last(1, PeriodType.Year)));
 
             var excelDataSourceItem = DataSourceFactory.GetMarketingDataSourceItem();
 

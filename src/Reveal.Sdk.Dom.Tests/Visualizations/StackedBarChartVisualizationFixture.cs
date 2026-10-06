@@ -326,7 +326,7 @@ public class StackedBarChartVisualizationFixture
             .SetValues("Paid Traffic", "Organic Traffic", "Other Traffic")
             .ConfigureSettings(settings => { settings.ShowLegend = true; }));
 
-        document.Filters.Add(new DashboardDateFilter("My Date Filter"));
+        document.Filters.Add(new DashboardDateFilter("My Date Filter", DateFilterRule.Last(1, PeriodType.Year)));
 
         //Act
         var json = document.ToJsonString();

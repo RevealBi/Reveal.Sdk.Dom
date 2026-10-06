@@ -67,16 +67,7 @@ namespace Sandbox.DashboardFactories
                 AllowMultipleSelection = true,
                 AllowEmptySelection = true
             };
-            var dateFilter = new DashboardDateFilter()
-            {
-                CustomDateRange = new DateRange()
-                {
-                    From = DateTime.Today.AddDays(-15),
-                    To = DateTime.Today.AddDays(-2)
-                },
-                RuleType = DateRuleType.CustomRange,
-                Title = "Custom Date Range Filter"
-            };
+            var dateFilter = new DashboardDateFilter("Custom Date Range Filter", DateFilterRule.Custom(DateTime.Today.AddDays(-15), DateTime.Today.AddDays(-2)));
 
             document.Filters.Add(genderFilter);
             document.Filters.Add(dateFilter);

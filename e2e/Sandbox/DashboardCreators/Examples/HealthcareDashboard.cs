@@ -23,10 +23,7 @@ namespace Sandbox.DashboardFactories
                 UseAutoLayout = false,
             };
 
-            document.Filters.Add(new DashboardDateFilter()
-            {
-                RuleType = DateRuleType.TrailingTwelveMonths
-            });
+            document.Filters.Add(new DashboardDateFilter(DateFilterRule.Previous(12, PeriodType.Month)));
 
             var globalDateFilterBinding = new DashboardDateFilterBinding("Date");
 

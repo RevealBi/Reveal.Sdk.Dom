@@ -51,3 +51,30 @@ document.Save(filePath);
 var json = document.ToJsonString();
 _revealView.Dashboard = await RVDashboard.LoadFromJsonAsync(json);
 ```
+
+### Date Filters
+
+Create date filters with a `DateFilterRule`, then replace the selection through `Rule` or the fluent `SetRule` method:
+
+```cs
+var salesDate = new DashboardDateFilter("Sales Date",
+    DateFilterRule.Last(90, PeriodType.Day, includeToday: false));
+document.Filters.Add(salesDate);
+
+salesDate.Rule = DateFilterRule.This(PeriodType.Quarter);
+salesDate.SetRule(DateFilterRule.Next(7, PeriodType.Day));
+
+var orderDate = new DateTimeFilter(DateFilterRule.Next(7, PeriodType.Day));
+visualization.AddDataFilter("OrderDate", orderDate)
+    .ConnectDashboardFilter(salesDate, "OrderDate");
+
+var xmlaDate = new XmlaDateFilter(DateFilterRule.ToDate(PeriodType.Year));
+var customDate = new DashboardDateFilter(
+    DateFilterRule.Custom(new DateTime(2026, 1, 1), new DateTime(2026, 3, 31)));
+```
+
+`Last` selects a rolling window; `Previous` selects complete preceding periods. `Next` begins at the start of the next period (tomorrow for days, next month for months). `This` selects the current period in full, and `ToDate` selects its start through today. Weeks start on Monday. `Last` and `ToDate` accept `includeToday`; setting it to `false` evaluates the window as of yesterday. `Custom` accepts inclusive endpoints and allows `null` for an open endpoint. Use `DateFilterRule.AllTime` to remove the date restriction.
+
+Setting `Rule` also activates rule filtering for `DateTimeFilter` and `XmlaDateFilter` and clears any previous selected values. The existing `FilterType` and `SelectedValues` properties still support other field-filter modes.
+
+The legacy date selection API (`DateRuleType`, `RuleType`, `CustomDateRange`, and `IncludeToday`) and constructors without a rule are no longer public. Existing RDASH files retain their original wire format through internal serialization members, including built-in date rules and their `IncludeToday` value. For example, replace a `LastYear` object initializer with `DateFilterRule.Last(1, PeriodType.Year)`, and `TrailingTwelveMonths` with `DateFilterRule.Previous(12, PeriodType.Month)`.
