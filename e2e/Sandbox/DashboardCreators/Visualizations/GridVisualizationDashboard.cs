@@ -59,14 +59,7 @@ namespace Sandbox.DashboardFactories
                 AllowMultipleSelection = true,
                 AllowEmptySelection = true
             };
-            var dateFilter = new DashboardDateFilter()
-            {
-                CustomDateRange = new Reveal.Sdk.Dom.DateRange()
-                {
-                    From = DateTime.Today.AddDays(-15),
-                    To = DateTime.Today.AddDays(-2)
-                }
-            };
+            var dateFilter = new DashboardDateFilter(DateFilterRule.Custom(DateTime.Today.AddDays(-15), DateTime.Today.AddDays(-2)));
 
             document.Filters.Add(spendFilter);
             document.Filters.Add(dateFilter);

@@ -206,7 +206,7 @@ public class FunnelChartVisualizationFixture
                     "FieldName" : "Conversions"
                   }
                 } ],
-                "FormatVersion" : 0,
+                "FormatVersion" : 1,
                 "AdHocExpandedElements" : [ ],
                 "Rows" : [ {
                   "_type" : "DimensionColumnSpecType",
@@ -264,7 +264,7 @@ public class FunnelChartVisualizationFixture
                 settings.SliceLabelDisplay = LabelDisplayMode.Percentage;
             }));
 
-        document.Filters.Add(new DashboardDateFilter("My Date Filter"));
+        document.Filters.Add(new DashboardDateFilter("My Date Filter", DateFilterRule.Last(1, PeriodType.Year)));
 
         var json = document.ToJsonString();
         var actualJson = JObject.Parse(json)["Widgets"];

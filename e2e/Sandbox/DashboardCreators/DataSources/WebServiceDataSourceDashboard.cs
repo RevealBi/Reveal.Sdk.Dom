@@ -63,7 +63,7 @@ namespace Sandbox.DashboardCreators
                     settings.Zoom.DegreesLatitude = 0.39;
                 }));
 
-            var dateFilter = new DashboardDateFilter("My Date Filter");
+            var dateFilter = new DashboardDateFilter("My Date Filter", DateFilterRule.Last(1, PeriodType.Year));
             document.Filters.Add(dateFilter);
 
             return document;

@@ -208,7 +208,7 @@ public class DoughnutChartVisualizationFixture
                     "FieldName" : "Conversions"
                   }
                 } ],
-                "FormatVersion" : 0,
+                "FormatVersion" : 1,
                 "AdHocExpandedElements" : [ ],
                 "Rows" : [ {
                   "_type" : "DimensionColumnSpecType",
@@ -267,7 +267,7 @@ public class DoughnutChartVisualizationFixture
             }));
 
         document.Filters.Add(new DashboardDataFilter("Spend", excelDataSourceItem));
-        document.Filters.Add(new DashboardDateFilter("My Date Filter"));
+        document.Filters.Add(new DashboardDateFilter("My Date Filter", DateFilterRule.Last(1, PeriodType.Year)));
 
         //Act
         var json = document.ToJsonString();

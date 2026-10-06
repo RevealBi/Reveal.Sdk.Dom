@@ -274,7 +274,7 @@ public class BarChartVisualizationFixture
                   }
                 } ],
                 "FixedLines": [],
-                "FormatVersion" : 0,
+                "FormatVersion" : 1,
                 "AdHocExpandedElements" : [ ],
                 "Rows" : [ {
                   "_type" : "DimensionColumnSpecType",
@@ -285,7 +285,16 @@ public class BarChartVisualizationFixture
                     "ExpandedItems" : [ ],
                     "FieldName" : "Date"
                   }
-                } ]
+                }, {
+                  "_type" : "DimensionColumnSpecType",
+                  "SummarizationField" : {
+                    "_type" : "SummarizationDateFieldType",
+                    "DateAggregationType" : "Day",
+                    "DrillDownElements" : [ ],
+                    "ExpandedItems" : [ ],
+                    "FieldName" : "Date"
+                  }
+                } ], "AdHocFields": 2
               }
             } ]
             """;
@@ -337,7 +346,7 @@ public class BarChartVisualizationFixture
                 settings.AutomaticLabelRotation = true;
             }));
 
-        document.Filters.Add(new DashboardDateFilter("My Date Filter"));
+        document.Filters.Add(new DashboardDateFilter("My Date Filter", DateFilterRule.Last(1, PeriodType.Year)));
 
         RdashSerializer.SerializeObject(document);
         var json = document.ToJsonString();

@@ -246,7 +246,7 @@ public class ComboChartVisualizationFixture
                     "FieldName" : "Budget"
                   }
                 } ],
-                "FormatVersion" : 0,
+                "FormatVersion" : 1,
                 "AdHocExpandedElements" : [ ],
                 "Rows" : [ {
                   "_type" : "DimensionColumnSpecType",
@@ -257,7 +257,16 @@ public class ComboChartVisualizationFixture
                     "ExpandedItems" : [ ],
                     "FieldName" : "Date"
                   }
-                } ]
+                }, {
+                  "_type" : "DimensionColumnSpecType",
+                  "SummarizationField" : {
+                    "_type" : "SummarizationDateFieldType",
+                    "DateAggregationType" : "Day",
+                    "DrillDownElements" : [ ],
+                    "ExpandedItems" : [ ],
+                    "FieldName" : "Date"
+                  }
+                } ], "AdHocFields": 2
               }
             } ]
             """;

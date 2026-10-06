@@ -27,7 +27,7 @@ namespace Reveal.Sdk.Dom.Tests
             Assert.Equal(Theme.Mountain, document.Theme);
             Assert.Equal(GlobalConstants.RdashDocument.CreatedWith, document.CreatedWith);
             Assert.Equal(string.Empty, document.SavedWith);
-            Assert.Equal(6, document.FormatVersion);
+            Assert.Equal(8, document.FormatVersion);
             Assert.True(document.UseAutoLayout);
             Assert.Null(document.Tags);
             Assert.Empty(document.DataSources);
@@ -162,7 +162,7 @@ namespace Reveal.Sdk.Dom.Tests
             var dataSourceItem = new DataSourceItemFactory().Create(DataSourceType.REST, "", "").SetFields(new List<IField>() { new TextField("Test") });
 
             var sourceDocument = new RdashDocument();
-            var dateFilter = new DashboardDateFilter("My Date Filter");
+            var dateFilter = new DashboardDateFilter("My Date Filter", DateFilterRule.Last(1, PeriodType.Year));
             sourceDocument.Filters.Add(dateFilter);
             var territoryFilter = new DashboardDataFilter("Territory", dataSourceItem);
             sourceDocument.Filters.Add(territoryFilter);
@@ -350,7 +350,7 @@ namespace Reveal.Sdk.Dom.Tests
               "ThemeName": "rvDashboardMountainTheme",
               "CreatedWith": "Reveal.Sdk.Dom",
               "SavedWith": "",
-              "FormatVersion": 6,
+              "FormatVersion": 8,
               "UseAutoLayout": true,
               "DataSources": [],
               "GlobalFilters": [],

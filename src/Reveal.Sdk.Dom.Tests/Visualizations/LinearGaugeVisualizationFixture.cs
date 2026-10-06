@@ -174,7 +174,7 @@ public class LinearGaugeVisualizationFixture
                   }
                 } ],
                 "Target" : [ ],
-                "FormatVersion" : 0,
+                "FormatVersion" : 1,
                 "AdHocExpandedElements" : [ ],
                 "Rows" : [ {
                   "_type" : "DimensionColumnSpecType",
@@ -185,7 +185,16 @@ public class LinearGaugeVisualizationFixture
                     "ExpandedItems" : [ ],
                     "FieldName" : "Date"
                   }
-                } ]
+                }, {
+                  "_type" : "DimensionColumnSpecType",
+                  "SummarizationField" : {
+                    "_type" : "SummarizationDateFieldType",
+                    "DateAggregationType" : "Day",
+                    "DrillDownElements" : [ ],
+                    "ExpandedItems" : [ ],
+                    "FieldName" : "Date"
+                  }
+                } ], "AdHocFields": 2
               }
             } ]
             """;

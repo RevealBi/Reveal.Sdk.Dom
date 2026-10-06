@@ -209,7 +209,7 @@ public class PieChartVisualizationFixture
                     "FieldName" : "Conversions"
                   }
                 } ],
-                "FormatVersion" : 0,
+                "FormatVersion" : 1,
                 "AdHocExpandedElements" : [ ],
                 "Rows" : [ {
                   "_type" : "DimensionColumnSpecType",
@@ -266,7 +266,7 @@ public class PieChartVisualizationFixture
                 settings.SliceLabelDisplay = LabelDisplayMode.Value;
             }));
 
-        document.Filters.Add(new DashboardDateFilter("My Date Filter"));
+        document.Filters.Add(new DashboardDateFilter("My Date Filter", DateFilterRule.Last(1, PeriodType.Year)));
 
         //Act
         var json = document.ToJsonString();

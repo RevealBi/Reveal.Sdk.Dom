@@ -270,7 +270,7 @@ public class StackedColumnChartVisualizationFixture
                   }
                 } ],
                 "FixedLines": [],
-                "FormatVersion" : 0,
+                "FormatVersion" : 1,
                 "AdHocExpandedElements" : [ ],
                 "Rows" : [ {
                   "_type" : "DimensionColumnSpecType",
@@ -281,7 +281,16 @@ public class StackedColumnChartVisualizationFixture
                     "ExpandedItems" : [ ],
                     "FieldName" : "Date"
                   }
-                } ]
+                }, {
+                  "_type" : "DimensionColumnSpecType",
+                  "SummarizationField" : {
+                    "_type" : "SummarizationDateFieldType",
+                    "DateAggregationType" : "Day",
+                    "DrillDownElements" : [ ],
+                    "ExpandedItems" : [ ],
+                    "FieldName" : "Date"
+                  }
+                } ], "AdHocFields": 2
               }
             } ]
             """;
@@ -328,7 +337,7 @@ public class StackedColumnChartVisualizationFixture
                 .SetValues("Paid Traffic", "Organic Traffic", "Other Traffic")
                 .ConfigureSettings(settings => { settings.IsPercentageDistributed = true; }));
 
-        document.Filters.Add(new DashboardDateFilter("My Date Filter"));
+        document.Filters.Add(new DashboardDateFilter("My Date Filter", DateFilterRule.Last(1, PeriodType.Year)));
         
         //Act
         var json = document.ToJsonString();

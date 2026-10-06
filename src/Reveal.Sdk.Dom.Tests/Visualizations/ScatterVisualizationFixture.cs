@@ -247,7 +247,7 @@ public class ScatterVisualizationFixture
                       }
                     }
                   ],
-                  "FormatVersion": 0,
+                  "FormatVersion": 1,
                   "AdHocExpandedElements": [],
                   "Rows": [
                     {

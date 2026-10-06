@@ -12,6 +12,7 @@ using System;
 using Reveal.Sdk.Dom.Core;
 using System.IO;
 using Reveal.Sdk.Dom.Core.Utilities;
+using System.Runtime.Serialization;
 
 namespace Reveal.Sdk.Dom
 {
@@ -70,7 +71,14 @@ namespace Reveal.Sdk.Dom
         public string SavedWith { get; internal set; } = string.Empty;
 
         [JsonProperty]
-        internal int FormatVersion { get; set; } = 6;
+        internal int FormatVersion { get; set; } = 8;
+
+        [OnDeserializing]
+        internal void ReadLegacyFormat(StreamingContext context)
+        {
+            // A missing version in an existing file must not imply that it has been migrated.
+            FormatVersion = 6;
+        }
 
         /// <summary>
         /// Gets or sets whether the viewer displaying the dashboard will automatically layout visualizations, or use an absolute layout controlled by each visualization's ColumnSpan and RowSpan properties. True by default.

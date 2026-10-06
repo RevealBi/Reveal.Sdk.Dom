@@ -69,16 +69,7 @@ namespace Sandbox.DashboardFactories
                 IsDynamic = true,
                 SortByLabel = true
             };
-            var dateFilter = new DashboardDateFilter()
-            {
-                CustomDateRange = new DateRange()
-                {
-                    From = DateTime.Today.AddDays(-15),
-                    To = DateTime.Today.AddDays(-2)
-                },
-                RuleType = DateRuleType.CustomRange,
-                Title = "Date Filter"
-            };
+            var dateFilter = new DashboardDateFilter("Date Filter", DateFilterRule.Custom(DateTime.Today.AddDays(-15), DateTime.Today.AddDays(-2)));
 
             document.Filters.Add(spendFilter);
             document.Filters.Add(dateFilter);

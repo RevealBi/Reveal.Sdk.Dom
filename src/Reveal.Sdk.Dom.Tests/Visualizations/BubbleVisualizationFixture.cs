@@ -305,7 +305,7 @@ public class BubbleVisualizationFixture
                       }
                     }
                   ],
-                  "FormatVersion": 0,
+                  "FormatVersion": 1,
                   "AdHocExpandedElements": [],
                   "Rows": [
                     {

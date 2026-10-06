@@ -186,7 +186,7 @@ public class TreeMapVisualizationFixture
                     "FieldName" : "Traffic"
                   }
                 } ],
-                "FormatVersion" : 0,
+                "FormatVersion" : 1,
                 "AdHocExpandedElements" : [ ],
                 "Rows" : [ {
                   "_type" : "DimensionColumnSpecType",
