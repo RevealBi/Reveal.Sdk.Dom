@@ -78,3 +78,25 @@ var customDate = new DashboardDateFilter(
 Setting `Rule` also activates rule filtering for `DateTimeFilter` and `XmlaDateFilter` and clears any previous selected values. The existing `FilterType` and `SelectedValues` properties still support other field-filter modes.
 
 The legacy date selection API (`DateRuleType`, `RuleType`, `CustomDateRange`, and `IncludeToday`) and constructors without a rule are no longer public. Existing RDASH files retain their original wire format through internal serialization members, including built-in date rules and their `IncludeToday` value. For example, replace a `LastYear` object initializer with `DateFilterRule.Last(1, PeriodType.Year)`, and `TrailingTwelveMonths` with `DateFilterRule.Previous(12, PeriodType.Month)`.
+
+#### Date filter IDs, bindings, and links
+
+Date bindings and visualization imports use the selected filter's `Id`. Replace `new DashboardDateFilterBinding("OrderDate")` with `new DashboardDateFilterBinding(salesDate, "OrderDate")`, or use `visualization.ConnectDashboardFilter(salesDate, "OrderDate")`.
+
+Date links require the source filter and the target filter (or its ID). This supports dashboards with multiple date filters and different IDs in each dashboard:
+
+```cs
+// Load dashboards that have already been saved by the current Reveal SDK.
+var source = RdashDocument.Load("Orders.rdash");
+var target = RdashDocument.Load("Deliveries.rdash");
+var sourceDate = source.Filters.OfType<DashboardDateFilter>()
+    .Single(f => f.Title == "Order Date");
+var targetDate = target.Filters.OfType<DashboardDateFilter>()
+    .Single(f => f.Title == "Delivery Date");
+var dateLink = new DateLinkFilter(sourceDate, targetDate);
+// Alternatively: new DateLinkFilter(sourceDate, targetDate.Id)
+```
+
+`DateLinkFilter()` is now internal for legacy JSON loading. New links serialize the actual source ID in `Value` and the target ID in `Namespace`. `_date` remains accepted as an explicit legacy target alias for the first date filter; source lookup requires the source filter's actual ID.
+
+**Format compatibility:** the DOM still creates format-6 documents with the legacy `_date` default and preserves the format version of loaded files. Reveal SDK's pre-version-7 migration rewrites dashboard date-filter IDs, so format-6 documents cannot safely carry arbitrary date-filter IDs or multiple independently identified date filters. Explicit IDs survive format 7+, while formats below 8 still migrate the legacy `_date` ID and its bindings. Use dashboards saved by the current SDK (format 8+) before adding independent date IDs or constructing links that must keep those IDs stable. Reload the saved document before building links so their source IDs match the migrated filters. Simply changing the format number would skip required visualization migrations; this PR does not perform that document-wide upgrade.

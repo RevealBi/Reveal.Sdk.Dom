@@ -70,9 +70,9 @@ namespace Reveal.Sdk.Dom.Visualizations
         public static T ConnectDashboardFilter<T>(this T visualization, DashboardFilter dashboardFilter, string fieldName)
             where T : IVisualization
         {
-            if (dashboardFilter is DashboardDateFilter)
+            if (dashboardFilter is DashboardDateFilter dateFilter)
             {
-                visualization.FilterBindings.Add(new DashboardDateFilterBinding(fieldName ?? "Date"));
+                visualization.FilterBindings.Add(new DashboardDateFilterBinding(dateFilter, fieldName ?? "Date"));
             }
             else if (dashboardFilter is DashboardDataFilter dataFilter)
             {

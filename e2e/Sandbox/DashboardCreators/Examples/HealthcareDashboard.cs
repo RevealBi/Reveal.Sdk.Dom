@@ -23,9 +23,10 @@ namespace Sandbox.DashboardFactories
                 UseAutoLayout = false,
             };
 
-            document.Filters.Add(new DashboardDateFilter(DateFilterRule.Previous(12, PeriodType.Month)));
+            var dateFilter = new DashboardDateFilter(DateFilterRule.Previous(12, PeriodType.Month));
+            document.Filters.Add(dateFilter);
 
-            var globalDateFilterBinding = new DashboardDateFilterBinding("Date");
+            var globalDateFilterBinding = new DashboardDateFilterBinding(dateFilter, "Date");
 
             document.Visualizations.Add(CreateIndicatorVisualization("Number of Inpatients", "Number of Inpatients", excelDataSourceItem));
             document.Visualizations.Add(CreateIndicatorVisualization("Number of Outpatients", "Number of Outpatients", excelDataSourceItem));

@@ -6,6 +6,7 @@ namespace Reveal.Sdk.Dom.Filters
     public sealed class DashboardDateFilterBindingTarget : BindingTarget
     {
         [JsonProperty("GlobalFilterId")]
+        // Compatibility fallback for old JSON that omitted the target ID. New bindings set the actual ID.
         public string DashboardFilterId { get; set; } = "_date";
 
         [JsonProperty("GlobalFilterFieldName")]

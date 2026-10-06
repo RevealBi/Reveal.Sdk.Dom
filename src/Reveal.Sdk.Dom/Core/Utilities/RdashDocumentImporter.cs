@@ -101,9 +101,9 @@ namespace Reveal.Sdk.Dom.Core.Utilities
 
         private static string GetFilterId(Binding binding)
         {
-            if (binding is DashboardDateFilterBinding)
+            if (binding is DashboardDateFilterBinding dateBinding)
             {
-                return "_date"; // "_date" is a special ID
+                return dateBinding.Target?.DashboardFilterId;
             }
             else if (binding is DashboardDataFilterBinding dataBinding)
             {

@@ -1,14 +1,26 @@
-﻿namespace Reveal.Sdk.Dom.Filters
+﻿using Newtonsoft.Json;
+using System;
+
+namespace Reveal.Sdk.Dom.Filters
 {
     public sealed class DashboardDateFilterBinding : Binding<DashboardDateFilterBindingTarget>
     {
-        internal DashboardDateFilterBinding() : this(string.Empty) { }
-
-        public DashboardDateFilterBinding(string fieldName)
+        [JsonConstructor]
+        internal DashboardDateFilterBinding()
         {
             Operator = BindingOperatorType.Between;
-            Source = new FieldBindingSource() { FieldName = fieldName };
+            Source = new FieldBindingSource();
             Target = new DashboardDateFilterBindingTarget();
+        }
+
+        /// <summary>Connects a visualization field to the specified dashboard date filter.</summary>
+        public DashboardDateFilterBinding(DashboardDateFilter dateFilter, string fieldName = "Date") : this()
+        {
+            if (dateFilter == null)
+                throw new ArgumentNullException(nameof(dateFilter));
+
+            Source = new FieldBindingSource() { FieldName = fieldName };
+            Target.DashboardFilterId = dateFilter.Id;
         }
     }
 }

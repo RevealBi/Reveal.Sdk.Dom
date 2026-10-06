@@ -12,8 +12,6 @@ namespace Sandbox.DashboardFactories
     {
         public string Name => "Marketing";
 
-        static Binding _globalDateFilterBinding = new DashboardDateFilterBinding("Date");
-
         public RdashDocument CreateDashboard()
         {
             var document = new RdashDocument()
@@ -24,15 +22,16 @@ namespace Sandbox.DashboardFactories
                 UseAutoLayout = false,
             };
 
-            document.Filters.Add(new DashboardDateFilter(DateFilterRule.Last(1, PeriodType.Year)));
+            var dateFilter = new DashboardDateFilter(DateFilterRule.Last(1, PeriodType.Year));
+            document.Filters.Add(dateFilter);
 
             var excelDataSourceItem = DataSourceFactory.GetMarketingDataSourceItem();
 
             document.Visualizations.Add(CreateKpiTargetVisualization(excelDataSourceItem));
-            document.Visualizations.Add(CreateLineChartVisualization(excelDataSourceItem));
+            document.Visualizations.Add(CreateLineChartVisualization(excelDataSourceItem, dateFilter));
             document.Visualizations.Add(CreatePieChartVisualization(excelDataSourceItem));
-            document.Visualizations.Add(CreateColumnChartVisualization(excelDataSourceItem));
-            document.Visualizations.Add(CreateFunnelChartVisualization(excelDataSourceItem));
+            document.Visualizations.Add(CreateColumnChartVisualization(excelDataSourceItem, dateFilter));
+            document.Visualizations.Add(CreateFunnelChartVisualization(excelDataSourceItem, dateFilter));
             document.Visualizations.Add(CreatePivotVisualization(excelDataSourceItem));
 
             return document;
@@ -89,7 +88,7 @@ namespace Sandbox.DashboardFactories
             return visualization;
         }
 
-        internal static Visualization CreateLineChartVisualization(DataSourceItem excelDataSourceItem)
+        internal static Visualization CreateLineChartVisualization(DataSourceItem excelDataSourceItem, DashboardDateFilter dateFilter)
         {
             var visualization = new LineChartVisualization(excelDataSourceItem)
             {
@@ -98,7 +97,7 @@ namespace Sandbox.DashboardFactories
                 RowSpan = 24,
             };
 
-            visualization.FilterBindings.Add(_globalDateFilterBinding);
+            visualization.ConnectDashboardFilter(dateFilter, "Date");
 
             visualization.Labels.Add(new DimensionColumn()
             {
@@ -142,7 +141,7 @@ namespace Sandbox.DashboardFactories
             return visualization;
         }
 
-        internal static Visualization CreateColumnChartVisualization(DataSourceItem excelDataSourceItem)
+        internal static Visualization CreateColumnChartVisualization(DataSourceItem excelDataSourceItem, DashboardDateFilter dateFilter)
         {
             var visualization = new ColumnChartVisualization(excelDataSourceItem)
             {
@@ -151,7 +150,7 @@ namespace Sandbox.DashboardFactories
                 RowSpan = 36,
             };
 
-            visualization.FilterBindings.Add(_globalDateFilterBinding);
+            visualization.ConnectDashboardFilter(dateFilter, "Date");
 
             visualization.Labels.Add(new DimensionColumn()
             {
@@ -177,7 +176,7 @@ namespace Sandbox.DashboardFactories
             return visualization;
         }
 
-        internal static Visualization CreateFunnelChartVisualization(DataSourceItem excelDataSourceItem)
+        internal static Visualization CreateFunnelChartVisualization(DataSourceItem excelDataSourceItem, DashboardDateFilter dateFilter)
         {
             var visualization = new FunnelChartVisualization(excelDataSourceItem)
             {
@@ -186,7 +185,7 @@ namespace Sandbox.DashboardFactories
                 RowSpan = 36,
             };
 
-            visualization.FilterBindings.Add(_globalDateFilterBinding);
+            visualization.ConnectDashboardFilter(dateFilter, "Date");
 
             visualization.Labels.Add(new DimensionColumn()
             {

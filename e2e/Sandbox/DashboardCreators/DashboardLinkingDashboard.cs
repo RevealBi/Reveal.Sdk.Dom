@@ -25,7 +25,8 @@ namespace Sandbox.DashboardFactories
                 UseAutoLayout = true,
             };
 
-            document.Filters.Add(new DashboardDateFilter(DateFilterRule.Last(1, PeriodType.Year)));
+            var dateFilter = new DashboardDateFilter(DateFilterRule.Last(1, PeriodType.Year));
+            document.Filters.Add(dateFilter);
 
             //create the funnel chart
             var funnelViz = new FunnelChartVisualization("Conversions by Campaign", excelDataSourceItem).SetLabel("CampaignID").SetValue("Conversions");
@@ -33,6 +34,7 @@ namespace Sandbox.DashboardFactories
             //get the filter from the target dashboard
             var linkedDoc = RdashDocument.Load(Path.Combine(Environment.CurrentDirectory, "Dashboards/Campaigns.rdash"));
             var filter = linkedDoc.Filters.Where(x => x.Title == "CampaignID").First();
+            var targetDateFilter = linkedDoc.Filters.OfType<DashboardDateFilter>().First();
 
             //create links the hard way
             funnelViz.Linker = new VisualizationLinker()
@@ -45,7 +47,7 @@ namespace Sandbox.DashboardFactories
                         Filters = new List<LinkFilter>()
                         {
                             new LinkFilter("Campaigns Filter", filter.Id, filter.Title),
-                            new DateLinkFilter(),
+                            new DateLinkFilter(dateFilter, targetDateFilter),
                         }
                     },
                 }
@@ -62,7 +64,7 @@ namespace Sandbox.DashboardFactories
             //create links the easy way
             pivotViz.Linker = new VisualizationLinker()
                 .AddUrl("Open URL", "https://www.brianlagunas.com/[CampaignID]")
-                .AddDashboard("Open Dashboard", "Campaigns", new LinkFilter("Campaigns Filter", filter.Id, filter.Title), new DateLinkFilter());
+                .AddDashboard("Open Dashboard", "Campaigns", new LinkFilter("Campaigns Filter", filter.Id, filter.Title), new DateLinkFilter(dateFilter, targetDateFilter));
 
             document.Visualizations.Add(pivotViz);
 

@@ -166,7 +166,7 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Extensions
             var visualization = mockVS.Object;
 
             var dateFilter = new DashboardDateFilter(DateFilterRule.Last(1, PeriodType.Year));
-            var expectedBinding = new DashboardDateFilterBinding("Date");
+            var expectedBinding = new DashboardDateFilterBinding(dateFilter, "Date");
 
             // Act
             visualization.ConnectDashboardFilter(dateFilter);
@@ -211,7 +211,7 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Extensions
 
             var dateFieldName = "TestDate";
             var dateFilter = new DashboardDateFilter(DateFilterRule.Last(1, PeriodType.Year));
-            var expectedBinding = new DashboardDateFilterBinding(dateFieldName);
+            var expectedBinding = new DashboardDateFilterBinding(dateFilter, dateFieldName);
 
             // Act
             visualization.ConnectDashboardFilter(dateFilter, dateFieldName);
@@ -264,7 +264,7 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Extensions
             };
             var expectedDashboardFilterBindings = new List<Binding>()
             {
-                new DashboardDateFilterBinding("Date"),
+                new DashboardDateFilterBinding(dateFilter, "Date"),
                 new DashboardDataFilterBinding(dataFilter)
             };
 

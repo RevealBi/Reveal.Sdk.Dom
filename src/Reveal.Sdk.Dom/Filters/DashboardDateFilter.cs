@@ -47,6 +47,8 @@ namespace Reveal.Sdk.Dom.Filters
         {
             SchemaTypeName = SchemaTypeNames.DateGlobalFilterType;
             Title = "Date Filter";
+            // New DOM documents still use format 6, whose SDK migration expects this legacy ID.
+            // Loaded modern documents preserve their explicit IDs through the inherited Id property.
             Id = "_date";
         }
 
