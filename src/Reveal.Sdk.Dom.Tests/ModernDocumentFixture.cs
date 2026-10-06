@@ -35,6 +35,15 @@ namespace Reveal.Sdk.Dom.Tests
         }
 
         [Theory]
+        [InlineData("2026-01-01T00:00:00.000Z")]
+        [InlineData("2026-01-01T00:00:00.000+03:00")]
+        [InlineData("2026-01-01T00:00:00.1234567-07:00")]
+        public void ModernWriter_PreservesDateLookingStringsVerbatim(string title)
+        {
+            Assert.Contains("\"Title\": \"" + title + "\"", new RdashDocument(title).ToJsonString());
+        }
+
+        [Theory]
         [InlineData(6)]
         [InlineData(7)]
         [InlineData(8)]

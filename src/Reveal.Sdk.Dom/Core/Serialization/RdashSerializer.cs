@@ -75,9 +75,13 @@ namespace Reveal.Sdk.Dom.Core.Serialization
             });
             if (@object is RdashDocument document && document.FormatVersion >= 7)
             {
-                var wireDocument = JObject.Parse(json);
-                ModernDocumentWriter.Prepare(wireDocument);
-                return wireDocument.ToString(Formatting.Indented);
+                // The projection must not reinterpret date-looking string values as timestamps.
+                using (var reader = new JsonTextReader(new StringReader(json)) { DateParseHandling = DateParseHandling.None })
+                {
+                    var wireDocument = JObject.Load(reader);
+                    ModernDocumentWriter.Prepare(wireDocument);
+                    return wireDocument.ToString(Formatting.Indented);
+                }
             }
             return json;
         }
