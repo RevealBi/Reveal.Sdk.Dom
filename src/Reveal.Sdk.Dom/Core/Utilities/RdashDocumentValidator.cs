@@ -13,7 +13,7 @@ namespace Reveal.Sdk.Dom.Core.Utilities
         internal static void Validate(RdashDocument document)
         {
             if (document.FormatVersion < 7 && document.Filters.OfType<DashboardDateFilter>()
-                .Any(filter => filter.Id != "_date" && string.IsNullOrEmpty(filter.CrossFilteringSourceWidgetId)))
+                .Any(filter => filter.Id != "_date" && filter.Id?.StartsWith("xFiltering_", StringComparison.Ordinal) != true))
                 throw new InvalidOperationException("Save this legacy dashboard with Reveal SDK 2.2.1 or later and reload it before adding date filters. Its old format would rewrite their IDs.");
 
             FixVisualizations(document);

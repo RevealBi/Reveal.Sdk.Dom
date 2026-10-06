@@ -55,6 +55,10 @@ namespace Reveal.Sdk.Dom.Tests
             Assert.Throws<InvalidOperationException>(() => target.Import(legacy));
             Assert.Empty(target.Visualizations);
             Assert.Empty(target.Filters);
+            ((DashboardDateFilter)legacy.Filters[0]).CrossFilteringSourceWidgetId = "widget";
+            Assert.Throws<InvalidOperationException>(() => legacy.ToJsonString());
+            legacy.Filters[0].Id = "xFiltering_date";
+            Assert.Contains("xFiltering_date", legacy.ToJsonString());
         }
 
         [Theory]
@@ -108,6 +112,27 @@ namespace Reveal.Sdk.Dom.Tests
             Assert.Equal(4, (int)field["Settings"]["DateFiscalYearStartMonth"]);
             Assert.True((bool)field["Settings"]["DisplayInLocalTimeZone"]);
             Assert.Equal(0, (int)field["Filter"]["DateFiscalYearStartMonth"]);
+        }
+
+        [Fact]
+        public void ModernDateHierarchy_DoesNotReuseTheFirstLevelsFormattingOrDrillSelection()
+        {
+            var json = JObject.Parse("""
+                {"Widgets":[{"DataSpec":{"Fields":[{"FieldName":"Date","FieldType":"Date"}]},
+                  "VisualizationDataSpec":{"FormatVersion":0,"Rows":[{"SummarizationField":{
+                    "_type":"SummarizationDateFieldType","FieldName":"Date","DateAggregationType":"Year",
+                    "DateFormatting":{"_type":"DateFormattingSpecType","DateFormat":"yyyy"},"DrillDownElements":["2026"]
+                  }}]}}]}
+                """);
+            ModernDocumentWriter.Prepare(json);
+            var rows = json["Widgets"][0]["VisualizationDataSpec"]["Rows"];
+            Assert.NotNull(rows[0]["SummarizationField"]["DateFormatting"]);
+            Assert.Single(rows[0]["SummarizationField"]["DrillDownElements"]);
+            foreach (var row in rows.Skip(1))
+            {
+                Assert.Null(row["SummarizationField"]["DateFormatting"]);
+                Assert.Empty(row["SummarizationField"]["DrillDownElements"]);
+            }
         }
 
         [Fact]

@@ -74,6 +74,9 @@ namespace Reveal.Sdk.Dom.Core.Serialization
             {
                 var column = (JObject)first.DeepClone();
                 column["SummarizationField"]["DateAggregationType"] = level;
+                // A deeper level needs its own formatting and drill selection.
+                column["SummarizationField"]["DrillDownElements"] = new JArray();
+                ((JObject)column["SummarizationField"]).Remove("DateFormatting");
                 expanded.Add(column);
             }
             spec["AdHocFields"] = expanded.Count;
