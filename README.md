@@ -101,8 +101,10 @@ var dateLink = new DateLinkFilter(sourceDate, targetDate);
 
 **New document format:** new dashboards use format 8, and every new dashboard date filter receives its own GUID. Bindings, imports, and links preserve the selected filter's ID. Legacy `_date` defaults exist only in JSON readers. The writer also emits explicit date hierarchies, date field settings, XMLA drill members, and single-value conditional formatting required by this document format.
 
-Fiscal-year and local-time settings belong on `DateField.Settings` or `DateField.Settings` or `DateTimeField.Settings` (a `DateTimeFieldSettings`), rather than on `DateTimeFilter`. The old filter-level properties are internal for JSON compatibility.
+Fiscal-year and local-time settings belong on `DateField.Settings` or `DateTimeField.Settings` (a `DateTimeFieldSettings`), rather than on `DateTimeFilter`. The old filter-level properties are internal for JSON compatibility.
 
 **Existing files:** loading, saving, and importing older dashboards are best-effort operations. Loaded documents retain their version, and internal serialization members preserve legacy date selections and IDs. The DOM warns when a legacy document contains IDs an SDK migration may rewrite, or when legacy visualizations are imported into a modern document; neither condition blocks the operation. Warnings use `System.Diagnostics.Trace` with the `warn` category, once per issue per document, and contain no dashboard data. If runtime filtering, rendering, or links differ, saving with a current Reveal SDK and reloading can resolve the issue. Malformed JSON still reports a parse error.
 
 The tested runtime baseline is Reveal SDK **2.2.1**. This is not a claim about the earliest supported release. SDK 1.7.3 rewrites date-filter IDs even in a document marked as modern and is incompatible with new GUID-based creation. Existing legacy date selections and omitted-ID JSON remain readable without exposing the old creation API.
+
+The existing WPF Sandbox references SDK 1.7.3. Its build checks compilation; use a compatible current SDK host to exercise new GUID-based date filters.
