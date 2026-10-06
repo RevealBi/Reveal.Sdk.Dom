@@ -55,19 +55,19 @@ namespace Reveal.Sdk.Dom.Tests
         }
 
         [Fact]
-        public void LegacyDocument_RejectsNewIdsAndImportIntoModernDocumentBeforeMutation()
+        public void LegacyDocument_SerializesAndImportsBestEffortWithoutChangingIds()
         {
             var legacy = RdashDocument.LoadFromJson("{\"FormatVersion\":6}");
-            legacy.Filters.Add(new DashboardDateFilter(DateFilterRule.AllTime));
-            Assert.Throws<InvalidOperationException>(() => legacy.ToJsonString());
+            var filter = new DashboardDateFilter(DateFilterRule.AllTime);
+            legacy.Filters.Add(filter);
+            legacy.Visualizations.Add(new GridVisualization(DataSource()).ConnectDashboardFilter(filter));
+            Assert.Contains(filter.Id, legacy.ToJsonString());
             var target = new RdashDocument();
-            Assert.Throws<InvalidOperationException>(() => target.Import(legacy));
-            Assert.Empty(target.Visualizations);
-            Assert.Empty(target.Filters);
-            ((DashboardDateFilter)legacy.Filters[0]).CrossFilteringSourceWidgetId = "widget";
-            Assert.Throws<InvalidOperationException>(() => legacy.ToJsonString());
-            legacy.Filters[0].Id = "xFiltering_date";
-            Assert.Contains("xFiltering_date", legacy.ToJsonString());
+            target.Import(legacy, options: new ImportOptions { IncludeDashboardFilters = true });
+            Assert.Single(target.Visualizations);
+            Assert.Equal(filter.Id, Assert.Single(target.Filters).Id);
+            Assert.Equal(8, (int)JObject.Parse(target.ToJsonString())["FormatVersion"]);
+            Assert.Equal(6, legacy.FormatVersion);
         }
 
         [Theory]

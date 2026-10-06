@@ -58,7 +58,9 @@ namespace Reveal.Sdk.Dom.Core.Serialization
 
         internal static RdashDocument Deserialize(string json)
         {
-            return JsonConvert.DeserializeObject<RdashDocument>(json);
+            var document = JsonConvert.DeserializeObject<RdashDocument>(json);
+            DocumentCompatibility.CheckDateIds(document);
+            return document;
         }
 
         internal static string SerializeDocument(RdashDocument document)

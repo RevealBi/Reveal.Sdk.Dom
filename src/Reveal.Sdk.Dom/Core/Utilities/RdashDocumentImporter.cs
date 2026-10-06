@@ -11,8 +11,7 @@ namespace Reveal.Sdk.Dom.Core.Utilities
     {
         public static void Import(RdashDocument targetDocument, RdashDocument sourceDocument, IVisualization visualization = null, ImportOptions options = null)
         {
-            if (targetDocument.FormatVersion >= 7 && sourceDocument.FormatVersion < 7)
-                throw new InvalidOperationException("Save the source dashboard with Reveal SDK 2.2.1 or later and reload it before importing into a modern document. Its visualizations still require SDK migration.");
+            DocumentCompatibility.CheckImport(targetDocument, sourceDocument);
 
             if (visualization == null)
             {
