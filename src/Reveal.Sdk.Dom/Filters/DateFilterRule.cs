@@ -33,6 +33,22 @@ namespace Reveal.Sdk.Dom.Filters
         public static DateFilterRule Next(int count, PeriodType period)
             => Relative(PeriodRelation.Next, count, period, null);
 
+        /// <summary>
+        /// The next <paramref name="count"/> complete <paramref name="period"/>(s), starting at the beginning of the next period.
+        /// For days, <paramref name="includeToday"/> can start the window today instead (e.g. Next 7 Days including today).
+        /// </summary>
+        /// <param name="includeToday">Whether today is included in the window. Only <see cref="PeriodType.Day"/> supports true:
+        /// other periods start at the beginning of the next period, which can't contain today.</param>
+        public static DateFilterRule Next(int count, PeriodType period, bool includeToday)
+        {
+            if (includeToday && period != PeriodType.Day)
+                throw new ArgumentException("Only a window of days can include today.", nameof(includeToday));
+
+            // Leaving it out already excludes today. The engine reads an explicit false on a Next rule with its
+            // legacy meaning ("evaluate as of yesterday"), which would include today.
+            return Relative(PeriodRelation.Next, count, period, includeToday ? true : (bool?)null);
+        }
+
         /// <summary>The <paramref name="count"/> full <paramref name="period"/>(s) immediately before the current one.</summary>
         public static DateFilterRule Previous(int count, PeriodType period)
             => Relative(PeriodRelation.Previous, count, period, null);

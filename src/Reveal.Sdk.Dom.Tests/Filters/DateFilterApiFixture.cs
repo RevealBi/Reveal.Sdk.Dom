@@ -117,10 +117,22 @@ namespace Reveal.Sdk.Dom.Tests
                 AssertRelative(type, DateFilterRule.Last(90, period, false), "Last", 90, period, false);
                 AssertRelative(type, DateFilterRule.Last(3, period), "Last", 3, period, true);
                 AssertRelative(type, DateFilterRule.Next(7, period), "Next", 7, period, null);
+                AssertRelative(type, DateFilterRule.Next(7, period, false), "Next", 7, period, null);
                 AssertRelative(type, DateFilterRule.Previous(2, period), "Previous", 2, period, null);
                 AssertRelative(type, DateFilterRule.This(period), "This", 1, period, null);
                 AssertRelative(type, DateFilterRule.ToDate(period, false), "ToDate", 1, period, false);
                 AssertRelative(type, DateFilterRule.ToDate(period), "ToDate", 1, period, true);
+            }
+            AssertRelative(type, DateFilterRule.Next(7, PeriodType.Day, true), "Next", 7, PeriodType.Day, true);
+        }
+
+        [Fact]
+        public void Next_IncludeToday_OnlyForDays()
+        {
+            foreach (PeriodType period in Enum.GetValues(typeof(PeriodType)))
+            {
+                if (period != PeriodType.Day)
+                    Assert.Throws<ArgumentException>(() => DateFilterRule.Next(2, period, true));
             }
         }
 
