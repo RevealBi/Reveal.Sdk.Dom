@@ -29,7 +29,10 @@ namespace Reveal.Sdk.Dom.Filters
         public static DateFilterRule Last(int count, PeriodType period, bool includeToday = true)
             => Relative(PeriodRelation.Last, count, period, includeToday);
 
-        /// <summary>The next <paramref name="count"/> complete <paramref name="period"/>(s), starting at the beginning of the next period.</summary>
+        /// <summary>
+        /// The next <paramref name="count"/> complete <paramref name="period"/>(s), starting at the beginning of the next period.
+        /// Excludes today; see <see cref="Next(int, PeriodType, bool)"/> to start a day window today.
+        /// </summary>
         public static DateFilterRule Next(int count, PeriodType period)
             => Relative(PeriodRelation.Next, count, period, null);
 
@@ -41,11 +44,13 @@ namespace Reveal.Sdk.Dom.Filters
         /// other periods start at the beginning of the next period, which can't contain today.</param>
         public static DateFilterRule Next(int count, PeriodType period, bool includeToday)
         {
+            ValidateWindow(count, period);
             if (includeToday && period != PeriodType.Day)
                 throw new ArgumentException("Only a window of days can include today.", nameof(includeToday));
 
-            // Leaving it out already excludes today. The engine reads an explicit false on a Next rule with its
-            // legacy meaning ("evaluate as of yesterday"), which would include today.
+            // Leaving it out excludes today on every Reveal SDK. An explicit false would be read as "evaluate as of
+            // yesterday" (which includes today) by SDKs without include-today support for Next windows, and by every
+            // SDK for periods other than Day.
             return Relative(PeriodRelation.Next, count, period, includeToday ? true : (bool?)null);
         }
 
@@ -80,16 +85,21 @@ namespace Reveal.Sdk.Dom.Filters
 
         private static DateFilterRule Relative(PeriodRelation relation, int count, PeriodType period, bool? includeToday)
         {
-            if (count <= 0)
-                throw new ArgumentOutOfRangeException(nameof(count), "The number of periods must be greater than zero.");
-            if (!Enum.IsDefined(typeof(PeriodType), period))
-                throw new ArgumentOutOfRangeException(nameof(period));
+            ValidateWindow(count, period);
 
             return new DateFilterRule
             {
                 RuleType = DateRuleType.CustomRule,
                 RelativePeriod = new RelativePeriod(relation, count, period, includeToday)
             };
+        }
+
+        private static void ValidateWindow(int count, PeriodType period)
+        {
+            if (count <= 0)
+                throw new ArgumentOutOfRangeException(nameof(count), "The number of periods must be greater than zero.");
+            if (!Enum.IsDefined(typeof(PeriodType), period))
+                throw new ArgumentOutOfRangeException(nameof(period));
         }
 
         // Rebuilds the facade from a filter's raw fields (used by the filter's Rule getter).

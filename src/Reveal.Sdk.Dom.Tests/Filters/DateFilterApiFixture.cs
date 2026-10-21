@@ -209,11 +209,14 @@ namespace Reveal.Sdk.Dom.Tests
             {
                 Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Last(count, PeriodType.Day));
                 Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Next(count, PeriodType.Day));
+                Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Next(count, PeriodType.Day, true));
+                Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Next(count, PeriodType.Month, true));
                 Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Previous(count, PeriodType.Day));
             }
             var invalid = (PeriodType)99;
             Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Last(1, invalid));
             Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Next(1, invalid));
+            Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Next(1, invalid, true));
             Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Previous(1, invalid));
             Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.This(invalid));
             Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.ToDate(invalid));
