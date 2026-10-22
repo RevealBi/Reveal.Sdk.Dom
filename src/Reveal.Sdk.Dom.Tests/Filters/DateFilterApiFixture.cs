@@ -126,16 +126,6 @@ namespace Reveal.Sdk.Dom.Tests
             AssertRelative(type, DateFilterRule.Next(7, PeriodType.Day, true), "Next", 7, PeriodType.Day, true);
         }
 
-        [Fact]
-        public void Next_IncludeToday_OnlyForDays()
-        {
-            foreach (PeriodType period in Enum.GetValues(typeof(PeriodType)))
-            {
-                if (period != PeriodType.Day)
-                    Assert.Throws<ArgumentException>(() => DateFilterRule.Next(2, period, true));
-            }
-        }
-
         [Theory]
         [MemberData(nameof(Filters))]
         public void ReplacingRule_ClearsInactiveStateAndSupportsFluentUpdates(Type type)
@@ -210,7 +200,6 @@ namespace Reveal.Sdk.Dom.Tests
                 Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Last(count, PeriodType.Day));
                 Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Next(count, PeriodType.Day));
                 Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Next(count, PeriodType.Day, true));
-                Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Next(count, PeriodType.Month, true));
                 Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Previous(count, PeriodType.Day));
             }
             var invalid = (PeriodType)99;
