@@ -41,8 +41,23 @@ namespace Reveal.Sdk.Dom.Tests
             var rule = f["CustomRule"]!;
             Assert.Equal("Next", (string)rule["Relation"]!);
             Assert.Equal(7, (int)rule["Count"]!);
-            // Next has no includeToday (only valid for Last/ToDate), so it's omitted.
+            // Next excludes today unless it's asked for, so it's omitted.
             Assert.Null(rule["IncludeToday"]);
+        }
+
+        [Fact]
+        public void NextDays_IncludingToday_RoundTrips()
+        {
+            var document = new RdashDocument("t");
+            document.Filters.Add(new DashboardDateFilter(DateFilterRule.Next(7, PeriodType.Day, includeToday: true)));
+
+            var json = document.ToJsonString();
+            Assert.True((bool)JObject.Parse(json)["GlobalFilters"]![0]!["CustomRule"]!["IncludeToday"]!);
+
+            var reloaded = JObject.Parse(RdashDocument.LoadFromJson(json).ToJsonString());
+            var rule = reloaded["GlobalFilters"]![0]!["CustomRule"]!;
+            Assert.Equal("Next", (string)rule["Relation"]!);
+            Assert.True((bool)rule["IncludeToday"]!);
         }
 
         [Fact]

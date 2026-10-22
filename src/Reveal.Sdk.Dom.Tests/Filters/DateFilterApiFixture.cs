@@ -117,11 +117,13 @@ namespace Reveal.Sdk.Dom.Tests
                 AssertRelative(type, DateFilterRule.Last(90, period, false), "Last", 90, period, false);
                 AssertRelative(type, DateFilterRule.Last(3, period), "Last", 3, period, true);
                 AssertRelative(type, DateFilterRule.Next(7, period), "Next", 7, period, null);
+                AssertRelative(type, DateFilterRule.Next(7, period, false), "Next", 7, period, null);
                 AssertRelative(type, DateFilterRule.Previous(2, period), "Previous", 2, period, null);
                 AssertRelative(type, DateFilterRule.This(period), "This", 1, period, null);
                 AssertRelative(type, DateFilterRule.ToDate(period, false), "ToDate", 1, period, false);
                 AssertRelative(type, DateFilterRule.ToDate(period), "ToDate", 1, period, true);
             }
+            AssertRelative(type, DateFilterRule.Next(7, PeriodType.Day, true), "Next", 7, PeriodType.Day, true);
         }
 
         [Theory]
@@ -197,11 +199,13 @@ namespace Reveal.Sdk.Dom.Tests
             {
                 Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Last(count, PeriodType.Day));
                 Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Next(count, PeriodType.Day));
+                Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Next(count, PeriodType.Day, true));
                 Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Previous(count, PeriodType.Day));
             }
             var invalid = (PeriodType)99;
             Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Last(1, invalid));
             Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Next(1, invalid));
+            Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Next(1, invalid, true));
             Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Previous(1, invalid));
             Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.This(invalid));
             Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.ToDate(invalid));
