@@ -7,6 +7,9 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
     - name: Download release asset (.nupkg)
@@ -27,5 +30,11 @@ jobs:
       with:
         dotnet-version: 9.x
 
+    - name: NuGet login
+      uses: NuGet/login@v1
+      id: login
+      with:
+        user: ${{ secrets.NUGET_USER }}
+
     - name: Push to NuGet.org
-      run: dotnet nuget push "./nupkg/${{ steps.download.outputs.filename }}" --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
+      run: dotnet nuget push "./nupkg/${{ steps.download.outputs.filename }}" --source https://api.nuget.org/v3/index.json --api-key ${{ steps.login.outputs.NUGET_API_KEY }}
