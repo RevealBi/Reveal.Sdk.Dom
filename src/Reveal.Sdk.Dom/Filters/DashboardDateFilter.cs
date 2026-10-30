@@ -42,19 +42,21 @@ namespace Reveal.Sdk.Dom.Filters
             return this;
         }
 
-        // Used by the deserializer.
+        /// <summary>Creates a date filter with the default title ("Date Filter") and an AllTime selection.</summary>
         [JsonConstructor]
-        internal DashboardDateFilter()
+        public DashboardDateFilter()
         {
             SchemaTypeName = SchemaTypeNames.DateGlobalFilterType;
             Title = "Date Filter";
+            Rule = DateFilterRule.AllTime;
         }
 
         [OnDeserializing]
-        internal void ReadLegacyId(StreamingContext context)
+        internal void ReadLegacyDefaults(StreamingContext context)
         {
-            // Only old JSON with no ID needs this fallback; creation uses DashboardFilter's GUID.
+            // Preserve omitted legacy JSON fields; new filters use a GUID and AllTime.
             Id = "_date";
+            RuleType = DateRuleType.LastYear;
         }
 
         /// <summary>Creates a date filter with the default title ("Date Filter").</summary>
@@ -62,6 +64,9 @@ namespace Reveal.Sdk.Dom.Filters
         {
             Rule = rule ?? throw new ArgumentNullException(nameof(rule));
         }
+
+        /// <summary>Creates a date filter with the given title and an AllTime selection.</summary>
+        public DashboardDateFilter(string title) : this(title, DateFilterRule.AllTime) { }
 
         /// <summary>Creates a date filter with an explicit title.</summary>
         public DashboardDateFilter(string title, DateFilterRule rule) : this()

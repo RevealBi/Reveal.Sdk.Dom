@@ -36,11 +36,16 @@ namespace Reveal.Sdk.Dom.Tests
 
         [Theory]
         [MemberData(nameof(Filters))]
-        public void PublicApi_RequiresRuleAndHidesWireMembers(Type type)
+        public void PublicApi_AllowsDefaultRulesAndHidesWireMembers(Type type)
         {
-            Assert.All(type.GetConstructors(), ctor =>
-                Assert.Contains(ctor.GetParameters(), parameter => parameter.ParameterType == typeof(DateFilterRule)));
-            Assert.Equal(type == typeof(DashboardDateFilter) ? 2 : 1, type.GetConstructors().Length);
+            Assert.NotNull(type.GetConstructor(Type.EmptyTypes));
+            Assert.NotNull(type.GetConstructor(new[] { typeof(DateFilterRule) }));
+            Assert.Equal(type == typeof(DashboardDateFilter) ? 4 : 2, type.GetConstructors().Length);
+            if (type == typeof(DashboardDateFilter))
+            {
+                Assert.NotNull(type.GetConstructor(new[] { typeof(string) }));
+                Assert.NotNull(type.GetConstructor(new[] { typeof(string), typeof(DateFilterRule) }));
+            }
             foreach (var name in new[] { "RuleType", "CustomDateRange", "IncludeToday", "CustomRule", "RelativePeriod" })
                 Assert.Null(type.GetProperty(name, BindingFlags.Instance | BindingFlags.Public));
 

@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Serialization;
 using Reveal.Sdk.Dom.Core.Constants;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -47,11 +48,19 @@ namespace Reveal.Sdk.Dom.Filters
             return this;
         }
 
-        // Used by the deserializer.
+        /// <summary>Creates a datetime filter with an AllTime selection.</summary>
         [JsonConstructor]
-        internal DateTimeFilter()
+        public DateTimeFilter()
         {
             SchemaTypeName = SchemaTypeNames.DateTimeFilterType;
+            Rule = DateFilterRule.AllTime;
+        }
+
+        [OnDeserializing]
+        internal void ReadLegacyDefaults(StreamingContext context)
+        {
+            // Missing legacy FilterType means AllValues, even though new rules activate filtering.
+            FilterType = FilterType.AllValues;
         }
 
         /// <summary>Creates a datetime filter with the given date selection.</summary>
