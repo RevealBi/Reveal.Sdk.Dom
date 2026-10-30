@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Reveal.Sdk.Dom.Data;
+using Reveal.Sdk.Dom.Core.Utilities;
 using Reveal.Sdk.Dom.Filters;
 using Reveal.Sdk.Dom.Visualizations;
 using System;
@@ -15,6 +16,7 @@ namespace Reveal.Sdk.Dom.Tests
         [Theory]
         [InlineData("orders-date")]
         [InlineData("_date")]
+        [InlineData("82c0bd54-8ddb-4e9b-aef0-197897b8f8c0")]
         public void Binding_UsesTheSelectedFilterId_AndRoundTrips(string id)
         {
             var filter = new DashboardDateFilter(DateFilterRule.AllTime) { Id = id };
@@ -87,6 +89,7 @@ namespace Reveal.Sdk.Dom.Tests
         [Theory]
         [InlineData("orders")]
         [InlineData("_date")]
+        [InlineData("82c0bd54-8ddb-4e9b-aef0-197897b8f8c0")]
         public void Import_UsesBindingTargetToFindDateFilter_AndDoesNotImportUnboundFilter(string id)
         {
             var source = ModernDocument(8);
@@ -134,11 +137,31 @@ namespace Reveal.Sdk.Dom.Tests
         }
 
         [Fact]
-        public void LegacyDateFilter_WithMissingId_RetainsTheCompatibilityDefault()
+        public void DateFilter_WithMissingId_KeepsItsGeneratedId()
         {
             var filter = JsonConvert.DeserializeObject<DashboardDateFilter>("{\"_type\":\"DateGlobalFilterType\",\"RuleType\":\"LastYear\"}");
-            Assert.Equal("_date", filter.Id);
-            Assert.Equal("_date", (string)JObject.Parse(JsonConvert.SerializeObject(filter))["Id"]);
+            Assert.True(Guid.TryParse(filter.Id, out _));
+            var json = JsonConvert.SerializeObject(filter);
+            Assert.Equal(filter.Id, (string)JObject.Parse(json)["Id"]);
+            Assert.Equal(filter.Id, JsonConvert.DeserializeObject<DashboardDateFilter>(json).Id);
+            Assert.Equal("LastYear", (string)JObject.Parse(json)["RuleType"]);
+        }
+
+        [Theory]
+        [InlineData("_date")]
+        [InlineData("82c0bd54-8ddb-4e9b-aef0-197897b8f8c0")]
+        public void SavedDateFilterId_SurvivesLoadingAndCloning(string id)
+        {
+            var json = new JObject { ["_type"] = "DateGlobalFilterType", ["Id"] = id,
+                ["RuleType"] = "LastMonth", ["IncludeToday"] = false };
+            var filter = JsonConvert.DeserializeObject<DashboardDateFilter>(json.ToString());
+            var cloned = CloneUtility.Clone(filter);
+            Assert.NotSame(filter, cloned);
+            Assert.Equal(id, filter.Id);
+            Assert.Equal(id, cloned.Id);
+            var saved = JObject.Parse(JsonConvert.SerializeObject(cloned));
+            Assert.Equal("LastMonth", (string)saved["RuleType"]);
+            Assert.False((bool)saved["IncludeToday"]);
         }
 
         [Fact]

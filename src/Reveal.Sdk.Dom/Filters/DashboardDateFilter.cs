@@ -1,7 +1,6 @@
 using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System.Runtime.Serialization;
 using Reveal.Sdk.Dom.Core.Constants;
 
 namespace Reveal.Sdk.Dom.Filters
@@ -11,7 +10,7 @@ namespace Reveal.Sdk.Dom.Filters
         // Retained only for RDASH serialization; callers select a rule through Rule.
         [JsonProperty]
         [JsonConverter(typeof(StringEnumConverter))]
-        internal DateRuleType RuleType { get; set; } = DateRuleType.LastYear;
+        internal DateRuleType RuleType { get; set; } = DateRuleType.AllTime;
 
         [JsonProperty]
         internal DateRange CustomDateRange { get; set; }
@@ -35,39 +34,30 @@ namespace Reveal.Sdk.Dom.Filters
             set => (value ?? throw new ArgumentNullException(nameof(value))).ApplyTo(this);
         }
 
-        /// <summary>Updates the date selection and returns this filter for fluent configuration.</summary>
-        public DashboardDateFilter SetRule(DateFilterRule rule)
-        {
-            Rule = rule ?? throw new ArgumentNullException(nameof(rule));
-            return this;
-        }
-
-        // Used by the deserializer.
+        /// <summary>Creates a date filter with the default title ("Date Filter") and an AllTime selection.</summary>
         [JsonConstructor]
-        internal DashboardDateFilter()
+        public DashboardDateFilter()
         {
             SchemaTypeName = SchemaTypeNames.DateGlobalFilterType;
             Title = "Date Filter";
         }
 
-        [OnDeserializing]
-        internal void ReadLegacyId(StreamingContext context)
-        {
-            // Only old JSON with no ID needs this fallback; creation uses DashboardFilter's GUID.
-            Id = "_date";
-        }
-
         /// <summary>Creates a date filter with the default title ("Date Filter").</summary>
         public DashboardDateFilter(DateFilterRule rule) : this()
         {
-            Rule = rule ?? throw new ArgumentNullException(nameof(rule));
+            Rule = rule;
+        }
+
+        /// <summary>Creates a date filter with the given title and an AllTime selection.</summary>
+        public DashboardDateFilter(string title) : this()
+        {
+            Title = title;
         }
 
         /// <summary>Creates a date filter with an explicit title.</summary>
-        public DashboardDateFilter(string title, DateFilterRule rule) : this()
+        public DashboardDateFilter(string title, DateFilterRule rule) : this(title)
         {
-            Title = title;
-            Rule = rule ?? throw new ArgumentNullException(nameof(rule));
+            Rule = rule;
         }
     }
 }

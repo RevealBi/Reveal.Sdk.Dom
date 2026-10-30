@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Serialization;
 using Reveal.Sdk.Dom.Core.Constants;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -34,24 +35,25 @@ namespace Reveal.Sdk.Dom.Filters
             set => (value ?? throw new ArgumentNullException(nameof(value))).ApplyTo(this);
         }
 
-        /// <summary>Updates the date selection and returns this filter for fluent configuration.</summary>
-        public XmlaDateFilter SetRule(DateFilterRule rule)
-        {
-            Rule = rule ?? throw new ArgumentNullException(nameof(rule));
-            return this;
-        }
-
-        // Used by the deserializer.
+        /// <summary>Creates an XMLA date filter with an AllTime selection.</summary>
         [JsonConstructor]
-        internal XmlaDateFilter()
+        public XmlaDateFilter()
         {
             SchemaTypeName = SchemaTypeNames.XmlaDateFilterType;
+            Rule = DateFilterRule.AllTime;
+        }
+
+        [OnDeserializing]
+        internal void ReadLegacyDefaults(StreamingContext context)
+        {
+            // Missing legacy FilterType means AllValues, even though new rules activate filtering.
+            FilterType = FilterType.AllValues;
         }
 
         /// <summary>Creates an XMLA date filter with the given date selection.</summary>
         public XmlaDateFilter(DateFilterRule rule) : this()
         {
-            Rule = rule ?? throw new ArgumentNullException(nameof(rule));
+            Rule = rule;
         }
     }
 }

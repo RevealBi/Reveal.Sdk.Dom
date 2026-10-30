@@ -54,15 +54,20 @@ _revealView.Dashboard = await RVDashboard.LoadFromJsonAsync(json);
 
 ### Date Filters
 
-Create date filters with a `DateFilterRule`, then replace the selection through `Rule` or the fluent `SetRule` method:
+New date filters default to AllTime when no rule is supplied, including title-only dashboard filters. Supply a `DateFilterRule` to choose a selection, then replace it through the public `Rule` property:
 
 ```cs
+var allDates = new DashboardDateFilter();
+var titledDates = new DashboardDateFilter("All Dates");
+var allFieldDates = new DateTimeFilter();
+var allXmlaDates = new XmlaDateFilter();
+
 var salesDate = new DashboardDateFilter("Sales Date",
     DateFilterRule.Last(90, PeriodType.Day, includeToday: false));
 document.Filters.Add(salesDate);
 
 salesDate.Rule = DateFilterRule.This(PeriodType.Quarter);
-salesDate.SetRule(DateFilterRule.Next(7, PeriodType.Day));
+salesDate.Rule = DateFilterRule.Next(7, PeriodType.Day);
 
 var orderDate = new DateTimeFilter(DateFilterRule.Next(7, PeriodType.Day));
 visualization.AddDataFilter("OrderDate", orderDate)
@@ -73,11 +78,11 @@ var customDate = new DashboardDateFilter(
     DateFilterRule.Custom(new DateTime(2026, 1, 1), new DateTime(2026, 3, 31)));
 ```
 
-`Last` selects a rolling window; `Previous` selects complete preceding periods. `Next` begins at the start of the next period (tomorrow for days, next month for months). `This` selects the current period in full, and `ToDate` selects its start through today. Weeks start on Monday. `Last` and `ToDate` accept `includeToday`; setting it to `false` evaluates the window as of yesterday. `Custom` accepts inclusive endpoints and allows `null` for an open endpoint. Use `DateFilterRule.AllTime` to remove the date restriction.
+`Last` selects a rolling window; `Previous` selects complete preceding periods. `Next` begins at the start of the next period (tomorrow for days, next month for months). For days, `includeToday: true` starts it today instead: `DateFilterRule.Next(7, PeriodType.Day, includeToday: true)` is today and the following six days. `includeToday` only affects day windows. Starting a `Next` window today needs a Reveal SDK version with include-today support for `Next` day windows; older SDKs ignore it and start the window tomorrow. `This` selects the current period in full, and `ToDate` selects its start through today. Weeks start on Monday. `Last` and `ToDate` also accept `includeToday`; setting it to `false` evaluates the window as of yesterday. `Custom` accepts inclusive endpoints and allows `null` for an open endpoint. Use `DateFilterRule.AllTime` to remove the date restriction.
 
 Setting `Rule` also activates rule filtering for `DateTimeFilter` and `XmlaDateFilter` and clears any previous selected values. The existing `FilterType` and `SelectedValues` properties still support other field-filter modes.
 
-The legacy date selection API (`DateRuleType`, `RuleType`, `CustomDateRange`, and `IncludeToday`) and constructors without a rule are no longer public. Existing RDASH files retain their original wire format through internal serialization members, including built-in date rules and their `IncludeToday` value. For example, replace a `LastYear` object initializer with `DateFilterRule.Last(1, PeriodType.Year)`, and `TrailingTwelveMonths` with `DateFilterRule.Previous(12, PeriodType.Month)`.
+Passing an explicit null rule to a constructor or `Rule` is invalid; use `DateFilterRule.AllTime` to remove a selection. Date filters expose no `SetRule` method. The legacy date selection API (`DateRuleType`, `RuleType`, `CustomDateRange`, and `IncludeToday`) is no longer public. Existing RDASH files preserve saved selections through internal serialization members, including built-in date rules and their `IncludeToday` value. For example, replace a `LastYear` object initializer with `DateFilterRule.Last(1, PeriodType.Year)`, and `TrailingTwelveMonths` with `DateFilterRule.Previous(12, PeriodType.Month)`.
 
 #### Date filter IDs, bindings, and links
 
@@ -105,6 +110,8 @@ Fiscal-year and local-time settings belong on `DateField.Settings` or `DateTimeF
 
 **Existing files:** older dashboards load, save, and import through the normal serialization path. Loaded documents retain their version, and internal serialization members preserve legacy date selections and IDs. Malformed JSON still reports a parse error.
 
-The tested runtime baseline is Reveal SDK **2.2.1**. This is not a claim about the earliest supported release. SDK 1.7.3 rewrites date-filter IDs even in a document marked as modern and is incompatible with new GUID-based creation. Existing legacy date selections and omitted-ID JSON remain readable without exposing the old creation API.
+Saved date-filter IDs, including `_date` and GUIDs, are retained during loading, cloning, and import. A date filter with a missing ID is incomplete input: it receives a normal generated GUID rather than being mapped to `_date`, and a missing rule defaults to AllTime. Separate legacy binding targets that omit `GlobalFilterId` still resolve to `_date`.
+
+The tested runtime baseline is Reveal SDK **2.2.1**. This is not a claim about the earliest supported release. SDK 1.7.3 rewrites date-filter IDs even in a document marked as modern and is incompatible with new GUID-based creation. Existing saved legacy date selections remain readable without exposing the old creation API.
 
 The existing WPF Sandbox references SDK 1.7.3. Its build checks compilation; use a compatible current SDK host to exercise new GUID-based date filters.

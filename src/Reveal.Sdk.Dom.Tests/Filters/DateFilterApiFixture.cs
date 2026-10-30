@@ -36,16 +36,21 @@ namespace Reveal.Sdk.Dom.Tests
 
         [Theory]
         [MemberData(nameof(Filters))]
-        public void PublicApi_RequiresRuleAndHidesWireMembers(Type type)
+        public void PublicApi_AllowsDefaultRulesAndHidesWireMembers(Type type)
         {
-            Assert.All(type.GetConstructors(), ctor =>
-                Assert.Contains(ctor.GetParameters(), parameter => parameter.ParameterType == typeof(DateFilterRule)));
-            Assert.Equal(type == typeof(DashboardDateFilter) ? 2 : 1, type.GetConstructors().Length);
+            Assert.NotNull(type.GetConstructor(Type.EmptyTypes));
+            Assert.NotNull(type.GetConstructor(new[] { typeof(DateFilterRule) }));
+            Assert.Equal(type == typeof(DashboardDateFilter) ? 4 : 2, type.GetConstructors().Length);
+            if (type == typeof(DashboardDateFilter))
+            {
+                Assert.NotNull(type.GetConstructor(new[] { typeof(string) }));
+                Assert.NotNull(type.GetConstructor(new[] { typeof(string), typeof(DateFilterRule) }));
+            }
             foreach (var name in new[] { "RuleType", "CustomDateRange", "IncludeToday", "CustomRule", "RelativePeriod" })
                 Assert.Null(type.GetProperty(name, BindingFlags.Instance | BindingFlags.Public));
 
             Assert.True(type.GetProperty("Rule").CanWrite);
-            Assert.Equal(type, type.GetMethod("SetRule").ReturnType);
+            Assert.Null(type.GetMethod("SetRule"));
             Assert.Empty(typeof(DateFilterRule).GetConstructors());
             Assert.DoesNotContain(typeof(DateFilterRule).GetProperties(), property => property.SetMethod?.IsPublic == true);
             var exported = typeof(DateFilterRule).Assembly.GetExportedTypes();
@@ -117,16 +122,18 @@ namespace Reveal.Sdk.Dom.Tests
                 AssertRelative(type, DateFilterRule.Last(90, period, false), "Last", 90, period, false);
                 AssertRelative(type, DateFilterRule.Last(3, period), "Last", 3, period, true);
                 AssertRelative(type, DateFilterRule.Next(7, period), "Next", 7, period, null);
+                AssertRelative(type, DateFilterRule.Next(7, period, false), "Next", 7, period, null);
                 AssertRelative(type, DateFilterRule.Previous(2, period), "Previous", 2, period, null);
                 AssertRelative(type, DateFilterRule.This(period), "This", 1, period, null);
                 AssertRelative(type, DateFilterRule.ToDate(period, false), "ToDate", 1, period, false);
                 AssertRelative(type, DateFilterRule.ToDate(period), "ToDate", 1, period, true);
             }
+            AssertRelative(type, DateFilterRule.Next(7, PeriodType.Day, true), "Next", 7, PeriodType.Day, true);
         }
 
         [Theory]
         [MemberData(nameof(Filters))]
-        public void ReplacingRule_ClearsInactiveStateAndSupportsFluentUpdates(Type type)
+        public void ReplacingRule_ClearsInactiveStateThroughTheProperty(Type type)
         {
             var filter = Create(type, DateFilterRule.Custom(new DateTime(2024, 1, 1), new DateTime(2024, 12, 31)));
             if (filter is FilterBase fieldFilter)
@@ -136,7 +143,7 @@ namespace Reveal.Sdk.Dom.Tests
             }
 
             var snapshot = ReadRule(filter);
-            Assert.Same(filter, SetRule(filter, DateFilterRule.Next(7, PeriodType.Day)));
+            AssignRule(filter, DateFilterRule.Next(7, PeriodType.Day));
             var relative = Serialize(filter);
             Assert.Null(relative["CustomDateRange"]);
             Assert.Equal("Next", (string)relative["CustomRule"]["Relation"]);
@@ -146,13 +153,13 @@ namespace Reveal.Sdk.Dom.Tests
                 Assert.Null(relative["SelectedValues"]);
             }
 
-            SetRule(filter, snapshot);
+            AssignRule(filter, snapshot);
             var range = Serialize(filter);
             Assert.Equal("CustomRange", (string)range["RuleType"]);
             Assert.NotNull(range["CustomDateRange"]);
             Assert.Null(range["CustomRule"]);
 
-            SetRule(filter, DateFilterRule.AllTime);
+            AssignRule(filter, DateFilterRule.AllTime);
             var allTime = Serialize(filter);
             Assert.Equal("AllTime", (string)allTime["RuleType"]);
             Assert.Null(allTime["CustomRule"]);
@@ -197,11 +204,13 @@ namespace Reveal.Sdk.Dom.Tests
             {
                 Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Last(count, PeriodType.Day));
                 Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Next(count, PeriodType.Day));
+                Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Next(count, PeriodType.Day, true));
                 Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Previous(count, PeriodType.Day));
             }
             var invalid = (PeriodType)99;
             Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Last(1, invalid));
             Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Next(1, invalid));
+            Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Next(1, invalid, true));
             Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.Previous(1, invalid));
             Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.This(invalid));
             Assert.Throws<ArgumentOutOfRangeException>(() => DateFilterRule.ToDate(invalid));
@@ -214,7 +223,6 @@ namespace Reveal.Sdk.Dom.Tests
             Assert.Throws<ArgumentNullException>(() => Create(type, null));
             var filter = Create(type, DateFilterRule.Next(7, PeriodType.Day));
             var before = Serialize(filter);
-            Assert.Throws<ArgumentNullException>(() => SetRule(filter, null));
             Assert.Throws<ArgumentNullException>(() => AssignRule(filter, null));
             Assert.True(JToken.DeepEquals(before, Serialize(filter)));
         }
@@ -281,14 +289,6 @@ namespace Reveal.Sdk.Dom.Tests
             DashboardDateFilter dashboard => dashboard.Rule,
             DateTimeFilter field => field.Rule,
             XmlaDateFilter xmla => xmla.Rule,
-            _ => throw new ArgumentException(nameof(filter))
-        };
-
-        private static object SetRule(object filter, DateFilterRule rule) => filter switch
-        {
-            DashboardDateFilter dashboard => dashboard.SetRule(rule),
-            DateTimeFilter field => field.SetRule(rule),
-            XmlaDateFilter xmla => xmla.SetRule(rule),
             _ => throw new ArgumentException(nameof(filter))
         };
 
