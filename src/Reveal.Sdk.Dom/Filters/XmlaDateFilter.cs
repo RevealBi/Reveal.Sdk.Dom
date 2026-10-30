@@ -35,13 +35,6 @@ namespace Reveal.Sdk.Dom.Filters
             set => (value ?? throw new ArgumentNullException(nameof(value))).ApplyTo(this);
         }
 
-        /// <summary>Updates the date selection and returns this filter for fluent configuration.</summary>
-        public XmlaDateFilter SetRule(DateFilterRule rule)
-        {
-            Rule = rule ?? throw new ArgumentNullException(nameof(rule));
-            return this;
-        }
-
         /// <summary>Creates an XMLA date filter with an AllTime selection.</summary>
         [JsonConstructor]
         public XmlaDateFilter()
@@ -60,7 +53,7 @@ namespace Reveal.Sdk.Dom.Filters
         /// <summary>Creates an XMLA date filter with the given date selection.</summary>
         public XmlaDateFilter(DateFilterRule rule) : this()
         {
-            Rule = rule ?? throw new ArgumentNullException(nameof(rule));
+            Rule = rule;
         }
     }
 }

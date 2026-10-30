@@ -62,15 +62,15 @@ namespace Reveal.Sdk.Dom.Tests
 
         [Theory]
         [MemberData(nameof(Filters))]
-        public void LoadingMissingFields_RetainsLegacyDefaults(Type type)
+        public void LoadingMissingFields_UsesDashboardDefaultsAndPreservesFieldModes(Type type)
         {
             var json = new JObject { ["_type"] = type == typeof(DashboardDateFilter) ? "DateGlobalFilterType" : type.Name + "Type" };
             var loaded = JsonConvert.DeserializeObject(json.ToString(), type);
             var saved = Serialize(loaded);
-            Assert.Equal(type == typeof(DashboardDateFilter) ? "LastYear" : "AllTime", (string)saved["RuleType"]);
+            Assert.Equal("AllTime", (string)saved["RuleType"]);
             Assert.True((bool)saved["IncludeToday"]);
             if (type == typeof(DashboardDateFilter))
-                Assert.Equal("_date", (string)saved["Id"]);
+                Assert.True(Guid.TryParse((string)saved["Id"], out _));
             else
                 Assert.Equal("AllValues", (string)saved["FilterType"]);
             Assert.Equal(saved, Serialize(JsonConvert.DeserializeObject(saved.ToString(), type)));
@@ -115,7 +115,7 @@ namespace Reveal.Sdk.Dom.Tests
             var filters = saved["GlobalFilters"];
             Assert.Equal("LastMonth", (string)filters[0]["RuleType"]);
             Assert.False((bool)filters[0]["IncludeToday"]);
-            Assert.Equal("LastYear", (string)filters[1]["RuleType"]);
+            Assert.Equal("AllTime", (string)filters[1]["RuleType"]);
             Assert.Equal("AllTime", (string)filters[2]["RuleType"]);
             Assert.Equal("AllTime", (string)filters[3]["RuleType"]);
             Assert.Equal("Orders", (string)filters[3]["Title"]);

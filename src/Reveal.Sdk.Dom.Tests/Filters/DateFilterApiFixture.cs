@@ -50,7 +50,7 @@ namespace Reveal.Sdk.Dom.Tests
                 Assert.Null(type.GetProperty(name, BindingFlags.Instance | BindingFlags.Public));
 
             Assert.True(type.GetProperty("Rule").CanWrite);
-            Assert.Equal(type, type.GetMethod("SetRule").ReturnType);
+            Assert.Null(type.GetMethod("SetRule"));
             Assert.Empty(typeof(DateFilterRule).GetConstructors());
             Assert.DoesNotContain(typeof(DateFilterRule).GetProperties(), property => property.SetMethod?.IsPublic == true);
             var exported = typeof(DateFilterRule).Assembly.GetExportedTypes();
@@ -133,7 +133,7 @@ namespace Reveal.Sdk.Dom.Tests
 
         [Theory]
         [MemberData(nameof(Filters))]
-        public void ReplacingRule_ClearsInactiveStateAndSupportsFluentUpdates(Type type)
+        public void ReplacingRule_ClearsInactiveStateThroughTheProperty(Type type)
         {
             var filter = Create(type, DateFilterRule.Custom(new DateTime(2024, 1, 1), new DateTime(2024, 12, 31)));
             if (filter is FilterBase fieldFilter)
@@ -143,7 +143,7 @@ namespace Reveal.Sdk.Dom.Tests
             }
 
             var snapshot = ReadRule(filter);
-            Assert.Same(filter, SetRule(filter, DateFilterRule.Next(7, PeriodType.Day)));
+            AssignRule(filter, DateFilterRule.Next(7, PeriodType.Day));
             var relative = Serialize(filter);
             Assert.Null(relative["CustomDateRange"]);
             Assert.Equal("Next", (string)relative["CustomRule"]["Relation"]);
@@ -153,13 +153,13 @@ namespace Reveal.Sdk.Dom.Tests
                 Assert.Null(relative["SelectedValues"]);
             }
 
-            SetRule(filter, snapshot);
+            AssignRule(filter, snapshot);
             var range = Serialize(filter);
             Assert.Equal("CustomRange", (string)range["RuleType"]);
             Assert.NotNull(range["CustomDateRange"]);
             Assert.Null(range["CustomRule"]);
 
-            SetRule(filter, DateFilterRule.AllTime);
+            AssignRule(filter, DateFilterRule.AllTime);
             var allTime = Serialize(filter);
             Assert.Equal("AllTime", (string)allTime["RuleType"]);
             Assert.Null(allTime["CustomRule"]);
@@ -223,7 +223,6 @@ namespace Reveal.Sdk.Dom.Tests
             Assert.Throws<ArgumentNullException>(() => Create(type, null));
             var filter = Create(type, DateFilterRule.Next(7, PeriodType.Day));
             var before = Serialize(filter);
-            Assert.Throws<ArgumentNullException>(() => SetRule(filter, null));
             Assert.Throws<ArgumentNullException>(() => AssignRule(filter, null));
             Assert.True(JToken.DeepEquals(before, Serialize(filter)));
         }
@@ -290,14 +289,6 @@ namespace Reveal.Sdk.Dom.Tests
             DashboardDateFilter dashboard => dashboard.Rule,
             DateTimeFilter field => field.Rule,
             XmlaDateFilter xmla => xmla.Rule,
-            _ => throw new ArgumentException(nameof(filter))
-        };
-
-        private static object SetRule(object filter, DateFilterRule rule) => filter switch
-        {
-            DashboardDateFilter dashboard => dashboard.SetRule(rule),
-            DateTimeFilter field => field.SetRule(rule),
-            XmlaDateFilter xmla => xmla.SetRule(rule),
             _ => throw new ArgumentException(nameof(filter))
         };
 

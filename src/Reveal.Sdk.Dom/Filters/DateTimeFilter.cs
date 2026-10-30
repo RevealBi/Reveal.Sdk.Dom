@@ -41,13 +41,6 @@ namespace Reveal.Sdk.Dom.Filters
             set => (value ?? throw new ArgumentNullException(nameof(value))).ApplyTo(this);
         }
 
-        /// <summary>Updates the date selection and returns this filter for fluent configuration.</summary>
-        public DateTimeFilter SetRule(DateFilterRule rule)
-        {
-            Rule = rule ?? throw new ArgumentNullException(nameof(rule));
-            return this;
-        }
-
         /// <summary>Creates a datetime filter with an AllTime selection.</summary>
         [JsonConstructor]
         public DateTimeFilter()
@@ -66,7 +59,7 @@ namespace Reveal.Sdk.Dom.Filters
         /// <summary>Creates a datetime filter with the given date selection.</summary>
         public DateTimeFilter(DateFilterRule rule) : this()
         {
-            Rule = rule ?? throw new ArgumentNullException(nameof(rule));
+            Rule = rule;
         }
     }
 }
