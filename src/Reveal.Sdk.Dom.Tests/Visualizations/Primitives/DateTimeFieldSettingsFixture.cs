@@ -29,15 +29,13 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
             var expectedJson = """
             {
               "_type": "DateTimeFieldSettingsType",
-              "DateFiscalYearStartMonth": 1,
-              "DisplayInLocalTimeZone": true
+              "DateFiscalYearStartMonth": 1
             }
             """;
 
             var instance = new DateTimeFieldSettings()
             {
                 DateFiscalYearStartMonth = 1,
-                DisplayInLocalTimeZone = true,
             };
 
             // Act

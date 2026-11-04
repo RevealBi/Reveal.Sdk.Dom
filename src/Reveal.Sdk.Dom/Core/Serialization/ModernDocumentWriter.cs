@@ -39,8 +39,7 @@ namespace Reveal.Sdk.Dom.Core.Serialization
                 field["Settings"] = new JObject
                 {
                     ["_type"] = "DateTimeFieldSettingsType",
-                    ["DateFiscalYearStartMonth"] = month > 1 && month <= 12 ? month : 0,
-                    ["DisplayInLocalTimeZone"] = (bool?)filter["DisplayInLocalTimeZone"] ?? false
+                    ["DateFiscalYearStartMonth"] = month > 1 && month <= 12 ? month : 0
                 };
                 if (month > 1 && month <= 12)
                     filter["DateFiscalYearStartMonth"] = 0;
