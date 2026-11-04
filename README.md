@@ -106,7 +106,7 @@ var dateLink = new DateLinkFilter(sourceDate, targetDate);
 
 **New document format:** new dashboards use format 8, and every new dashboard date filter receives its own GUID. Bindings, imports, and links preserve the selected filter's ID. Legacy `_date` defaults exist only in JSON readers. The writer also emits explicit date hierarchies, date field settings, XMLA drill members, and single-value conditional formatting required by this document format.
 
-Fiscal-year and local-time settings belong on `DateField.Settings` or `DateTimeField.Settings` (a `DateTimeFieldSettings`), rather than on `DateTimeFilter`. The old filter-level properties are internal for JSON compatibility.
+Fiscal-year settings belong on `DateField.Settings` or `DateTimeField.Settings` (a `DateTimeFieldSettings`), rather than on `DateTimeFilter`. The old filter-level property is internal for JSON compatibility.
 
 **Existing files:** older dashboards load, save, and import through the normal serialization path. Loaded documents retain their version, and internal serialization members preserve legacy date selections and IDs. Malformed JSON still reports a parse error.
 
