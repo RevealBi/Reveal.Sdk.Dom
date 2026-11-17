@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
+using Reveal.Sdk.Dom.Data;
+using Reveal.Sdk.Dom.Filters;
 using Reveal.Sdk.Dom.Visualizations;
 using System;
 using System.Collections.Generic;
@@ -63,6 +65,36 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
 
             // Assert
             Assert.Equal(expectedJObject, actualJObject);
-        }    
+        }
+
+        [Fact]
+        public void LoadFromJson_KeepsTopNRule_WhenTextFieldHasNumberFilter()
+        {
+            // Arrange: a Top N rule on a text field, as @revealbi/dom's addDataFilter writes it
+            var source = new DataSourceItemFactory().Create(DataSourceType.REST, "", "")
+                .SetFields(new List<IField> { new TextField("City"), new NumberField("Sales") });
+            var document = new RdashDocument();
+            document.Visualizations.Add(new ColumnChartVisualization(source).SetLabel("City").SetValue("Sales"));
+            var json = JObject.Parse(document.ToJsonString());
+            var cityJson = json["Widgets"][0]["DataSpec"]["Fields"].First(f => (string)f["FieldName"] == "City");
+            cityJson["Filter"] = JObject.Parse("""{"_type":"NumberFilterType","FilterType":"FilterByRule","SelectedValues":[],"RuleType":"TopItems","Value":10}""");
+
+            // Act
+            var loaded = RdashDocument.LoadFromJson(json.ToString());
+            var savedJson = JObject.Parse(loaded.ToJsonString());
+
+            // Assert
+            var city = Assert.IsType<TextField>(loaded.Visualizations[0].DataDefinition.AsTabular().Fields.First(f => f.FieldName == "City"));
+            var topN = Assert.IsType<NumberFilter>(city.Filter);
+            Assert.Equal(FilterType.FilterByRule, topN.FilterType);
+            Assert.Equal(NumberRuleType.TopItems, topN.RuleType);
+            Assert.Equal(10, topN.Value);
+            Assert.Null(city.DataFilter);
+
+            var savedFilter = savedJson["Widgets"][0]["DataSpec"]["Fields"].First(f => (string)f["FieldName"] == "City")["Filter"];
+            Assert.Equal("NumberFilterType", (string)savedFilter["_type"]);
+            Assert.Equal("TopItems", (string)savedFilter["RuleType"]);
+            Assert.Equal(10, (double)savedFilter["Value"]);
+        }
     }
 }
