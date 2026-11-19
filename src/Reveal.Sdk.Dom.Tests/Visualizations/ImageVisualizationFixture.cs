@@ -90,6 +90,7 @@ public class ImageVisualizationFixture
                   "FieldName" : "Date",
                   "FieldLabel" : "Date",
                   "UserCaption" : "Date",
+                  "IsHidden" : false,
                   "IsCalculated" : false,
                   "Properties" : { },
                   "Sorting" : "None",
@@ -98,6 +99,7 @@ public class ImageVisualizationFixture
                   "FieldName" : "Territory",
                   "FieldLabel" : "Territory",
                   "UserCaption" : "Territory",
+                  "IsHidden" : false,
                   "IsCalculated" : false,
                   "Properties" : { },
                   "Sorting" : "None",
@@ -106,6 +108,7 @@ public class ImageVisualizationFixture
                   "FieldName" : "Spend",
                   "FieldLabel" : "Spend",
                   "UserCaption" : "Spend",
+                  "IsHidden" : false,
                   "IsCalculated" : false,
                   "Properties" : { },
                   "Sorting" : "None",
@@ -151,6 +154,7 @@ public class ImageVisualizationFixture
                 "UrlColumn" : {
                   "_type" : "TabularColumnSpecType",
                   "FieldName" : "Territory",
+                  "IsHidden" : false,
                   "Sorting" : "None"
                 }
               }

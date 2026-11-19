@@ -161,6 +161,7 @@ public class GridVisualizationFixture
                   "FieldName" : "Date",
                   "FieldLabel" : "Date",
                   "UserCaption" : "Date",
+                  "IsHidden" : false,
                   "IsCalculated" : false,
                   "Properties" : { },
                   "Sorting" : "None",
@@ -169,6 +170,7 @@ public class GridVisualizationFixture
                   "FieldName" : "Spend",
                   "FieldLabel" : "Spend",
                   "UserCaption" : "Spend",
+                  "IsHidden" : false,
                   "IsCalculated" : false,
                   "Properties" : { },
                   "Sorting" : "None",
@@ -177,6 +179,7 @@ public class GridVisualizationFixture
                   "FieldName" : "Conversions",
                   "FieldLabel" : "Conversions",
                   "UserCaption" : "Conversions",
+                  "IsHidden" : false,
                   "IsCalculated" : false,
                   "Properties" : { },
                   "Sorting" : "None",
@@ -185,6 +188,7 @@ public class GridVisualizationFixture
                   "FieldName" : "Territory",
                   "FieldLabel" : "Territory",
                   "UserCaption" : "Territory",
+                  "IsHidden" : false,
                   "IsCalculated" : false,
                   "Properties" : { },
                   "Sorting" : "None",
@@ -230,14 +234,17 @@ public class GridVisualizationFixture
                 "Columns" : [ {
                   "_type" : "TabularColumnSpecType",
                   "FieldName" : "Territory",
+                  "IsHidden" : false,
                   "Sorting" : "None"
                 }, {
                   "_type" : "TabularColumnSpecType",
                   "FieldName" : "Conversions",
+                  "IsHidden" : false,
                   "Sorting" : "None"
                 }, {
                   "_type" : "TabularColumnSpecType",
                   "FieldName" : "Spend",
+                  "IsHidden" : false,
                   "Sorting" : "None"
                 } ]
               }

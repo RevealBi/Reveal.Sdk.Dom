@@ -127,6 +127,7 @@ public class CategoryVisualizationBaseFixture
                   "FieldName" : "Date",
                   "FieldLabel" : "Date",
                   "UserCaption" : "Date",
+                  "IsHidden" : false,
                   "IsCalculated" : false,
                   "Properties" : { },
                   "Sorting" : "None",

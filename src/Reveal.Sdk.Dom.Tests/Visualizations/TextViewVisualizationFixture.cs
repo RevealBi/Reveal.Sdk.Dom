@@ -118,6 +118,7 @@ public class TextViewVisualizationFixture
                   "FieldName" : "Date",
                   "FieldLabel" : "Date",
                   "UserCaption" : "Date",
+                  "IsHidden" : false,
                   "IsCalculated" : false,
                   "Properties" : { },
                   "Sorting" : "None",
@@ -126,6 +127,7 @@ public class TextViewVisualizationFixture
                   "FieldName" : "Territory",
                   "FieldLabel" : "Territory",
                   "UserCaption" : "Territory",
+                  "IsHidden" : false,
                   "IsCalculated" : false,
                   "Properties" : { },
                   "Sorting" : "None",
@@ -134,6 +136,7 @@ public class TextViewVisualizationFixture
                   "FieldName" : "Spend",
                   "FieldLabel" : "Spend",
                   "UserCaption" : "Spend",
+                  "IsHidden" : false,
                   "IsCalculated" : false,
                   "Properties" : { },
                   "Sorting" : "None",
@@ -179,14 +182,17 @@ public class TextViewVisualizationFixture
                 "Columns" : [ {
                   "_type" : "TabularColumnSpecType",
                   "FieldName" : "Territory",
+                  "IsHidden" : false,
                   "Sorting" : "None"
                 }, {
                   "_type" : "TabularColumnSpecType",
                   "FieldName" : "Conversions",
+                  "IsHidden" : false,
                   "Sorting" : "None"
                 }, {
                   "_type" : "TabularColumnSpecType",
                   "FieldName" : "Spend",
+                  "IsHidden" : false,
                   "Sorting" : "None"
                 } ]
               }

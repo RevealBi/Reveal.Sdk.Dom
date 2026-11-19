@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,7 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
               "FieldName": "Field name",
               "FieldLabel": "Field name",
               "UserCaption": "Field name",
+              "IsHidden": false,
               "IsCalculated": false,
               "Properties": {},
               "Sorting": "None",
@@ -52,7 +54,7 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
             """;
 
             var instance = new DateTimeField("Field name");
-            
+
 
             // Act
             var actualJson = instance.ToJsonString();
@@ -61,6 +63,26 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
 
             // Assert
             Assert.Equal(expectedJObject, actualJObject);
+        }
+
+        [Fact]
+        public void LoadFromJson_KeepsFormatting_WhenDateTimeFieldHasACustomFormat()
+        {
+            // Arrange: a date and time format set on the field in the Reveal editor
+            var source = new DataSourceItemFactory().Create(DataSourceType.REST, "", "")
+                .SetFields(new List<IField> { new DateTimeField("Stamp"), new NumberField("Sales") });
+            var document = new RdashDocument();
+            document.Visualizations.Add(new GridVisualization(source).SetColumns("Stamp", "Sales"));
+            var json = JObject.Parse(document.ToJsonString());
+            json["Widgets"][0]["DataSpec"]["Fields"].First(f => (string)f["FieldName"] == "Stamp")["Formatting"] =
+                JObject.Parse("""{"_type":"DateFormattingSpecType","OverrideDefaultSettings":false,"DateFormat":"dd-MMM-yyyy HH:mm"}""");
+
+            // Act
+            var saved = JObject.Parse(RdashDocument.LoadFromJson(json.ToString()).ToJsonString());
+
+            // Assert
+            var stamp = saved["Widgets"][0]["DataSpec"]["Fields"].First(f => (string)f["FieldName"] == "Stamp");
+            Assert.Equal("dd-MMM-yyyy HH:mm", (string)stamp["Formatting"]["DateFormat"]);
         }
     }
 }

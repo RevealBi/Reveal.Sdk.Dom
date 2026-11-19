@@ -412,6 +412,7 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations
                         "FieldName": "A",
                         "FieldLabel": "A",
                         "UserCaption": "A",
+                        "IsHidden": false,
                         "IsCalculated": false,
                         "Properties": {},
                         "Sorting": "None",
