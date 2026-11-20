@@ -19,6 +19,11 @@ namespace Reveal.Sdk.Dom.Visualizations
         public string FieldName { get; set; }
 
         /// <summary>
+        /// Gets or sets whether the column is hidden in the visualization.
+        /// </summary>
+        public bool IsHidden { get; set; }
+
+        /// <summary>
         /// Gets or sets the sorting type.
         /// </summary>
         [JsonConverter(typeof(StringEnumConverter))]

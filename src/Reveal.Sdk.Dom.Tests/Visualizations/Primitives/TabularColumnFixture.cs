@@ -1,8 +1,11 @@
 using Newtonsoft.Json.Linq;
+using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations;
 using Reveal.Sdk.Dom.Core.Constants;
 using Xunit;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
 {
@@ -48,6 +51,7 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
             {
                 "_type": "TabularColumnSpecType",
                 "FieldName": "test field",
+                "IsHidden": false,
                 "Sorting": "Desc"
             }
             """);
@@ -61,6 +65,25 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
 
             // Assert
             Assert.Equal(expectedJson.ToString(), outputJson);
+        }
+
+        [Fact]
+        public void LoadFromJson_KeepsIsHidden_WhenColumnIsHidden()
+        {
+            // Arrange: a grid column hidden in the Reveal editor
+            var source = new DataSourceItemFactory().Create(DataSourceType.REST, "", "")
+                .SetFields(new List<IField> { new TextField("City"), new NumberField("Sales") });
+            var document = new RdashDocument();
+            document.Visualizations.Add(new GridVisualization(source).SetColumns("City", "Sales"));
+            var json = JObject.Parse(document.ToJsonString());
+            json["Widgets"][0]["VisualizationDataSpec"]["Columns"].First(c => (string)c["FieldName"] == "Sales")["IsHidden"] = true;
+
+            // Act
+            var saved = JObject.Parse(RdashDocument.LoadFromJson(json.ToString()).ToJsonString());
+
+            // Assert
+            var sales = saved["Widgets"][0]["VisualizationDataSpec"]["Columns"].First(c => (string)c["FieldName"] == "Sales");
+            Assert.True((bool)sales["IsHidden"]);
         }
     }
 }

@@ -151,6 +151,7 @@ public class ImageVisualizationFixture
                 "UrlColumn" : {
                   "_type" : "TabularColumnSpecType",
                   "FieldName" : "Territory",
+                  "IsHidden" : false,
                   "Sorting" : "None"
                 }
               }

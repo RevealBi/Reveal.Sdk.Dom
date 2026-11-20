@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations;
 using System;
 using System.Collections.Generic;
@@ -63,6 +64,26 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
 
             // Assert
             Assert.Equal(expectedJObject, actualJObject);
+        }
+
+        [Fact]
+        public void LoadFromJson_KeepsFormatting_WhenDateFieldHasACustomFormat()
+        {
+            // Arrange: a date format set on the field in the Reveal editor
+            var source = new DataSourceItemFactory().Create(DataSourceType.REST, "", "")
+                .SetFields(new List<IField> { new DateField("Date"), new NumberField("Sales") });
+            var document = new RdashDocument();
+            document.Visualizations.Add(new GridVisualization(source).SetColumns("Date", "Sales"));
+            var json = JObject.Parse(document.ToJsonString());
+            json["Widgets"][0]["DataSpec"]["Fields"].First(f => (string)f["FieldName"] == "Date")["Formatting"] =
+                JObject.Parse("""{"_type":"DateFormattingSpecType","OverrideDefaultSettings":false,"DateFormat":"dd-MMM-yyyy"}""");
+
+            // Act
+            var saved = JObject.Parse(RdashDocument.LoadFromJson(json.ToString()).ToJsonString());
+
+            // Assert
+            var date = saved["Widgets"][0]["DataSpec"]["Fields"].First(f => (string)f["FieldName"] == "Date");
+            Assert.Equal("dd-MMM-yyyy", (string)date["Formatting"]["DateFormat"]);
         }
     }
 }

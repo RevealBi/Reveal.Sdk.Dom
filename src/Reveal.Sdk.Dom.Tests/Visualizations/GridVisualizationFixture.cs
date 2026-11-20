@@ -230,14 +230,17 @@ public class GridVisualizationFixture
                 "Columns" : [ {
                   "_type" : "TabularColumnSpecType",
                   "FieldName" : "Territory",
+                  "IsHidden" : false,
                   "Sorting" : "None"
                 }, {
                   "_type" : "TabularColumnSpecType",
                   "FieldName" : "Conversions",
+                  "IsHidden" : false,
                   "Sorting" : "None"
                 }, {
                   "_type" : "TabularColumnSpecType",
                   "FieldName" : "Spend",
+                  "IsHidden" : false,
                   "Sorting" : "None"
                 } ]
               }
