@@ -45,7 +45,6 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
               "FieldName": "Field name",
               "FieldLabel": "Field name",
               "UserCaption": "Field name",
-              "IsHidden": false,
               "IsCalculated": false,
               "Properties": {},
               "Sorting": "None",
@@ -54,7 +53,7 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
             """;
 
             var instance = new DateTimeField("Field name");
-
+            
 
             // Act
             var actualJson = instance.ToJsonString();

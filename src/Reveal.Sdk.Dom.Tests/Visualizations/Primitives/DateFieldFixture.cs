@@ -47,7 +47,6 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
               "FieldName": "Field name",
               "FieldLabel": "Field name",
               "UserCaption": "Field name",
-              "IsHidden": false,
               "IsCalculated": false,
               "Properties": {},
               "Sorting": "None",

@@ -42,12 +42,6 @@ namespace Reveal.Sdk.Dom.Visualizations
         [JsonConverter(typeof(StringEnumConverter))]
         DataType IFieldDataType.DataType { get; set; } = DataType.String;
 
-        /// <summary>
-        /// Gets or sets whether the field is hidden. The Reveal editor sets it when it hides the field's column;
-        /// <see cref="TabularColumn.IsHidden"/> is what hides the column.
-        /// </summary>
-        public bool IsHidden { get; set; }
-
         /// <inheritdoc />
         public bool IsCalculated { get; set; }
 

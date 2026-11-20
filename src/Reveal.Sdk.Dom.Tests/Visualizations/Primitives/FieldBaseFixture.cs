@@ -1,10 +1,8 @@
 ﻿using Moq;
 using Newtonsoft.Json.Linq;
-using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Filters;
 using Reveal.Sdk.Dom.Visualizations;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
@@ -46,7 +44,6 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
                   "FieldName": "TestFieldName",
                   "FieldLabel": "TestFieldLabel",
                   "UserCaption": "TestUserCaption",
-                  "IsHidden": false,
                   "IsCalculated": false,
                   "Expression": "Test Expression",
                   "Filter": {},
@@ -81,25 +78,6 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
 
             // Assert
             Assert.Equal(expectedJObject, actualJObject);
-        }
-
-        [Fact]
-        public void LoadFromJson_KeepsIsHidden_WhenFieldIsHidden()
-        {
-            // Arrange: a field whose column was hidden in the Reveal editor
-            var source = new DataSourceItemFactory().Create(DataSourceType.REST, "", "")
-                .SetFields(new List<IField> { new TextField("City"), new NumberField("Sales") });
-            var document = new RdashDocument();
-            document.Visualizations.Add(new GridVisualization(source).SetColumns("City"));
-            var json = JObject.Parse(document.ToJsonString());
-            json["Widgets"][0]["DataSpec"]["Fields"].First(f => (string)f["FieldName"] == "Sales")["IsHidden"] = true;
-
-            // Act
-            var saved = JObject.Parse(RdashDocument.LoadFromJson(json.ToString()).ToJsonString());
-
-            // Assert
-            var sales = saved["Widgets"][0]["DataSpec"]["Fields"].First(f => (string)f["FieldName"] == "Sales");
-            Assert.True((bool)sales["IsHidden"]);
         }
 
         private class MockFieldBase : FieldBase<MockIFilter>

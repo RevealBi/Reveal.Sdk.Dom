@@ -114,7 +114,6 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
                     "FieldName": "Test Field",
                     "FieldLabel": "Test Field",
                     "UserCaption": "Test Field",
-                    "IsHidden": false,
                     "IsCalculated": false,
                     "Properties": {},
                     "Sorting": "None",
