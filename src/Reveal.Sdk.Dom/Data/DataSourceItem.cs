@@ -65,6 +65,9 @@ namespace Reveal.Sdk.Dom.Data
         internal Dictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
 
         [JsonProperty]
+        internal Dictionary<string, object> Settings { get; set; }
+
+        [JsonProperty]
         internal Dictionary<string, object> Parameters { get; set; } = new Dictionary<string, object>();
 
         [JsonProperty]

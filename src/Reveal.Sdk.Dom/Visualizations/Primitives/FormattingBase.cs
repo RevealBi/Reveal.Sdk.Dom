@@ -7,5 +7,8 @@ namespace Reveal.Sdk.Dom.Visualizations
     {
         [JsonProperty]
         internal bool OverrideDefaultSettings { get; set; }
+
+        [JsonProperty]
+        internal string Locale { get; set; }
     }
 }

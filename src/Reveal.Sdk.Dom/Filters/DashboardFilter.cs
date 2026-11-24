@@ -11,6 +11,11 @@ namespace Reveal.Sdk.Dom.Filters
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string Title { get; set; }
 
+        /// <summary>
+        /// Gets or sets whether the filter is hidden from the dashboard's filter bar.
+        /// </summary>
+        public bool IsHidden { get; set; }
+
         //todo: figure this out
         [JsonProperty]
         internal string CrossFilteringSourceWidgetId { get; set; }
