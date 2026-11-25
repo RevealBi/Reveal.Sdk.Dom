@@ -5,7 +5,6 @@ namespace Reveal.Sdk.Dom.Visualizations
     public sealed class DateTimeFieldSettings : FieldSettings
     {
         public int DateFiscalYearStartMonth { get; set; }
-        public bool DisplayInLocalTimeZone { get; set; }
 
         public DateTimeFieldSettings()
         {

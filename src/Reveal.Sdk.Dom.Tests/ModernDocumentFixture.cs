@@ -97,7 +97,7 @@ namespace Reveal.Sdk.Dom.Tests
         [InlineData(true)]
         public void ModernWriter_PreservesFiscalSettingsAndExistingExplicitSettings(bool dateOnly)
         {
-            var dateSettings = new DateTimeFieldSettings { DateFiscalYearStartMonth = 4, DisplayInLocalTimeZone = true };
+            var dateSettings = new DateTimeFieldSettings { DateFiscalYearStartMonth = 4 };
             IField field = dateOnly ? new DateField("Date") { Settings = dateSettings }
                 : new DateTimeField("Date") { Settings = dateSettings };
             var data = DataSource(); data.Fields = new List<IField> { field };
@@ -105,21 +105,18 @@ namespace Reveal.Sdk.Dom.Tests
             var json = JObject.Parse(document.ToJsonString());
             var settings = json["Widgets"][0]["DataSpec"]["Fields"][0]["Settings"];
             Assert.Equal(4, (int)settings["DateFiscalYearStartMonth"]);
-            Assert.True((bool)settings["DisplayInLocalTimeZone"]);
             Assert.Equal(settings, JObject.Parse(RdashDocument.LoadFromJson(json.ToString()).ToJsonString())["Widgets"][0]["DataSpec"]["Fields"][0]["Settings"]);
             Assert.Null(typeof(DateTimeFilter).GetProperty("DateFiscalYearStartMonth"));
-            Assert.Null(typeof(DateTimeFilter).GetProperty("DisplayInLocalTimeZone"));
         }
 
         [Fact]
         public void ModernWriter_ProjectsLegacyDateFieldSettingsFromLoadedFilter()
         {
-            var filter = JsonConvert.DeserializeObject<DateTimeFilter>("{\"_type\":\"DateTimeFilterType\",\"RuleType\":\"Today\",\"DateFiscalYearStartMonth\":4,\"DisplayInLocalTimeZone\":true}");
+            var filter = JsonConvert.DeserializeObject<DateTimeFilter>("{\"_type\":\"DateTimeFilterType\",\"RuleType\":\"Today\",\"DateFiscalYearStartMonth\":4}");
             var data = DataSource(); ((DateTimeField)data.Fields[0]).DataFilter = filter;
             var document = new RdashDocument(); document.Visualizations.Add(new GridVisualization(data));
             var field = JObject.Parse(document.ToJsonString())["Widgets"][0]["DataSpec"]["Fields"][0];
             Assert.Equal(4, (int)field["Settings"]["DateFiscalYearStartMonth"]);
-            Assert.True((bool)field["Settings"]["DisplayInLocalTimeZone"]);
             Assert.Equal(0, (int)field["Filter"]["DateFiscalYearStartMonth"]);
         }
 

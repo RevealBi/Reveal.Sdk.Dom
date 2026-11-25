@@ -11,9 +11,6 @@ namespace Reveal.Sdk.Dom.Filters
         [JsonProperty]
         internal int DateFiscalYearStartMonth { get; set; }
 
-        [JsonProperty]
-        internal bool DisplayInLocalTimeZone { get; set; }
-
         // Retained only for RDASH serialization; callers select a rule through Rule.
         [JsonProperty]
         [JsonConverter(typeof(StringEnumConverter))]
