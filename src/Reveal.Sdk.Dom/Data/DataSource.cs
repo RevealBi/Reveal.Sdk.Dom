@@ -72,6 +72,12 @@ namespace Reveal.Sdk.Dom.Data
         [JsonProperty]
         public Dictionary<string, object> Settings { get; set; }
 
+        internal void CopySettingsFrom(DataSource source)
+        {
+            if (source.Settings != null)
+                Settings = new Dictionary<string, object>(source.Settings);
+        }
+
         public override bool Equals(object obj)
         {
             return Equals(obj as DataSource);

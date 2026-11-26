@@ -65,6 +65,9 @@ namespace Reveal.Sdk.Dom.Data
         internal Dictionary<string, object> Properties { get; set; } = new Dictionary<string, object>();
 
         [JsonProperty]
+        internal Dictionary<string, object> Settings { get; set; }
+
+        [JsonProperty]
         internal Dictionary<string, object> Parameters { get; set; } = new Dictionary<string, object>();
 
         [JsonProperty]
@@ -137,13 +140,14 @@ namespace Reveal.Sdk.Dom.Data
             if (dataSource is T specificDataSource)
                 return specificDataSource;
 
-            return new T
+            var newDataSource = new T
             {
                 Id = dataSource.Id,
                 Title = dataSource.Title,
                 Subtitle = dataSource.Subtitle,
-                DefaultRefreshRate = dataSource.DefaultRefreshRate,
             };
+            newDataSource.CopySettingsFrom(dataSource);
+            return newDataSource;
         }
 
         protected virtual void InitializeDataSourceItem(string title)
@@ -259,6 +263,7 @@ namespace Reveal.Sdk.Dom.Data
             ResourceItemDataSource.Id = dataSource.Id;
             ResourceItemDataSource.Title = dataSource.Title ?? ResourceItem.Title;
             ResourceItemDataSource.Subtitle = dataSource.Subtitle ?? ResourceItem.Subtitle;
+            ResourceItemDataSource.CopySettingsFrom(dataSource);
             ResourceItem.DataSourceId = ResourceItemDataSource.Id;
         }
     }

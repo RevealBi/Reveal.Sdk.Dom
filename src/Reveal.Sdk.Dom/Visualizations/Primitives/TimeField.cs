@@ -9,5 +9,8 @@ namespace Reveal.Sdk.Dom.Visualizations
         {
             ((IFieldDataType)this).DataType = DataType.Time;
         }
+
+        /// <summary>Time format of the field's values.</summary>
+        public DateFormatting Formatting { get; set; }
     }
 }

@@ -1,8 +1,10 @@
+using Newtonsoft.Json.Linq;
 using Reveal.Sdk.Dom.Core.Constants;
 using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Xunit;
 
@@ -402,6 +404,24 @@ namespace Reveal.Sdk.Dom.Tests.Data
 
             // Assert
             Assert.Equal(expectedIsXmla, isXmla);
+        }
+
+        [Fact]
+        public void LoadFromJson_KeepsSettings_WhenItemHasThem()
+        {
+            // Arrange: the item's refresh rate, as the Reveal editor writes it
+            var source = new DataSourceItemFactory().Create(DataSourceType.REST, "", "")
+                .SetFields(new List<IField> { new TextField("City"), new NumberField("Sales") });
+            var document = new RdashDocument();
+            document.Visualizations.Add(new GridVisualization(source).SetColumns("City", "Sales"));
+            var json = JObject.Parse(document.ToJsonString());
+            json["Widgets"][0]["DataSpec"]["DataSourceItem"]["Settings"] = JObject.Parse("""{"DefaultRefreshRate":60}""");
+
+            // Act
+            var saved = JObject.Parse(RdashDocument.LoadFromJson(json.ToString()).ToJsonString());
+
+            // Assert
+            Assert.Equal(60, (int)saved["Widgets"][0]["DataSpec"]["DataSourceItem"]["Settings"]["DefaultRefreshRate"]);
         }
     }
 }

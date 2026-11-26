@@ -41,6 +41,20 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
         }
 
         [Fact]
+        public void Constructor_CopiesSettings_ToResourceItemDataSource()
+        {
+            // Arrange
+            var dataSource = new DataSource { DefaultRefreshRate = "120" };
+            dataSource.Settings["CustomSetting"] = "value";
+
+            // Act
+            var item = new RestDataSourceItem("Test", dataSource);
+
+            // Assert
+            Assert.Equal(dataSource.Settings, item.ResourceItemDataSource.Settings);
+        }
+
+        [Fact]
         public void HasAsset_Should_Be_False()
         {
             // Arrange

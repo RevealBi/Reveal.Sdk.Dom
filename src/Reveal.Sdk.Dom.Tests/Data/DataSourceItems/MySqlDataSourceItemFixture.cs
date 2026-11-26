@@ -29,6 +29,21 @@ namespace Reveal.Sdk.Dom.Tests.Data.DataSourceItems
             Assert.Equal(dataSource, item.DataSource);
         }
 
+        [Fact]
+        public void Constructor_CopiesAllSettings_WhenDataSourceIsGeneric()
+        {
+            // Arrange
+            var dataSource = new DataSource { DefaultRefreshRate = "120" };
+            dataSource.Settings["CustomSetting"] = "value";
+
+            // Act
+            var item = new MySqlDataSourceItem("Test Item", dataSource);
+
+            // Assert
+            Assert.IsType<MySqlDataSource>(item.DataSource);
+            Assert.Equal(dataSource.Settings, item.DataSource.Settings);
+        }
+
 
         [Fact]
         public void ProcessDataOnServer_SetsAndGetsServerAggregationValue_WithInputs()
