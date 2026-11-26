@@ -34,6 +34,20 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
         }
 
         [Fact]
+        public void OverrideDefaultSettings_IsWritten_WhenSetFromCode()
+        {
+            // Arrange
+            var formatting = new DateFormatting("dd-MMM-yyyy") { OverrideDefaultSettings = true };
+
+            // Act
+            var json = JObject.Parse(formatting.ToJsonString());
+
+            // Assert
+            Assert.True((bool)json["OverrideDefaultSettings"]);
+            Assert.Equal("dd-MMM-yyyy", (string)json["DateFormat"]);
+        }
+
+        [Fact]
         public void LoadFromJson_KeepsLocale_WhenFormattingHasOne()
         {
             // Arrange: date and number formats with a locale, as the Reveal editor writes them
