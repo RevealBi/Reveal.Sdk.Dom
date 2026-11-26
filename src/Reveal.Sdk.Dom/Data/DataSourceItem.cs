@@ -140,13 +140,14 @@ namespace Reveal.Sdk.Dom.Data
             if (dataSource is T specificDataSource)
                 return specificDataSource;
 
-            return new T
+            var newDataSource = new T
             {
                 Id = dataSource.Id,
                 Title = dataSource.Title,
                 Subtitle = dataSource.Subtitle,
-                DefaultRefreshRate = dataSource.DefaultRefreshRate,
             };
+            newDataSource.CopySettingsFrom(dataSource);
+            return newDataSource;
         }
 
         protected virtual void InitializeDataSourceItem(string title)
@@ -262,6 +263,7 @@ namespace Reveal.Sdk.Dom.Data
             ResourceItemDataSource.Id = dataSource.Id;
             ResourceItemDataSource.Title = dataSource.Title ?? ResourceItem.Title;
             ResourceItemDataSource.Subtitle = dataSource.Subtitle ?? ResourceItem.Subtitle;
+            ResourceItemDataSource.CopySettingsFrom(dataSource);
             ResourceItem.DataSourceId = ResourceItemDataSource.Id;
         }
     }
