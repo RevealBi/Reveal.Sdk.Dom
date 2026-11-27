@@ -1,5 +1,7 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Reveal.Sdk.Dom.Core.Constants;
+using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations;
 using System;
 using System.Collections.Generic;
@@ -57,6 +59,49 @@ namespace Reveal.Sdk.Dom.Tests.Visualizations.Primitives
 
             // Assert
             Assert.Equal(expectedJObject, actualJObject);
+        }
+
+        private static JObject LegacyFormatting(JObject keys)
+        {
+            var formatting = new JObject { ["_type"] = "NumberFormattingSpecType", ["OverrideDefaultSettings"] = true, ["FormatType"] = "Number", ["DecimalDigits"] = 0 };
+            formatting.Merge(keys);
+            return formatting;
+        }
+
+        private static JToken RoundTrip(JObject formatting)
+        {
+            var dataSourceItem = new DataSourceItem { Title = "Data", HasTabularData = true };
+            dataSourceItem.Fields.Add(new TextField("Category"));
+            dataSourceItem.Fields.Add(new NumberField("Sales"));
+            var document = new RdashDocument("Formats");
+            document.Visualizations.Add(new BarChartVisualization("Chart", dataSourceItem).SetLabel("Category").SetValue("Sales"));
+            var json = JObject.Parse(document.ToJsonString());
+            json["Widgets"][0]["VisualizationDataSpec"]["Values"][0]["SummarizationField"]["Formatting"] = formatting;
+            var saved = JObject.Parse(RdashDocument.LoadFromJson(json.ToString()).ToJsonString());
+            return saved["Widgets"][0]["VisualizationDataSpec"]["Values"][0]["SummarizationField"]["Formatting"];
+        }
+
+        [Fact]
+        public void LoadFromJson_ReadsApplyMkFormatAsAuto_WhenMKFormatIsMissing()
+        {
+            var formatting = RoundTrip(LegacyFormatting(new JObject { ["ApplyMkFormat"] = true }));
+
+            Assert.Equal("Auto", (string)formatting["MKFormat"]);
+            Assert.Null(formatting["ApplyMkFormat"]);
+        }
+
+        [Theory]
+        [InlineData("{ \"ApplyMkFormat\": false }", LargeNumberFormat.None)]
+        [InlineData("{}", LargeNumberFormat.None)]
+        [InlineData("{ \"ApplyMkFormat\": true }", LargeNumberFormat.Auto)]
+        [InlineData("{ \"MKFormat\": \"None\", \"ApplyMkFormat\": true }", LargeNumberFormat.None)]
+        [InlineData("{ \"ApplyMkFormat\": true, \"MKFormat\": \"None\" }", LargeNumberFormat.None)]
+        [InlineData("{ \"ApplyMkFormat\": true, \"MKFormat\": \"K\" }", LargeNumberFormat.K)]
+        public void Deserialize_ReadsLargeNumberFormat_AsRevealDoes(string keys, LargeNumberFormat expected)
+        {
+            var formatting = JsonConvert.DeserializeObject<NumberFormatting>(LegacyFormatting(JObject.Parse(keys)).ToString());
+
+            Assert.Equal(expected, formatting.LargeNumberFormat);
         }
     }
 }
