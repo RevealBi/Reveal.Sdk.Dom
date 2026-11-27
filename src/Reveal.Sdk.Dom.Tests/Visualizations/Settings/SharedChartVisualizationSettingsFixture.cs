@@ -91,6 +91,7 @@ public class SharedChartVisualizationSettingsFixture
               "ShowLegends" : true,
               "VisualizationType" : "CHART",
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
             }
             """;
 

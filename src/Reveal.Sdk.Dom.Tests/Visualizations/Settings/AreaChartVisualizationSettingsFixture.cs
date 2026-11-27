@@ -52,6 +52,7 @@ public class AreaChartVisualizationSettingsFixture
               "LeftAxisMinValue" : null,
               "LeftAxisMaxValue" : null,
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
               "ShowLegends" : true,
               "BrushOffsetIndex" : null,
               "ChartType" : "Area",

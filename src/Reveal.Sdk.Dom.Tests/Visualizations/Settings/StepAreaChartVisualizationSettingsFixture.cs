@@ -39,6 +39,7 @@ public class StepAreaChartVisualizationSettingsFixture
               "ChartType" : "StepArea",
               "VisualizationType" : "CHART",
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
             }
             """;
 

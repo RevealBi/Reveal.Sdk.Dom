@@ -51,6 +51,7 @@ public class CategoryChartVisualizationSettingsFixture
               "ChartType" : "Column",
               "VisualizationType" : "CHART",
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
             }
             """;
 

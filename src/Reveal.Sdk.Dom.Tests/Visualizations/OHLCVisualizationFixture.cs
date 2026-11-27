@@ -116,6 +116,7 @@ public class OHLCVisualizationFixture
                 "_type" : "SampleSchema",
                 "LeftAxisLogarithmic" : false,
                 "AxisTitlesMode" : "None",
+                "GridLinesMode" : "None",
                 "ChartType" : "OHLC",
                 "VisualizationType" : "CHART"
               },

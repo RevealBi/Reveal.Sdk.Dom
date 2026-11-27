@@ -144,6 +144,7 @@ public class BubbleVisualizationFixture
                   "ShowAxisY": true,
                   "LeftAxisLogarithmic": true,
                   "AxisTitlesMode" : "None",
+                  "GridLinesMode" : "None",
                   "ShowLegends": true,
                   "BrushOffsetIndex": 1,
                   "ChartType": "Bubble",

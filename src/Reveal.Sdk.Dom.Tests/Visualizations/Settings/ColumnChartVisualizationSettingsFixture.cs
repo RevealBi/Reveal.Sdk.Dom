@@ -54,6 +54,7 @@ public class ColumnChartVisualizationSettingsFixture
               "LeftAxisMinValue" : null,
               "LeftAxisMaxValue" : null,
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
               "ShowLegends" : true,
               "BrushOffsetIndex" : null,
               "ChartType" : "Column",

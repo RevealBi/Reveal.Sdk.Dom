@@ -36,6 +36,7 @@ public class StackedBarChartVisualizationSettingsFixture
               "ChartType" : "StackedBar",
               "VisualizationType" : "CHART",
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
             }
             """;
 

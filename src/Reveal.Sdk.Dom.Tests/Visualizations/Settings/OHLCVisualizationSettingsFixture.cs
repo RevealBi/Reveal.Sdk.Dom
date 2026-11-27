@@ -28,6 +28,7 @@ public class OHLCVisualizationSettingsFixture
               "_type" : "ChartVisualizationSettingsType",
               "LeftAxisLogarithmic" : false,
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
               "ChartType" : "OHLC",
               "VisualizationType" : "CHART"
             }

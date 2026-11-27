@@ -39,6 +39,7 @@ public class LineChartVisualizationSettingsFixture
               "ChartType" : "Line",
               "VisualizationType" : "CHART",
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
             }
             """;
 

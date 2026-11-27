@@ -39,6 +39,7 @@ public class SplineChartVisualizationSettingsFixture
               "ChartType" : "Spline",
               "VisualizationType" : "CHART",
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
             }
             """;
 

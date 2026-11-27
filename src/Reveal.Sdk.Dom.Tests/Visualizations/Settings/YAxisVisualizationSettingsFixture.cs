@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using Reveal.Sdk.Dom.Visualizations;
 using Reveal.Sdk.Dom.Visualizations.Settings;
 using Xunit;
 
@@ -16,6 +17,7 @@ public class YAxisVisualizationSettingsFixture
         Assert.False(settings.YAxisIsLogarithmic);
         Assert.Null(settings.YAxisMinValue);
         Assert.Null(settings.YAxisMaxValue);
+        Assert.Equal(GridLinesMode.None, settings.GridLinesMode);
         Assert.True(settings.ShowLegend);
         Assert.Equal(default(int?), settings.StartColorIndex);
         Assert.Equal("CHART", settings.VisualizationType);
@@ -34,6 +36,7 @@ public class YAxisVisualizationSettingsFixture
               "LeftAxisMinValue" : 10.0,
               "LeftAxisMaxValue" : 100.0,
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
               "ShowLegends" : true,
               "ChartType" : "Column",
               "VisualizationType" : "CHART"

@@ -39,6 +39,7 @@ public class SplineAreaChartVisualizationSettingsFixture
               "ChartType" : "SplineArea",
               "VisualizationType" : "CHART",
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
             }
             """;
 

@@ -39,6 +39,7 @@ public class ScatterVisualizationSettingsFixture
               "LeftAxisMinValue": 100.0,
               "LeftAxisMaxValue": 9000.0,
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
               "ShowLegends": true,
               "BrushOffsetIndex": 1,
               "ChartType": "Scatter",

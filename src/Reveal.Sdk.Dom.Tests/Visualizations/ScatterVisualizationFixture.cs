@@ -122,6 +122,7 @@ public class ScatterVisualizationFixture
                   "ShowAxisY": true,
                   "LeftAxisLogarithmic": false,
                   "AxisTitlesMode" : "None",
+                  "GridLinesMode" : "None",
                   "ShowLegends": true,
                   "ChartType": "Scatter",
                   "VisualizationType": "CHART"

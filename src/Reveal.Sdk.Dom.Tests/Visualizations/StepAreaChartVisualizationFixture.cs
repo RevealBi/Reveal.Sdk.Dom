@@ -120,6 +120,7 @@ public class StepAreaChartVisualizationFixture
                 "ZoomScaleVertical" : 1.0,
                 "LeftAxisLogarithmic" : false,
                 "AxisTitlesMode" : "None",
+                "GridLinesMode" : "None",
                 "ShowLegends" : true,
                 "ChartType" : "StepArea",
                 "VisualizationType" : "CHART"

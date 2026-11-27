@@ -39,6 +39,7 @@ public class StepLineChartVisualizationSettingsFixture
               "ChartType" : "StepLine",
               "VisualizationType" : "CHART",
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
             }
             """;
 

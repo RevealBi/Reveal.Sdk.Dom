@@ -36,6 +36,7 @@ public class StackedAreaChartVisualizationSettingsFixture
               "ChartType" : "StackedArea",
               "VisualizationType" : "CHART",
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
             }
             """;
 

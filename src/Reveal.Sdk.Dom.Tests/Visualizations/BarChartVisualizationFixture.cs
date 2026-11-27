@@ -126,6 +126,7 @@ public class BarChartVisualizationFixture
                 "ZoomScaleVertical" : 1.0,
                 "LeftAxisLogarithmic" : false,
                 "AxisTitlesMode" : "None",
+                "GridLinesMode" : "None",
                 "ShowLegends" : true,
                 "ChartType" : "Bar",
                 "VisualizationType" : "CHART"

@@ -36,6 +36,7 @@ public class StackedColumnChartVisualizationSettingsFixture
               "ChartType" : "StackedColumn",
               "VisualizationType" : "CHART",
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
             }
             """;
 
