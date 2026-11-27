@@ -128,6 +128,7 @@ public class ComboChartVisualizationFixture
                 "ShowAxisY" : true,
                 "LeftAxisLogarithmic" : false,
                 "AxisTitlesMode" : "None",
+                "GridLinesMode" : "None",
                 "ShowLegends" : true,
                 "BrushOffsetIndex" : 5,
                 "ChartType" : "Composite",

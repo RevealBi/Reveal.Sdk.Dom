@@ -18,6 +18,7 @@ public class FinancialVisualizationSettingsBaseFixture
         Assert.False(settings.LeftAxisIsLogarithmic);
         Assert.Null(settings.LeftAxisMinValue);
         Assert.Null(settings.LeftAxisMaxValue);
+        Assert.Equal(GridLinesMode.None, settings.GridLinesMode);
         Assert.Equal(SchemaTypeNames.ChartVisualizationSettingsType, settings.SchemaTypeName);
         Assert.Equal(VisualizationTypes.CHART, settings.VisualizationType);
         Assert.Equal(default(RdashChartType), settings.ChartType);
@@ -35,6 +36,7 @@ public class FinancialVisualizationSettingsBaseFixture
               "LeftAxisMinValue" : 10.5,
               "LeftAxisMaxValue" : 100.75,
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
               "ChartType" : "Column",
               "VisualizationType" : "CHART"
             }

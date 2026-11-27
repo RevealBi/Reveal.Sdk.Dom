@@ -121,6 +121,7 @@ public class StackedBarChartVisualizationFixture
                 "ZoomScaleVertical" : 1.0,
                 "LeftAxisLogarithmic" : false,
                 "AxisTitlesMode" : "None",
+                "GridLinesMode" : "None",
                 "ShowLegends" : true,
                 "ChartType" : "StackedBar",
                 "VisualizationType" : "CHART"

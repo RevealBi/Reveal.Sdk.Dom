@@ -39,6 +39,7 @@ public class TimeSeriesVisualizationSettingsFixture
               "ChartType" : "TimeSeries",
               "VisualizationType" : "CHART",
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
             }
             """;
 

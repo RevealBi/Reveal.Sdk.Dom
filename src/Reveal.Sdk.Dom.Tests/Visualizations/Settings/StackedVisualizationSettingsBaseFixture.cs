@@ -49,6 +49,7 @@ public class StackedVisualizationSettingsBaseFixture
               "ChartType" : "Column",
               "VisualizationType" : "CHART",
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
             }
             """;
         var settings = new TestStackedVisualizationSettingsBase

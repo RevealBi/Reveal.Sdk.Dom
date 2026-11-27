@@ -34,5 +34,12 @@ namespace Reveal.Sdk.Dom.Visualizations.Settings
         [JsonProperty("AxisTitlesMode")]
         [JsonConverter(typeof(StringEnumConverter))]
         public AxisTitleMode AxisTitleMode { get; set; } = AxisTitleMode.None;
+
+        /// <summary>
+        /// Gets or sets which grid lines the chart displays. Default value is None.
+        /// </summary>
+        [JsonProperty]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public GridLinesMode GridLinesMode { get; set; } = GridLinesMode.None;
     }
 }

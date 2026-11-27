@@ -121,6 +121,7 @@ public class SplineChartVisualizationFixture
                 "ZoomScaleVertical" : 1.0,
                 "LeftAxisLogarithmic" : false,
                 "AxisTitlesMode" : "None",
+                "GridLinesMode" : "None",
                 "ShowLegends" : true,
                 "ChartType" : "Spline",
                 "VisualizationType" : "CHART"

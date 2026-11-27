@@ -118,6 +118,7 @@ public class ComboChartVisualizationSettingsFixture
               "ChartType" : "Composite",
               "VisualizationType" : "CHART",
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
             }
             """;
 

@@ -114,6 +114,7 @@ public class CandleStickVisualizationFixture
                 "_type" : "SampleSchema",
                 "LeftAxisLogarithmic" : false,
                 "AxisTitlesMode" : "None",
+                "GridLinesMode" : "None",
                 "ChartType" : "Candlestick",
                 "VisualizationType" : "CHART"
               },

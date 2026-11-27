@@ -54,6 +54,7 @@ public class BarChartVisualizationSettingsFixture
               "ChartType" : "Bar",
               "VisualizationType" : "CHART",
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
             }
             """;
 

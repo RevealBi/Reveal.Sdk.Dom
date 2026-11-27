@@ -28,6 +28,7 @@ public class CandleStickVisualizationSettingsFixture
               "_type" : "ChartVisualizationSettingsType",
               "LeftAxisLogarithmic" : false,
               "AxisTitlesMode" : "None",
+              "GridLinesMode" : "None",
               "ChartType" : "Candlestick",
               "VisualizationType" : "CHART"
             }

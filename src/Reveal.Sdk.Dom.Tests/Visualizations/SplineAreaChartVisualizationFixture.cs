@@ -121,6 +121,7 @@ public class SplineAreaChartVisualizationFixture
                 "ZoomScaleVertical" : 1.0,
                 "LeftAxisLogarithmic" : false,
                 "AxisTitlesMode" : "None",
+                "GridLinesMode" : "None",
                 "ShowLegends" : true,
                 "ChartType" : "SplineArea",
                 "VisualizationType" : "Area"
