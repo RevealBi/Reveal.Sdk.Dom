@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Reveal.Sdk.Dom.Core.Constants;
+using Reveal.Sdk.Dom.Data;
 using Reveal.Sdk.Dom.Visualizations;
 using Reveal.Sdk.Dom.Visualizations.Settings;
 using Xunit;
@@ -55,12 +57,6 @@ public class ScatterMapVisualizationSettingsFixture
               "ZoomThreshold" : 3,
               "ShowTileSource" : true,
               "UseDifferentMarkers" : false,
-              "ZoomRectangle" : {
-                "X" : 0.0,
-                "Y" : 0.0,
-                "Width" : 0.0,
-                "Height" : 0.0
-              },
               "ShowLegends" : true,
               "ColorIndex" : -1,
               "VisualizationType" : "SCATTER_MAP"
@@ -81,5 +77,83 @@ public class ScatterMapVisualizationSettingsFixture
 
         // Assert
         Assert.Equal(expectedJObject, actualJObject);
+    }
+
+    [Fact]
+    public void ToJsonString_OmitsZoomRectangle_WhenZoomIsNotSet()
+    {
+        // Arrange
+        var document = new RdashDocument("Maps");
+        document.Visualizations.Add(CreateScatterMap());
+
+        // Act
+        var settings = JObject.Parse(document.ToJsonString())["Widgets"][0]["VisualizationSettings"];
+
+        // Assert
+        Assert.Null(settings["ZoomRectangle"]);
+    }
+
+    [Fact]
+    public void ToJsonString_WritesZoomRectangle_WhenZoomIsSet()
+    {
+        // Arrange
+        var document = new RdashDocument("Maps");
+        document.Visualizations.Add(CreateScatterMap().ConfigureSettings(settings =>
+        {
+            settings.Zoom.Longitude = -180;
+            settings.Zoom.Latitude = -60;
+            settings.Zoom.DegreesLongitude = 360;
+            settings.Zoom.DegreesLatitude = 150;
+        }));
+        var expected = JObject.Parse("""{ "X" : -180.0, "Y" : -60.0, "Width" : 360.0, "Height" : 150.0 }""");
+
+        // Act
+        var json = document.ToJsonString();
+        var roundTripJson = RdashDocument.LoadFromJson(json).ToJsonString();
+
+        // Assert
+        Assert.Equal(expected, JObject.Parse(json)["Widgets"][0]["VisualizationSettings"]["ZoomRectangle"]);
+        Assert.Equal(expected, JObject.Parse(roundTripJson)["Widgets"][0]["VisualizationSettings"]["ZoomRectangle"]);
+    }
+
+    [Fact]
+    public void ToJsonString_OmitsZoomRectangle_WhenLoadedZoomIsEmpty()
+    {
+        // Arrange
+        var document = new RdashDocument("Maps");
+        document.Visualizations.Add(CreateScatterMap());
+        var json = JObject.Parse(document.ToJsonString());
+        json["Widgets"][0]["VisualizationSettings"]["ZoomRectangle"] = JObject.Parse("""{ "X" : 0.0, "Y" : 0.0, "Width" : 0.0, "Height" : 0.0 }""");
+
+        // Act
+        var roundTripJson = RdashDocument.LoadFromJson(json.ToString()).ToJsonString();
+
+        // Assert
+        Assert.Null(JObject.Parse(roundTripJson)["Widgets"][0]["VisualizationSettings"]["ZoomRectangle"]);
+    }
+
+    [Fact]
+    public void ToJsonString_OmitsZoomRectangle_WhenLoadedZoomIsNull()
+    {
+        // Arrange
+        var document = new RdashDocument("Maps");
+        document.Visualizations.Add(CreateScatterMap());
+        var json = JObject.Parse(document.ToJsonString());
+        json["Widgets"][0]["VisualizationSettings"]["ZoomRectangle"] = JValue.CreateNull();
+
+        // Act
+        var roundTripJson = RdashDocument.LoadFromJson(json.ToString()).ToJsonString();
+
+        // Assert
+        Assert.Null(JObject.Parse(roundTripJson)["Widgets"][0]["VisualizationSettings"]["ZoomRectangle"]);
+    }
+
+    private static ScatterMapVisualization CreateScatterMap()
+    {
+        var dataSourceItem = new DataSourceItem("Cities", new DataSource())
+        {
+            Fields = new List<IField> { new TextField("City"), new NumberField("Lat"), new NumberField("Lon") }
+        };
+        return new ScatterMapVisualization("Cities", dataSourceItem).SetLatitude("Lat").SetLongitude("Lon").SetLabel("City");
     }
 }
