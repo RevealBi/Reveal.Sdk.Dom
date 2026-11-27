@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.ComponentModel;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Reveal.Sdk.Dom.Core.Constants;
 
@@ -45,9 +46,13 @@ namespace Reveal.Sdk.Dom.Visualizations.Settings
         public bool UseDifferentMarkers { get; set; }
 
         /// <summary>
-        /// Gets the zoom and position of the map.
+        /// Gets the zoom and position of the map. While its size is 0x0, it isn't saved and Reveal shows the whole map.
         /// </summary>
         [JsonProperty("ZoomRectangle")]
         public MapZoomRectangle Zoom { get; internal set; } = new MapZoomRectangle();
+
+        // Reveal draws a 0x0 zoom area as an empty map; leaving it out shows the whole map.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public bool ShouldSerializeZoom() => Zoom != null && (Zoom.DegreesLongitude != 0 || Zoom.DegreesLatitude != 0);
     }
 }
