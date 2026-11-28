@@ -10,6 +10,7 @@ namespace Reveal.Sdk.Dom.Core.Serialization.Converters
         {
             TypeMap = new System.Collections.Generic.Dictionary<string, Type>()
             {
+                { SchemaTypeNames.ResourceDataSpecType, typeof(ResourceDataDefinition)},
                 { SchemaTypeNames.TabularDataSpecType, typeof(TabularDataDefinition)},
                 { SchemaTypeNames.TextBoxDataSpecType, typeof(TextBoxDataDefinition)},
                 { SchemaTypeNames.XmlaDataSpecType, typeof(XmlaDataDefinition)},
